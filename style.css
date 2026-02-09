@@ -1,0 +1,22 @@
+.entete{
+    background-color: #1A1A1D;
+    border-bottom: 2px solid #F2C94C;
+    padding: 15px 40px;
+}
+
+.barre-nav{
+    display: flex;
+    align-items: center;
+}
+
+.logo-zone{
+    margin-right: 40px;
+}
+
+.menu-liste{
+
+}
+
+.zone-profil{
+
+}
