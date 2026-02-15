@@ -1,37 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
     <title>Flagrant Délice</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <header class="entete">
 
-        <nav class="barre-nav">
-            <div class="logo-zone">
-                <img src="/images/logo.png" alt="LOGO Flagrant Délice" id="">
-            </div>
-
-            <ul class="menu-liste">
-                <li><a href="index.html">ACCUEIL</a></li>
-                <li><a href="presentation.html">AU MENU</a></li>
-                <li><a href="profil.html">IDENTIFICATION</a></li>
-                <li><a href="livraison.html">LIVRAISON</a></li>
+    <div class="header">
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Logo Flagrant Délice">
+        </div>
+        
+        <div class="menu">
+            <ul>
+                <li><a href="accueil.html" class="nav-link active">ACCUEIL</a></li>
+                <li><a href="presentation.html" class="nav-link">LA CARTE</a></li>
+                <li><a href="connexion.html" class="nav-link">CONNEXION</a></li>
             </ul>
+        </div>
+    </div>
 
-            <div class="zone-profil">
-                <a href="connexion.html" class="bouton-profil">SE CONNECTER</a>
-            </div>
-        </nav>
+    <div class="hero-section">
+        <h1>FLAGRANT DÉLICE</h1>
+        <p class="subtitle">Le goût est un crime. Avouez tout.</p>
+        
+        <div class="search-box">
+            <form action="presentation.html" method="get">
+                <input type="text" placeholder="Rechercher un crime (ex: Pizza Ananas)..." class="search-input">
+                <button type="submit" class="search-btn">RECHERCHER</button>
+            </form>
+        </div>
+    </div>
 
-    </header>
-    <h1>Flagrant Délice</h1>
-    <form action="" method="post">
-        <input type="text">
-        <input type="submit" value="Chercher">
-    </form>
+    <hr class="separator">
 
-    
+    <div class="content-section">
+        <h2>LES CRIMES DU JOUR</h2>
+        <br>
+
+        <div class="card">
+            <div class="badge-danger">WANTED</div>
+            <h3>Le Donut Burger</h3>
+            <p>Double steak coincé entre deux donuts glacés au sucre.</p>
+            <p class="price">14.50 €</p>
+            <a href="presentation.html" class="btn-action">VOIR</a>
+        </div>
+
+        <div class="card">
+            <div class="badge-danger">DANGER</div>
+            <h3>L'Hawaïenne</h3>
+            <p>De l'ananas chaud sur une pizza. 10 ans de prison ferme.</p>
+            <p class="price">12.00 €</p>
+            <a href="presentation.html" class="btn-action">VOIR</a>
+        </div>
+
+        <div class="card">
+            <div class="badge-danger">ILLÉGAL</div>
+            <h3>Le Tacos Perpétuité</h3>
+            <p>4 viandes, avec de la sauce fromagère radioactive mmhhh.</p>
+            <p class="price">16.00 €</p>
+            <a href="presentation.html" class="btn-action">VOIR</a>
+        </div>
+    </div>
+
+    <div class="services-section">
+        <div class="service-item">
+            <h3>SUR PLACE</h3>
+            <p>Ambiance garde à vue.</p>
+        </div>
+        <div class="service-item">
+            <h3>A EMPORTER</h3>
+            <p>Prenez les preuves et filez.</p>
+        </div>
+        <div class="service-item">
+            <h3>LIVRAISON</h3>
+            <p>Intervention rapide.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Flagrant Délice - Projet Pré-Ing 2 CY Tech</p>
+    </div>
+
 </body>
 </html>
