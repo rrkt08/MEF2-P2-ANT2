@@ -225,12 +225,33 @@ body {
     color: #ffffff !important;
 }
 
-/* --- Footer --- */
+/* --- Footer (Trois Colonnes) --- */
 .footer {
-    background-color: #ffffff;
-    color: #00a8e8;
-    text-align: center;
-    padding: 20px;
+    background-color: #ffffff;    /* Fond blanc [cite: 316] */
+    color: #00a8e8;               /* Texte bleu cyan [cite: 133] */
+    padding: 50px 0;              /* Espace en haut et en bas  */
+    border-top: 4px solid #00a8e8;/* Grosse bordure bleue en haut [cite: 374, 379] */
+    text-align: center;           /* Centre les blocs inline-block  */
     font-family: Arial, sans-serif;
-    font-weight: bold;
+}
+
+.footer-col {
+    display: inline-block;        /* Aligne les 3 colonnes  */
+    width: 30%;                   /* Chaque colonne prend environ 1/3 de la page [cite: 553] */
+    vertical-align: top;          /* Aligne les textes par le haut [cite: 827] */
+    font-size: 14px;              /* Taille de texte normale [cite: 724] */
+}
+
+/* On peut mettre le copyright un peu plus petit ou discret */
+.copyright-col {
+    font-size: 12px;
+}
+
+.footer-col p {
+    margin: 5px 0;                /* Espace entre les lignes [cite: 456] */
+}
+
+.footer-col strong {
+    color: #e60012;               /* Les titres CONTACT et HORAIRES en rouge */
+    letter-spacing: 1px;
 }
