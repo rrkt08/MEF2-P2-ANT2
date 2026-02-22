@@ -32,18 +32,18 @@ body {
 }
 
 .header-menu ul {
-    list-style-type: none; /* [cite: 520, 524] */
+    list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
 .header-menu li {
-    display: inline-block; /* [cite: 616, 617] */
+    display: inline-block;
     margin: 0 15px; 
 }
 
 .header-menu a {
-    text-decoration: none; /* [cite: 1388, 1389, 1390] */
+    text-decoration: none;
     color: #ffffff; 
     font-size: 18px;
     font-weight: bold;
@@ -67,7 +67,7 @@ body {
     color: #e60012;
     padding: 12px 30px; 
     border-radius: 25px;
-    border: 2px solid #ffffff; /* [cite: 1090, 1091, 1096] */
+    border: 2px solid #ffffff;
 }
 
 .header-menu a.btn-inscription:hover,
@@ -79,9 +79,9 @@ body {
 
 /* Banniere accueil */
 .banniere {
-    background-image: url('images/fondplat.png'); /* [cite: 1039, 1044] */
-    background-size: cover; /* [cite: 1599] */
-    background-position: center; /* [cite: 1065] */
+    background-image: url('images/fondplat.png');
+    background-size: cover;
+    background-position: center;
     text-align: center;
     padding-top: 380px; 
     padding-bottom: 20px;
@@ -90,7 +90,7 @@ body {
 
 .banniere h1 {
     color: #00a8e8; 
-    font-family: Impact, 'Arial Black', Arial, sans-serif; /* [cite: 397] */
+    font-family: Impact, 'Arial Black', Arial, sans-serif;
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 5px;
@@ -125,14 +125,14 @@ body {
 .btn-recherche {
     padding: 16px 35px;
     background-color: #e60012;
-    color: white; /* [cite: 1004, 1007, 1008] */
+    color: white;
     border: none;
     border-radius: 35px;
     font-family: Impact, sans-serif;
     font-size: 18px;
     letter-spacing: 2px;
     cursor: pointer;
-    margin-left: 10px; /* [cite: 1173, 1178] */
+    margin-left: 10px;
     text-transform: uppercase;
 }
 
@@ -143,7 +143,7 @@ body {
 /* Titres intermédiaires */
 .bandeau-titre {
     background-color: #00a8e8; 
-    text-align: center; /* [cite: 848, 851] */
+    text-align: center;
     padding: 50px 0; 
     margin: 0;
     overflow: hidden;
@@ -211,7 +211,7 @@ body {
     background-color: #ffffff; 
     color: #e60012; 
     padding: 10px 25px;
-    text-decoration: none; /* [cite: 1388, 1389, 1390] */
+    text-decoration: none;
     border-radius: 25px;
     font-family: Impact, sans-serif;
     display: inline-block;
@@ -226,10 +226,10 @@ body {
 .footer {
     background-color: #ffffff;
     color: #00a8e8;
-    padding: 50px 0; /* [cite: 1230, 1243] */
+    padding: 50px 0;
     border-top: 4px solid #00a8e8;
     text-align: center;
-    font-family: Arial, sans-serif; /* [cite: 1414, 1416] */
+    font-family: Arial, sans-serif;
 }
 
 .footer-col {
@@ -294,17 +294,17 @@ body {
 /* Commande */
 .conteneur-tableau {
     padding: 20px;
-    overflow-x: auto; /* [cite: 1559, 1561] */
+    overflow-x: auto;
     text-align: center;
 }
 
 .tableau-commandes {
     width: 90%;
     margin: 0 auto;
-    border-collapse: collapse; /* [cite: 1517, 1518, 1521] */
+    border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    border: 3px solid #00a8e8; /* [cite: 1511, 1516] */
+    border: 3px solid #00a8e8;
 }
 
 .tableau-commandes th {
@@ -382,7 +382,7 @@ body {
     border-radius: 10px;
     text-align: center;
     border: 3px solid transparent; 
-    box-sizing: border-box; /* [cite: 1281, 1289] */
+    box-sizing: border-box;
     cursor: pointer;
 }
 
@@ -406,7 +406,7 @@ body {
 .conteneur-formulaire {
     width: 60%;
     margin: 30px auto;
-    text-align: left; /* [cite: 1375, 1376, 1383] */
+    text-align: left;
     font-family: Arial, sans-serif;
 }
 
@@ -438,7 +438,7 @@ body {
     border: 2px solid #00a8e8;
     border-radius: 5px;
     font-family: Arial, sans-serif;
-    box-sizing: border-box; /* [cite: 1281, 1289] */
+    box-sizing: border-box;
 }
 
 .textarea-form {
