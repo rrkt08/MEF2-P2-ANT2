@@ -1,11 +1,11 @@
-/* Style de base */
+/* Base de la page */
 body {
     background-color: #ffffff;
     font-family: 'Arial Black', Impact, Arial, sans-serif;
     margin: 0;
 }
 
-/* Header et Logo */
+/* En-tête et logo */
 .header-top {
     background-color: #ffffff;
     text-align: center;
@@ -24,7 +24,7 @@ body {
     letter-spacing: -1px;
 }
 
-/* Menu de navigation */
+/* Nav (ou menu) */
 .header-menu {
     background-color: #00a8e8;
     text-align: center;
@@ -61,7 +61,7 @@ body {
     color: #ffffff; 
 }
 
-/* Boutons d'inscription (Spécificité augmentée pour éviter !important) */
+/* Bouton inscription dans la nav (ou menu)*/
 .header-menu a.btn-inscription {
     background-color: #ffffff;
     color: #e60012;
@@ -77,7 +77,7 @@ body {
     border-color: #e60012;
 }
 
-/* Banniere accueil */
+/* Accueil, image de fond*/
 .banniere {
     background-image: url('images/fondplat.png');
     background-size: cover;
@@ -98,7 +98,7 @@ body {
     font-size: 8vw; 
 }
 
-/* Barre de recherche */
+/* Barre de recherche (accueil et carte) */
 .zone-recherche {
     background-color: #ffffff;
     text-align: center;
@@ -140,7 +140,7 @@ body {
     background-color: #00a8e8;
 }
 
-/* Titres intermédiaires */
+/* Bandeaux de séparation avec titres */
 .bandeau-titre {
     background-color: #00a8e8; 
     text-align: center;
@@ -158,7 +158,7 @@ body {
     margin: 0;
 }
 
-/* Grille des plats */
+/* Affichage des plats en grille */
 .plats-populaires {
     background-color: #00a8e8;
     text-align: center;
@@ -206,7 +206,7 @@ body {
     margin-bottom: 15px;
 }
 
-/* Bouton plats (Spécificité augmentée pour éviter !important) */
+/* Boutons pour commander/ajouter un plat */
 .plats-populaires a.btn-plat {
     background-color: #ffffff; 
     color: #e60012; 
@@ -222,7 +222,7 @@ body {
     color: #ffffff;
 }
 
-/* Footer */
+/* Pied de page */
 .footer {
     background-color: #ffffff;
     color: #00a8e8;
@@ -252,7 +252,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* Filtres page presentation */
+/* Filtres de la page carte */
 .zone-filtres {
     background-color: #ffffff; 
     text-align: center;
@@ -291,10 +291,10 @@ body {
     margin-top: 15px; 
 }
 
-/* Commande */
+/* Page des commandes (restaurateur) */
 .conteneur-tableau {
     padding: 20px;
-    overflow-x: auto;
+    overflow-x: auto; /* Pour scroll sur un petit écran */
     text-align: center;
 }
 
@@ -343,7 +343,7 @@ body {
     text-transform: uppercase;
 }
 
-/* LIVRAISON */
+/* Page livreur mobile */
 .bloc-livraison {
     padding: 20px;
     text-align: center;
@@ -402,7 +402,7 @@ body {
     color: white;
 }
 
-/* FORMULAIRES (Notation, Inscription et Connexion) */
+/* Formulaires (connexion, inscription, notation) */
 .conteneur-formulaire {
     width: 60%;
     margin: 30px auto;
@@ -438,22 +438,20 @@ body {
     border: 2px solid #00a8e8;
     border-radius: 5px;
     font-family: Arial, sans-serif;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Pour gérer le padding sans casser la largeur */
 }
 
 .textarea-form {
     resize: vertical;
 }
 
-/* -- CLASSES SUPPLÉMENTAIRES POUR LES FORMULAIRES -- */
-
-/* Variante du conteneur pour la page de connexion */
+/* Ajustement largeur pour la page de connexion */
 .conteneur-connexion {
     width: 50%;
     margin: 50px auto; 
 }
 
-/* Textes informatifs dans les formulaires */
+/* Textes dans les formulaires */
 .texte-intro-form {
     color: #333333;
     margin-bottom: 25px;
@@ -469,18 +467,17 @@ body {
     margin-top: 0;
 }
 
-/* Cases à cocher (Spécificité augmentée pour éviter !important) */
+/* Checkbox (les cases à cocher e-mail, sms)*/
 .groupe-formulaire label.label-checkbox {
     color: #333333;
     font-weight: normal;
 }
 
-/* Zone de validation (boutons en bas) */
+/* Conteneur boutons de validation */
 .form-actions {
     text-align: center;
 }
 
-/* Grand bouton de soumission */
 .btn-submit-form {
     width: 100%;
     margin-left: 0;
@@ -488,7 +485,7 @@ body {
     font-size: 22px;
 }
 
-/* Lien de bas de formulaire (redirection) */
+/* Liens vers les autres formulaires (ex: pas encore de compte) */
 .lien-redirection {
     color: #e60012;
     font-family: Arial, sans-serif;
@@ -498,6 +495,7 @@ body {
     margin-top: 15px;
 }
 
+/* Espacement checkbox (les cases à cocher e-mail, sms)*/
 .marge-droite {
     margin-right: 12px; 
 }
