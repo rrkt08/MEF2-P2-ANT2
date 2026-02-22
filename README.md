@@ -1,4 +1,4 @@
-# 🍔🍩 Flagrant Délice - Projet Creative Yumland ### Pré-ing 2 CY Tech 2025-26
+# 🍔🍩 Flagrant Délice - Projet Creative Yumland (Pré-ing 2 CY Tech 2025-26)
 
 > **"Mélanges Interdits, Saveurs Criminelles."**
 
