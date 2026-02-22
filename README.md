@@ -63,7 +63,7 @@ Puisque le projet est actuellement en **Phase 1 (Statique)**, aucun serveur loca
 
 1.  **Télécharger le dépôt :**
     ```bash
-    git clone [https://github.com/votre-user/Projet_Creative_Yumland.git](https://github.com/votre-user/Projet_Creative_Yumland.git)
+    [https://github.com/votre-user/Projet_Creative_Yumland.git](https://github.com/votre-user/Projet_Creative_Yumland.git)
     ```
 2.  **Lancer le site :**
     * Ouvrez simplement le fichier `accueil.html` dans votre navigateur web préféré (Chrome, Firefox, Edge).
