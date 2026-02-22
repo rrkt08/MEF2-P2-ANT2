@@ -10,7 +10,7 @@ Le concept ? Un restaurant audacieux spécialisé dans les **"crimes culinaires"
 * **Ahmed Eish**
 * **Naim Mohammed**
 * **Tarek Itim**
-j
+
 ---
 
 ## État d'Avancement du Projet
