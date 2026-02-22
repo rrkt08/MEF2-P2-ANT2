@@ -2,10 +2,57 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flagrant Délice - Accueil</title>
+    <title>Flagrant Délice - Connexion</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
+    <div class="header-top">
+        <div class="logo-texte">FLAGRANT DÉLICE</div>
+    </div>
+    
+    <div class="header-menu">
+        <ul>
+            <li><a href="accueil.html">ACCUEIL</a></li>
+            <li><a href="presentation.html">LA CARTE</a></li>
+            <li><a href="connexion.html" class="actif">CONNEXION</a></li>
+            <li><a href="inscription.html" class="btn-inscription">INSCRIPTION</a></li>
+        </ul>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>IDENTIFICATION</u></h2>
+    </div>
+
+    <div class="conteneur-formulaire connexion">
+        <form action="accueil.html" method="post">
+            
+            <fieldset class="groupe-formulaire">
+                <legend>IDENTIFIANTS</legend>
+
+                <label>E-mail</label><br>
+                <input type="email" name="email" class="input-form" placeholder="Votre adresse e-mail" required>
+                <br><br>
+
+                <label>Mot de passe</label><br>
+                <input type="password" name="mdp" class="input-form" placeholder="Votre mot de passe" required>
+            </fieldset>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn-recherche btn-valider-form">SE CONNECTER</button>
+                <br><br>
+                <a href="inscription.html" class="lien-alternatif">Pas encore de compte ? Créez-en un ici ></a>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="footer-col copyright-col">
+            <p>©2026 Flagrant Délice</p>
+        </div>
+    </div>
+
 </body>
+</html>

@@ -2,10 +2,132 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flagrant Délice - Accueil</title>
+    <title>Flagrant Délice - Inscription</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
+    <div class="header-top">
+        <div class="logo-texte">FLAGRANT DÉLICE</div>
+    </div>
+    
+    <div class="header-menu">
+        <ul>
+            <li><a href="accueil.html">ACCUEIL</a></li>
+            <li><a href="presentation.html">LA CARTE</a></li>
+            <li><a href="connexion.html">CONNEXION</a></li>
+            <li><a href="inscription.html" class="btn-inscription actif" style="background-color: #e60012; color: #ffffff;">INSCRIPTION</a></li>
+        </ul>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>CRÉATION DE COMPTE</u></h2>
+    </div>
+
+    <div class="conteneur-formulaire">
+        
+        <p style="color: #333333; margin-bottom: 25px; font-family: Arial, sans-serif; line-height: 1.5;">
+            Complétez vos informations personnelles pour créer votre compte. Tous les champs marqués d'un * sont obligatoires.
+        </p>
+
+        <form action="connexion.html" method="post">
+            
+            <fieldset class="groupe-formulaire">
+                <legend>MES INFORMATIONS</legend>
+                
+                <label>Prénom *</label><br>
+                <input type="text" name="prenom" class="input-form" placeholder="ex: Tristan" required>
+                <br><br>
+
+                <label>Nom *</label><br>
+                <input type="text" name="nom" class="input-form" placeholder="ex: Douille" required>
+                <br><br>
+
+                <label>Date de naissance *</label><br>
+                <input type="date" name="date_naissance" class="input-form" required>
+                <br><br>
+
+                <label>E-mail *</label><br>
+                <input type="email" name="email" class="input-form" placeholder="ex: tristan.douille@email.com" required>
+                <br><br>
+
+                <label>Mot de passe *</label><br>
+                <input type="password" name="mdp" class="input-form" placeholder="ex: Unmotdepasse13sécurisé!" required>
+            </fieldset>
+
+            <fieldset class="groupe-formulaire">
+                <legend>MA LIVRAISON</legend>
+
+                <label>Adresse (N° et rue) *</label><br>
+                <input type="text" name="adresse" class="input-form" placeholder="ex: 42 Avenue des Champs Elysées" required>
+                <br><br>
+
+                <label>Complément d'adresse</label><br>
+                <input type="text" name="complement_adresse" class="input-form" placeholder="Bâtiment, digicode, étage, interphone...">
+                <br><br>
+
+                <label>Code Postal *</label><br>
+                <input type="text" name="code_postal" class="input-form" maxlength="5" placeholder="ex: 75008" required>
+                <br><br>
+
+                <label>Ville *</label><br>
+                <input type="text" name="ville" class="input-form" placeholder="ex: Paris" required>
+                <br><br>
+
+                <label>Numéro de téléphone *</label><br>
+                <input type="tel" name="telephone" class="input-form" placeholder="ex: 06 12 34 56 78" required>
+                <br><br>
+
+                <label>Préférences alimentaires / Allergies</label><br>
+                <textarea name="preferences_alimentaires" rows="3" class="textarea-form" placeholder="Sans gluten, intolérance au lactose, etc..."></textarea>
+            </fieldset>
+
+            <fieldset class="groupe-formulaire">
+                <legend>MES PRÉFÉRENCES</legend>
+                
+                <p style="color: #00a8e8; font-weight: bold; font-size: 16px; margin-bottom: 10px; margin-top: 0;">
+                    J'accepte de recevoir des offres et actualités de la part de Flagrant Délice :
+                </p>
+                
+                <input type="checkbox" name="offres" value="email" id="offre-email">
+                <label for="offre-email" style="color: #333333; font-weight: normal;">Par e-mail</label>
+                &nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="offres" value="sms" id="offre-sms">
+                <label for="offre-sms" style="color: #333333; font-weight: normal;">Par SMS</label>
+                
+                <br><br>
+                
+                <input type="checkbox" name="age" required id="age">
+                <label for="age" style="color: #333333; font-weight: normal;">Je certifie avoir un estomac solide. *</label>
+            </fieldset>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn-recherche" style="width: 100%; margin-left: 0; padding: 20px; font-size: 22px;">VALIDER MON INSCRIPTION</button>
+                <br><br>
+                <a href="connexion.html" style="color: #e60012; font-family: Arial, sans-serif; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px;">Vous avez déjà un compte ? ></a>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="footer-col">
+            <p><strong>CONTACT</strong></p>
+            <p>123 Rue du Crime Culinaire</p>
+            <p>01 23 45 67 89</p>
+        </div>
+
+        <div class="footer-col copyright-col">
+            <p>©2026 Flagrant Délice</p>
+        </div>
+
+        <div class="footer-col">
+            <p><strong>HORAIRES</strong></p>
+            <p>Lun - Sam : 11h - 23h</p>
+            <p>Dimanche : 12h - 22h</p>
+        </div>
+    </div>
+
 </body>
+</html>
