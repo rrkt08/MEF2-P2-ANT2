@@ -2,10 +2,90 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flagrant Délice - Accueil</title>
+    <title>Flagrant Délice - Gestion des Commandes</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
+    <div class="header-top">
+        <div class="logo-texte">FLAGRANT DÉLICE</div>
+    </div>
+    
+    <div class="header-menu">
+        <ul>
+            <li><a href="accueil.html">ACCUEIL</a></li>
+            <li><a href="presentation.html">LA CARTE</a></li>
+            <li><a href="commandes.html" class="actif">CUISINE</a></li>
+        </ul>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>COMMANDES EN COURS</u></h2>
+    </div>
+
+    <h2 class="categorie-titre">A PRÉPARER</h2>
+    
+    <div class="conteneur-tableau">
+        <table class="tableau-commandes">
+            <thead>
+                <tr>
+                    <th>N° Commande</th>
+                    <th>Heure</th>
+                    <th>Détail du Menu</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#CMD-001</td>
+                    <td>12:30</td>
+                    <td>1x Chiken Donut Burger<br>1x Frites Chocolat</td>
+                    <td>16.00 €</td>
+                    <td><button class="btn-action btn-pret">PRÊT</button></td>
+                </tr>
+                <tr>
+                    <td>#CMD-002</td>
+                    <td>12:35</td>
+                    <td>2x Pizza Hawaïenne<br>2x Soda Cornichon</td>
+                    <td>22.00 €</td>
+                    <td><button class="btn-action btn-pret">PRÊT</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="categorie-titre">EN COURS DE LIVRAISON</h2>
+
+    <div class="conteneur-tableau">
+        <table class="tableau-commandes">
+            <thead>
+                <tr>
+                    <th>N° Commande</th>
+                    <th>Livreur</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#CMD-003</td>
+                    <td>Paul (Moto 1)</td>
+                    <td><span class="statut-livraison">En route</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <div class="footer-col">
+            <p><strong>ESPACE PRO</strong></p>
+            <p>Restaurateur</p>
+        </div>
+        <div class="footer-col copyright-col">
+            <p>©2026 Flagrant Délice</p>
+        </div>
+    </div>
+
 </body>
+</html>

@@ -2,10 +2,70 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flagrant Délice - Accueil</title>
+    <title>Flagrant Délice - Votre Avis</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
+    <div class="header-top">
+        <div class="logo-texte">FLAGRANT DÉLICE</div>
+    </div>
+    
+    <div class="header-menu">
+        <ul>
+            <li><a href="accueil.html">ACCUEIL</a></li>
+            <li><a href="presentation.html">LA CARTE</a></li>
+            <li><a href="profil.html">MON COMPTE</a></li>
+        </ul>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>NOTER VOTRE COMMANDE</u></h2>
+    </div>
+
+    <div class="conteneur-formulaire">
+        <form action="remerciement.html" method="post">
+            
+            <fieldset class="groupe-formulaire">
+                <legend>LA LIVRAISON</legend>
+                <label>Note du livreur :</label><br>
+                <select name="note-livraison" class="select-form">
+                    <option value="5">★★★★★ - Parfait</option>
+                    <option value="4">★★★★☆ - Très bien</option>
+                    <option value="3">★★★☆☆ - Moyen</option>
+                    <option value="2">★★☆☆☆ - Mauvais</option>
+                    <option value="1">★☆☆☆☆ - Horrible</option>
+                </select>
+            </fieldset>
+
+            <fieldset class="groupe-formulaire">
+                <legend>LE REPAS</legend>
+                <label>Qualité des plats :</label><br>
+                <select name="note-repas" class="select-form">
+                    <option value="5">★★★★★ - Délicieux</option>
+                    <option value="4">★★★★☆ - Bon</option>
+                    <option value="3">★★★☆☆ - Moyen</option>
+                    <option value="2">★★☆☆☆ - Pas bon</option>
+                    <option value="1">★☆☆☆☆ - Immangeable</option>
+                </select>
+                
+                <br><br>
+                <label>Un commentaire ?</label><br>
+                <textarea name="commentaire" rows="5" placeholder="Dites-nous ce que vous avez pensé de ce mélange..." class="textarea-form"></textarea>
+            </fieldset>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn-recherche">ENVOYER L'AVIS</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="footer-col copyright-col">
+            <p>©2026 Flagrant Délice</p>
+        </div>
+    </div>
+
 </body>
+</html>

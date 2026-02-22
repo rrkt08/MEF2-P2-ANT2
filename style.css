@@ -288,3 +288,159 @@ body {
 .premier-titre {
     margin-top: 15px; 
 }
+
+/* !!! AJOUTS POUR COMMANDES, LIVRAISON, NOTATION !!!!!! */
+
+/* Commande*/
+.conteneur-tableau {
+    padding: 20px;
+    overflow-x: auto; /* pr scroll sur un petit écran */
+    text-align: center;
+}
+
+.tableau-commandes {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse; 
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    border: 3px solid #00a8e8;
+}
+
+.tableau-commandes th {
+    background-color: #00a8e8;
+    color: #ffffff;
+    padding: 15px;
+    font-family: Impact, sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.tableau-commandes td {
+    border: 1px solid #00a8e8;
+    padding: 15px;
+    color: #00a8e8;
+    font-weight: bold;
+}
+
+.btn-action {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Impact, sans-serif;
+    letter-spacing: 1px;
+}
+
+.btn-pret {
+    background-color: #e60012;
+    color: white;
+}
+
+.statut-livraison {
+    color: #e60012;
+    text-transform: uppercase;
+}
+
+/* LIVRAISON (optimisé l'utilisation avec les gants etc) */
+.bloc-livraison {
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.titre-livraison {
+    color: #00a8e8;
+    font-family: Impact, sans-serif;
+    font-size: 24px;
+    border-bottom: 2px solid #e60012;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.info-livraison {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+.actions-livreur {
+    margin-top: 20px;
+}
+
+.btn-livreur {
+    display: block;
+    width: 90%;
+    margin: 30px auto; 
+    padding: 20px;
+    font-family: Impact, sans-serif;
+    font-size: 22px;
+    text-decoration: none;
+    border-radius: 10px;
+    text-align: center;
+    border: 3px solid transparent; 
+    box-sizing: border-box; 
+    cursor: pointer;
+}
+
+.btn-tel {
+    background-color: #00a8e8;
+    color: white;
+}
+
+.btn-gps {
+    background-color: #ffffff;
+    border: 3px solid #00a8e8;
+    color: #00a8e8;
+}
+
+.btn-valider {
+    background-color: #e60012;
+    color: white;
+}
+
+/*  FORMULAIRES (Notation,Inscription et Connexion)*/
+.conteneur-formulaire {
+    width: 60%;
+    margin: 30px auto;
+    text-align: left;
+    font-family: Arial, sans-serif;
+}
+
+.groupe-formulaire {
+    border: 3px solid #00a8e8;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: #f9f9f9;
+}
+
+.groupe-formulaire legend {
+    color: #e60012;
+    font-family: Impact, sans-serif;
+    font-size: 20px;
+    padding: 0 10px;
+}
+
+.groupe-formulaire label {
+    color: #00a8e8;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.select-form, .textarea-form, .input-form {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #00a8e8;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box; /* Pour gérer le padding sans casser la largeur */
+}
+
+.textarea-form {
+    resize: vertical;
+}
