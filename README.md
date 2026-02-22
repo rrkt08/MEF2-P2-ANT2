@@ -1,33 +1,25 @@
-# MEF2-P2-ANT2
-Projet info 4 MEF 2 P2 - Ahmed Eish, Naim Mohamed, Tarek Itim
-
 # 🍔🍩 Flagrant Délice - Projet Creative Yumland
+*** Pré-ing 2 CY Tech 2025-26
 
 > **"Mélanges Interdits, Saveurs Criminelles."**
 
-Bienvenue sur le dépôt officiel du projet **Flagrant Délice**. Ce site web a été conçu dans le cadre du module *Projet Web (Pré-Ing 2)* à CY Tech (2025-2026).
+Bienvenue sur le dépôt officiel du projet **Flagrant Délice**.
 
 Le concept ? Un restaurant audacieux spécialisé dans les **"crimes culinaires"** : des mélanges interdits mais délicieux comme le Burger Donut, la Pizza Hawaïenne ou les Frites au Chocolat.
 
-## 👥 L'Équipe
-
-Ce projet est réalisé par le trinôme suivant :
+## Ce projet est réalisé par le trinôme suivant :
 * **Ahmed Eish**
 * **Naim Mohammed**
 * **Tarek Itim**
 
-**Encadrant :** Mme Arib Souhila
-
 ---
 
-## 📅 État d'Avancement du Projet
+## État d'Avancement du Projet
 
-Le projet est divisé en 4 phases distinctes suivant la progression du cours.
-
-- [x] **Phase 1 : Interface Statique (HTML5 / CSS3)** - *Terminée* ✅
-- [ ] **Phase 2 : Dynamisation Serveur (PHP / MySQL)** - *En cours* 🚧
-- [ ] **Phase 3 : Dynamisation Client (JavaScript / AJAX)** - *À venir* ⏳
-- [ ] **Phase 4 : Bonnes Pratiques & Optimisation** - *À venir* ⏳
+- **Phase 1 : Interface Statique (HTML5 / CSS3)** - *Terminée* ✅
+- **Phase 2 : Dynamisation Serveur (PHP / MySQL)** - *En cours* 🚧
+- **Phase 3 : Dynamisation Client (JavaScript / AJAX)** - *À venir* ⏳
+- **Phase 4 : Bonnes Pratiques & Optimisation** - *À venir* ⏳
 
 ---
 
