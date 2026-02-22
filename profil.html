@@ -2,10 +2,130 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flagrant Délice - Accueil</title>
+    <title>Flagrant Délice - Mon Profil</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
+    <div class="header-top">
+        <div class="logo-texte">FLAGRANT DÉLICE</div>
+    </div>
+    
+    <div class="header-menu">
+        <ul>
+            <li><a href="accueil.html">ACCUEIL</a></li>
+            <li><a href="presentation.html">LA CARTE</a></li>
+            <li><a href="profil.html" class="actif">MON COMPTE</a></li> <li><a href="connexion.html">DÉCONNEXION</a></li>
+        </ul>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>MON ESPACE PERSONNEL</u></h2>
+    </div>
+
+    <div class="conteneur-formulaire">
+        
+        <fieldset class="groupe-formulaire" style="background-color: #e6f7ff;">
+            <legend>MA FIDÉLITÉ</legend>
+            <div style="text-align: center; color: #00a8e8;">
+                <h3 style="font-family: Impact, sans-serif; font-size: 24px; margin: 0;">STATUT : COMPLICE GOURMAND</h3>
+                <p style="font-size: 18px; font-weight: bold;">Points cumulés : <span style="color: #e60012; font-size: 22px;">150 pts</span></p>
+                <p style="font-size: 14px;">Plus que 50 points pour obtenir un <em>Burger Donut offert</em> !</p>
+            </div>
+        </fieldset>
+
+        <fieldset class="groupe-formulaire">
+            <legend>MES INFORMATIONS</legend>
+            
+            <label>Nom :</label><br>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <input type="text" value="Douille" class="input-form" readonly> 
+                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            </div>
+
+            <label>Prénom :</label><br>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <input type="text" value="Tristan" class="input-form" readonly>
+                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            </div>
+
+            <label>E-mail :</label><br>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <input type="email" value="tristan.douille@email.com" class="input-form" readonly>
+                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            </div>
+
+            <label>Adresse de livraison :</label><br>
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <input type="text" value="12 Rue du Mauvais Goût, 95000 Cergy" class="input-form" readonly>
+                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            </div>
+
+            <label>Code Interphone :</label><br>
+            <div style="display: flex; align-items: center;">
+                <input type="text" value="B421" class="input-form" style="width: 100px;" readonly>
+                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            </div>
+        </fieldset>
+    </div>
+
+    <h2 class="categorie-titre">HISTORIQUE DES CRIMES CULINAIRES</h2>
+
+    <div class="conteneur-tableau">
+        <table class="tableau-commandes">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Détail Commande</th>
+                    <th>Prix Total</th>
+                    <th>Statut</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>12/10/2025</td>
+                    <td>2x Pizza Hawaïenne<br>1x Soda Cornichon</td>
+                    <td>22.00 €</td>
+                    <td style="color: green;">LIVRÉ</td>
+                    <td><a href="#" style="color: #e60012; font-weight: bold;">Recommander</a></td>
+                </tr>
+                <tr>
+                    <td>05/10/2025</td>
+                    <td>1x Fish Donut<br>1x Frites Chocolat</td>
+                    <td>15.00 €</td>
+                    <td style="color: green;">LIVRÉ</td>
+                    <td><a href="#" style="color: #e60012; font-weight: bold;">Recommander</a></td>
+                </tr>
+                <tr>
+                    <td>20/09/2025</td>
+                    <td>1x Omelette Skittles</td>
+                    <td>4.50 €</td>
+                    <td style="color: #e60012;">ANNULÉ</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <div class="footer-col">
+            <p><strong>CONTACT</strong></p>
+            <p>123 Rue du Crime Culinaire</p>
+            <p>01 23 45 67 89</p>
+        </div>
+
+        <div class="footer-col copyright-col">
+            <p>©2026 Flagrant Délice</p>
+        </div>
+
+        <div class="footer-col">
+            <p><strong>HORAIRES</strong></p>
+            <p>Lun - Sam : 11h - 23h</p>
+            <p>Dimanche : 12h - 22h</p>
+        </div>
+    </div>
+
 </body>
+</html>

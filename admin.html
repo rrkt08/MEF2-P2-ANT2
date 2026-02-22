@@ -2,11 +2,92 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flagrant Délice - Accueil</title>
+    <title>Flagrant Délice - Administration</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+
+    <div class="header-top">
+        <div class="logo-texte">FLAGRANT DÉLICE</div>
+    </div>
+    
+    <div class="header-menu">
+        <ul>
+            <li><a href="accueil.html">RETOUR SITE</a></li>
+            <li><a href="admin.html" class="actif">DASHBOARD ADMIN</a></li>
+        </ul>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>GESTION DES CLIENTS</u></h2>
+    </div>
+
+    <div class="conteneur-tableau">
+        <table class="tableau-commandes">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Identité</th>
+                    <th>Email</th>
+                    <th>Ville</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#1</td>
+                    <td><strong>Douille Tristan</strong></td>
+                    <td>tristan@email.com</td>
+                    <td>Cergy</td>
+                    <td><a href="profil.html" class="btn-action">VOIR PROFIL</a></td>
+                </tr>
+                <tr>
+                    <td>#2</td>
+                    <td><strong>Ronaldo Cristiano</strong></td>
+                    <td>cr7@email.com</td>
+                    <td>Paris</td>
+                    <td><a href="profil.html" class="btn-action">VOIR PROFIL</a></td>
+                </tr>
+                <tr>
+                    <td>#3</td>
+                    <td><strong>Dupont Jean</strong></td>
+                    <td>jean@email.com</td>
+                    <td>Pontoise</td>
+                    <td><a href="profil.html" class="btn-action">VOIR PROFIL</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>ACCÈS RAPIDE (DEBUG)</u></h2>
+    </div>
+
+    <div style="text-align: center; padding: 20px;">
+        
+        <div style="display: inline-block; vertical-align: top; margin: 0 20px;">
+            <h3 style="color: #00a8e8; font-family: Impact;">CÔTÉ CLIENT</h3>
+            <a href="accueil.html" class="btn-action" style="display:block; margin: 5px; background-color: #00a8e8; color: white !important; border: none;">ACCUEIL</a>
+            <a href="presentation.html" class="btn-action" style="display:block; margin: 5px; background-color: #00a8e8; color: white !important; border: none;">LA CARTE</a>
+            <a href="inscription.html" class="btn-action" style="display:block; margin: 5px; background-color: #00a8e8; color: white !important; border: none;">INSCRIPTION</a>
+            <a href="connexion.html" class="btn-action" style="display:block; margin: 5px; background-color: #00a8e8; color: white !important; border: none;">CONNEXION</a>
+            <a href="notation.html" class="btn-action" style="display:block; margin: 5px; background-color: #00a8e8; color: white !important; border: none;">NOTATION</a>
+        </div>
+
+        <div style="display: inline-block; vertical-align: top; margin: 0 20px;">
+            <h3 style="color: #e60012; font-family: Impact;">CÔTÉ STAFF</h3>
+            <a href="commandes.html" class="btn-action" style="display:block; margin: 5px; background-color: #e60012; color: white !important; border: none;">CUISINE (Tablette)</a>
+            <a href="livraison.html" class="btn-action" style="display:block; margin: 5px; background-color: #e60012; color: white !important; border: none;">LIVRAISON (Mobile)</a>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div class="footer-col copyright-col">
+            <p>©2026 Flagrant Délice - Administration</p>
+        </div>
+    </div>
 
 </body>
 </html>
