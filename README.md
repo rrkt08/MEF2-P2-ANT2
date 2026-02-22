@@ -61,7 +61,7 @@ L'identité visuelle repose sur un contraste fort pour souligner le côté "déc
 
 Puisque le projet est actuellement en **Phase 1 (Statique)**, aucun serveur local (WAMP/XAMPP) n'est strictement nécessaire pour visualiser le design, mais il sera requis pour la Phase 2.
 
-1.  **Cloner le dépôt :**
+1.  **Télécharger le dépôt :**
     ```bash
     git clone [https://github.com/votre-user/Projet_Creative_Yumland.git](https://github.com/votre-user/Projet_Creative_Yumland.git)
     ```
