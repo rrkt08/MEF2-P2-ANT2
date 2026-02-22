@@ -24,7 +24,7 @@ body {
     letter-spacing: -1px;
 }
 
-/* Nav (ou menu) */
+/*Nav (ou menu) */
 .header-menu {
     background-color: #00a8e8;
     text-align: center;
@@ -158,7 +158,7 @@ body {
     margin: 0;
 }
 
-/* Affichage des plats en grille */
+/* affichage des plats (grille) */
 .plats-populaires {
     background-color: #00a8e8;
     text-align: center;
@@ -291,10 +291,10 @@ body {
     margin-top: 15px; 
 }
 
-/* Page des commandes (restaurateur) */
+/* Page des commandes (cuisine) */
 .conteneur-tableau {
     padding: 20px;
-    overflow-x: auto; /* Pour scroll sur un petit écran */
+    overflow-x: auto; /* pour le scroll sur mobile */
     text-align: center;
 }
 
@@ -438,20 +438,20 @@ body {
     border: 2px solid #00a8e8;
     border-radius: 5px;
     font-family: Arial, sans-serif;
-    box-sizing: border-box; /* Pour gérer le padding sans casser la largeur */
+    box-sizing: border-box; /* Pour gérer le padding sans casser la largeur */ 
 }
 
 .textarea-form {
     resize: vertical;
 }
 
-/* Ajustement largeur pour la page de connexion */
+/* ajustement largeur pour la page de connexion */
 .conteneur-connexion {
     width: 50%;
     margin: 50px auto; 
 }
 
-/* Textes dans les formulaires */
+/* textes dans les formulaires */
 .texte-intro-form {
     color: #333333;
     margin-bottom: 25px;
@@ -498,4 +498,117 @@ body {
 /* Espacement checkbox (les cases à cocher e-mail, sms)*/
 .marge-droite {
     margin-right: 12px; 
+}
+
+/* menu de debug pour la page admin */
+.admin-debug-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.admin-debug-col {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 20px;
+}
+
+.admin-debug-title-client {
+    color: #00a8e8;
+    font-family: Impact, sans-serif;
+}
+
+.admin-debug-title-staff {
+    color: #e60012;
+    font-family: Impact, sans-serif;
+}
+
+.btn-debug {
+    display: block;
+    margin: 5px;
+    color: white !important;
+    border: none;
+}
+
+.btn-debug-client {
+    background-color: #00a8e8;
+}
+
+.btn-debug-staff {
+    background-color: #e60012;
+}
+
+/* espace client / profil */
+.fidelite-box {
+    background-color: #e6f7ff;
+}
+
+.fidelite-content {
+    text-align: center;
+    color: #00a8e8;
+}
+
+.fidelite-titre {
+    font-family: Impact, sans-serif;
+    font-size: 24px;
+    margin: 0;
+}
+
+.fidelite-points {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.fidelite-valeur {
+    color: #e60012;
+    font-size: 22px;
+}
+
+.fidelite-desc {
+    font-size: 14px;
+}
+
+/* aligner l'input et crayon */
+.input-group-profil {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.btn-edit-profil {
+    margin-left: 10px;
+    background-color: #00a8e8;
+    color: white;
+}
+
+.input-short {
+    width: 100px;
+}
+
+/* couleurs specifiques pour l'historique des statuts */
+.tableau-commandes td.statut-livre {
+    color: green;
+}
+
+.tableau-commandes td.statut-annule {
+    color: #e60012;
+}
+
+.tableau-commandes td .lien-recommander {
+    color: #e60012;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.tableau-commandes td .lien-recommander:hover {
+    text-decoration: underline;
+}
+
+/* petits fix pour profil et notation */
+.checkbox-wrapper {
+    flex-grow: 1; 
+    padding: 10px 0;
+}
+
+.btn-edit-tall {
+    height: 100%;
 }

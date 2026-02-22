@@ -26,46 +26,103 @@
 
     <div class="conteneur-formulaire">
         
-        <fieldset class="groupe-formulaire" style="background-color: #e6f7ff;">
+        <fieldset class="groupe-formulaire fidelite-box">
             <legend>MA FIDÉLITÉ</legend>
-            <div style="text-align: center; color: #00a8e8;">
-                <h3 style="font-family: Impact, sans-serif; font-size: 24px; margin: 0;">STATUT : COMPLICE GOURMAND</h3>
-                <p style="font-size: 18px; font-weight: bold;">Points cumulés : <span style="color: #e60012; font-size: 22px;">150 pts</span></p>
-                <p style="font-size: 14px;">Plus que 50 points pour obtenir un <em>Burger Donut offert</em> !</p>
+            <div class="fidelite-content">
+                <h3 class="fidelite-titre">STATUT : COMPLICE GOURMAND</h3>
+                <p class="fidelite-points">Points cumulés : <span class="fidelite-valeur">150 pts</span></p>
+                <p class="fidelite-desc">Plus que 50 points pour obtenir un <em>Burger Donut offert</em> !</p>
             </div>
         </fieldset>
 
         <fieldset class="groupe-formulaire">
             <legend>MES INFORMATIONS</legend>
             
-            <label>Nom :</label><br>
-            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                <input type="text" value="Douille" class="input-form" readonly> 
-                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            <label>Prénom :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="Tristan" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
 
-            <label>Prénom :</label><br>
-            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                <input type="text" value="Tristan" class="input-form" readonly>
-                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            <label>Nom :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="Douille" class="input-form" readonly> 
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+
+            <label>Date de naissance :</label><br>
+            <div class="input-group-profil">
+                <input type="date" value="1998-08-15" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
 
             <label>E-mail :</label><br>
-            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+            <div class="input-group-profil">
                 <input type="email" value="tristan.douille@email.com" class="input-form" readonly>
-                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
 
-            <label>Adresse de livraison :</label><br>
-            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                <input type="text" value="12 Rue du Mauvais Goût, 95000 Cergy" class="input-form" readonly>
-                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            <label>Mot de passe :</label><br>
+            <div class="input-group-profil">
+                <input type="password" value="********" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+        </fieldset>
+
+        <fieldset class="groupe-formulaire">
+            <legend>MA LIVRAISON</legend>
+
+            <label>Adresse (N° et rue) :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="12 Rue du Mauvais Goût" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
 
-            <label>Code Interphone :</label><br>
-            <div style="display: flex; align-items: center;">
-                <input type="text" value="B421" class="input-form" style="width: 100px;" readonly>
-                <button type="button" class="btn-action" style="margin-left: 10px; background-color: #00a8e8; color: white;">✏️</button>
+            <label>Complément d'adresse :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="Bâtiment B, Interphone B421" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+
+            <label>Code Postal :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="95000" class="input-form input-short" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+
+            <label>Ville :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="Cergy" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+
+            <label>Numéro de téléphone :</label><br>
+            <div class="input-group-profil">
+                <input type="tel" value="06 12 34 56 78" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+
+            <label>Préférences alimentaires / Allergies :</label><br>
+            <div class="input-group-profil">
+                <textarea rows="2" class="textarea-form" readonly>Intolérance au lactose, pas de cornichons svp.</textarea>
+                <button type="button" class="btn-action btn-edit-profil btn-edit-tall">✏️</button>
+            </div>
+        </fieldset>
+
+        <fieldset class="groupe-formulaire">
+            <legend>MES PRÉFÉRENCES</legend>
+            <p class="texte-info-preferences">Offres et actualités de Flagrant Délice :</p>
+            
+            <div class="input-group-profil">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="profil-email" checked disabled>
+                    <label for="profil-email" class="label-checkbox marge-droite">Abonné par e-mail</label>
+                    
+                    <input type="checkbox" id="profil-sms" disabled>
+                    <label for="profil-sms" class="label-checkbox">Abonné par SMS</label>
+                </div>
+                
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
         </fieldset>
     </div>
@@ -88,21 +145,21 @@
                     <td>12/10/2025</td>
                     <td>2x Pizza Hawaïenne<br>1x Soda Cornichon</td>
                     <td>22.00 €</td>
-                    <td style="color: green;">LIVRÉ</td>
-                    <td><a href="#" style="color: #e60012; font-weight: bold;">Recommander</a></td>
+                    <td class="statut-livre">LIVRÉ</td>
+                    <td><a href="presentation.html" class="lien-recommander">Recommander</a></td>
                 </tr>
                 <tr>
                     <td>05/10/2025</td>
                     <td>1x Fish Donut<br>1x Frites Chocolat</td>
                     <td>15.00 €</td>
-                    <td style="color: green;">LIVRÉ</td>
-                    <td><a href="#" style="color: #e60012; font-weight: bold;">Recommander</a></td>
+                    <td class="statut-livre">LIVRÉ</td>
+                    <td><a href="presentation.html" class="lien-recommander">Recommander</a></td>
                 </tr>
                 <tr>
                     <td>20/09/2025</td>
                     <td>1x Omelette Skittles</td>
                     <td>4.50 €</td>
-                    <td style="color: #e60012;">ANNULÉ</td>
+                    <td class="statut-annule">ANNULÉ</td>
                     <td>-</td>
                 </tr>
             </tbody>
