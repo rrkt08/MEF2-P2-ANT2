@@ -1,35 +1,32 @@
-/* --- Configuration Globale --- */
+/* Style de base */
 body {
     background-color: #ffffff;
     font-family: 'Arial Black', Impact, Arial, sans-serif;
     margin: 0;
 }
 
-/* --- Haut du Header (Logo en Texte Massif sur une ligne) --- */
+/* Header et Logo */
 .header-top {
     background-color: #ffffff;
     text-align: center;
     padding: 1px 0;
     margin: 0;
-    overflow: hidden; /* Empêche l'apparition d'une barre de défilement en bas */
+    overflow: hidden;
 }
 
 .logo-texte {
     color: #e60012;
     font-family: Impact, 'Arial Black', Arial, sans-serif; 
-    
-    /* On augmente à ~13.5vw pour que les 15 lettres prennent 100% de la largeur */
     font-size: 13.5vw; 
-    
-    white-space: nowrap; /* FORCE le texte à rester sur une seule et même ligne */
+    white-space: nowrap;
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: -1px; /* Rapproche légèrement les lettres */
+    letter-spacing: -1px;
 }
 
-/* --- Bas du Header (Menu Bleu) --- */
+/* Menu de navigation */
 .header-menu {
-    background-color: #00a8e8; /* Le bleu cyan de fond */
+    background-color: #00a8e8;
     text-align: center;
     padding: 25px 0; 
 }
@@ -45,7 +42,6 @@ body {
     margin: 0 15px; 
 }
 
-/* 1. Tous les liens classiques sont en blanc par défaut */
 .header-menu a {
     text-decoration: none;
     color: #ffffff; 
@@ -53,76 +49,66 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     padding: 10px 20px; 
-    border-radius: 8px; /* Prépare la forme de la case */
+    border-radius: 8px;
 }
 
-/* 2. Au survol : la case devient blanche et le texte Bleu Cyan */
 .header-menu a:hover {
     background-color: #ffffff; 
     color: #00a8e8; 
 }
 
-/* On enlève la couleur de la page active pour qu'elle soit blanche aussi */
 .actif {
     color: #ffffff; 
 }
 
-/* 3. LE BOUTON COMMANDER (Ne change pas, reste Rouge !) */
+/* Boutons d'inscription */
 .btn-inscription {
-    background-color: #ffffff !important; /* Force le fond blanc */
-    color: #e60012 !important; /* Force le texte ROUGE */
+    background-color: #ffffff !important;
+    color: #e60012 !important;
     padding: 12px 30px; 
-    border-radius: 25px; /* Bouton rond */
+    border-radius: 25px;
     border: 2px solid #ffffff;
 }
 
 .btn-inscription:hover {
-    background-color: #e60012 !important; /* Devient rouge au survol */
-    color: #ffffff !important; /* Le texte devient blanc au survol */
+    background-color: #e60012 !important;
+    color: #ffffff !important;
     border-color: #e60012 !important;
 }
 
-/* --- Bannière Principale --- */
+/* Banniere accueil */
 .banniere {
     background-image: url('images/fondplat.png'); 
     background-size: cover;
     background-position: center;
     text-align: center;
-    
-    /* On pousse le texte vers le bas. Ajuste le 350px si tu veux encore plus bas */
     padding-top: 380px; 
     padding-bottom: 20px;
-    
     overflow: hidden;
 }
 
 .banniere h1 {
-    /* Couleur Bleu Cyan identique au menu */
     color: #00a8e8; 
-    
-    /* EXACTEMENT le même style que le haut */
     font-family: Impact, 'Arial Black', Arial, sans-serif;
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 5px;
     margin: 0;
-    
-    /* TAILLE RÉDUITE (8vw au lieu de 13.5vw) */
     font-size: 8vw; 
 }
 
-/* --- Zone de Recherche (Phase 1 ) --- */
+/* Barre de recherche */
 .zone-recherche {
-    background-color: #ffffff; /* Fond blanc pour séparer l'image des plats */
+    background-color: #ffffff;
     text-align: center;
     padding: 40px 0;
 }
 
 .input-recherche {
     padding: 15px 25px;
-    width: 450px; /* Largeur confortable pour la recherche */
-    border: 3px solid #00a8e8; /* Bordure Bleu Cyan */
-    border-radius: 35px; /* Forme pilule comme le bouton Commander */
+    width: 450px;
+    border: 3px solid #00a8e8;
+    border-radius: 35px;
     font-family: Verdana, sans-serif;
     font-weight: bold;
     outline: none;
@@ -130,7 +116,6 @@ body {
     font-size: 16px;
 }
 
-/* Style du texte à l'intérieur du champ de recherche */
 .input-recherche::placeholder {
     color: #00a8e8;
     opacity: 0.6;
@@ -138,27 +123,26 @@ body {
 
 .btn-recherche {
     padding: 16px 35px;
-    background-color: #e60012; /* Rouge vif pour attirer l'oeil */
+    background-color: #e60012;
     color: white;
     border: none;
     border-radius: 35px;
     font-family: Impact, sans-serif;
     font-size: 18px;
-    letter-spacing: 2px; /* Lettres espacées pour le style */
+    letter-spacing: 2px;
     cursor: pointer;
     margin-left: 10px;
     text-transform: uppercase;
 }
 
 .btn-recherche:hover {
-    background-color: #00a8e8; /* Devient bleu au survol */
+    background-color: #00a8e8;
 }
 
-/* --- Bandeau de transition Bleu --- */
+/* Titres intermédiaires */
 .bandeau-titre {
     background-color: #00a8e8; 
     text-align: center;
-    /* On passe de 20px à 50px pour donner plus d'espace en haut et en bas */
     padding: 50px 0; 
     margin: 0;
     overflow: hidden;
@@ -173,49 +157,60 @@ body {
     margin: 0;
 }
 
-/* --- Section des Plats --- */
+/* Grille des plats */
 .plats-populaires {
-    background-color: #00a8e8; /* Fond bleu cyan */
-    text-align: center;        /* Centre les 3 blocs sur la ligne [cite: 134] */
-    padding: 0px 2%;          /* Espace en haut/bas et sur les côtés */
+    background-color: #00a8e8;
+    text-align: center;
+    padding: 0px 2%;
 }
 
 .plat {
-    display: inline-block;     /* Aligne les éléments côte à côte  */
-    width: 30%;               /* 30% x 3 = 90%, il reste 10% pour les espaces [cite: 585] */
-    margin: 1.5%;              /* Crée l'espace entre les plats [cite: 456] */
-    vertical-align: top;       /* Aligne les boites par le haut */
-    text-align: center;        /* Aligne le texte au milieu sous l'image */
+    display: inline-block;
+    width: 30%;
+    margin: 1.5%;
+    vertical-align: top;
+    text-align: center;
 }
 
 .plat img {
-    width: 100%;               /* L'image s'adapte à la largeur du bloc [cite: 1054] */
-    height: auto;
-    border-radius: 10px;       /* Petits bords arrondis pour faire propre */
-    margin-bottom: 15px;       /* Espace entre l'image et le nom */
-}
-
-.plat h3 {
-    color: #ffffff;            /* Nom en blanc */
-    font-family: Impact, sans-serif;
-    font-size: 22px;
-    margin: 5px 0;
-}
-
-.prix {
-    color: #ffffff;            /* Prix en blanc */
-    font-weight: bold;
-    font-size: 18px;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
     margin-bottom: 15px;
 }
 
-/* Bouton blanc avec texte rouge (Style Père & Fish) */
+.plat h3 {
+    color: #ffffff;
+    font-family: Impact, sans-serif;
+    font-size: 28px;
+    margin: 5px 0;
+}
+
+.description-plat {
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 10px 15px 0px 15px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.prix {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
 .btn-plat {
     background-color: #ffffff; 
     color: #e60012 !important; 
     padding: 10px 25px;
-    text-decoration: none;     /* Enlève le soulignement du lien [cite: 673] */
-    border-radius: 25px;       /* Forme bouton pilule */
+    text-decoration: none;
+    border-radius: 25px;
     font-family: Impact, sans-serif;
     display: inline-block;
 }
@@ -225,33 +220,71 @@ body {
     color: #ffffff !important;
 }
 
-/* --- Footer (Trois Colonnes) --- */
+/* Footer */
 .footer {
-    background-color: #ffffff;    /* Fond blanc [cite: 316] */
-    color: #00a8e8;               /* Texte bleu cyan [cite: 133] */
-    padding: 50px 0;              /* Espace en haut et en bas  */
-    border-top: 4px solid #00a8e8;/* Grosse bordure bleue en haut [cite: 374, 379] */
-    text-align: center;           /* Centre les blocs inline-block  */
+    background-color: #ffffff;
+    color: #00a8e8;
+    padding: 50px 0;
+    border-top: 4px solid #00a8e8;
+    text-align: center;
     font-family: Arial, sans-serif;
 }
 
 .footer-col {
-    display: inline-block;        /* Aligne les 3 colonnes  */
-    width: 30%;                   /* Chaque colonne prend environ 1/3 de la page [cite: 553] */
-    vertical-align: top;          /* Aligne les textes par le haut [cite: 827] */
-    font-size: 14px;              /* Taille de texte normale [cite: 724] */
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+    font-size: 14px;
 }
 
-/* On peut mettre le copyright un peu plus petit ou discret */
 .copyright-col {
     font-size: 12px;
 }
 
 .footer-col p {
-    margin: 5px 0;                /* Espace entre les lignes [cite: 456] */
+    margin: 5px 0;
 }
 
 .footer-col strong {
-    color: #e60012;               /* Les titres CONTACT et HORAIRES en rouge */
+    color: #e60012;
     letter-spacing: 1px;
+}
+
+/* Filtres page presentation */
+.zone-filtres {
+    background-color: #ffffff; 
+    text-align: center;
+    padding: 30px 0;
+}
+
+.menu-deroulant {
+    padding: 15px 20px;
+    border: 3px solid #00a8e8;
+    border-radius: 35px;
+    font-family: Verdana, sans-serif;
+    font-weight: bold;
+    color: #00a8e8;
+    font-size: 16px;
+    outline: none;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+.zone-filtres .input-recherche {
+    width: 250px; 
+}
+
+.categorie-titre {
+    text-align: center;
+    color: #e60012;
+    font-family: Impact, 'Arial Black', Arial, sans-serif;
+    font-size: 40px;
+    letter-spacing: 3px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.premier-titre {
+    margin-top: 15px; 
 }

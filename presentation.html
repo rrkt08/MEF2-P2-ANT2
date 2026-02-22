@@ -2,10 +2,252 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flagrant Délice - Accueil</title>
+    <title>Flagrant Délice - La Carte</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
+    <div class="header-top">
+        <div class="logo-texte">FLAGRANT DÉLICE</div>
+    </div>
+    
+    <div class="header-menu">
+        <ul>
+            <li><a href="accueil.html">ACCUEIL</a></li>
+            <li><a href="presentation.html" class="actif">LA CARTE</a></li>
+            <li><a href="connexion.html">CONNEXION</a></li>
+            <li><a href="inscription.html" class="btn-inscription">INSCRIPTION</a></li>
+        </ul>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>TOUS NOS CRIMES CULINAIRES</u></h2>
+    </div>
+
+    <div class="zone-filtres">
+        <form action="#" method="get">
+            <input type="text" name="q" placeholder="Rechercher un crime..." class="input-recherche">
+            
+            <select name="categorie" class="menu-deroulant">
+                <option value="">Toutes les catégories</option>
+                <option value="donut-burgers">Donut Burgers</option>
+                <option value="varietes">Variétés</option>
+                <option value="pizzas">Pizzas</option>
+                <option value="desserts">Desserts</option>
+                <option value="boissons">Boissons</option>
+            </select>
+
+            <select name="allergene" class="menu-deroulant">
+                <option value="">Tous les allergènes</option>
+                <option value="gluten">Sans Gluten</option>
+                <option value="lactose">Sans Lactose</option>
+            </select>
+
+            <button type="submit" class="btn-recherche">FILTRER</button>
+        </form>
+    </div>
+
+    <h2 class="categorie-titre premier-titre">DONUT BURGERS</h2>
+    <div class="plats-populaires">
+        <div class="plat">
+            <img src="images/Fish_donut.png" alt="Fish Donut Burger">
+            <h3>FISH DONUT BURGER</h3>
+            <p class="description-plat">Filet de poisson pané croustillant entre deux donuts sucrés.</p>
+            <p class="prix">10.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+        <div class="plat">
+            <img src="images/Steak_donut.png" alt="Steak Donut Burger">
+            <h3>STEAK DONUT BURGER</h3>
+            <p class="description-plat">Le classique bœuf-cheddar entre deux donuts sucrés.</p>
+            <p class="prix">11.50 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+        <div class="plat">
+            <img src="images/Chiken_donut.png" alt="Chiken Donut Burger">
+            <h3>CHIKEN DONUT BURGER</h3>
+            <p class="description-plat">Filet de poulet frit épicé entre deux donuts sucrés.</p>
+            <p class="prix">11.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+    </div>
+
+    <h2 class="categorie-titre">PIZZAS</h2>
+    <div class="plats-populaires">
+        <div class="plat">
+            <img src="images/pizza_fraise.png" alt="Pizza Fraise">
+            <h3>PIZZA FRAISE</h3>
+            <p class="description-plat">Base crème diplomate et fraises fraîches.</p>
+            <p class="prix">13.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/pizza_maki.png" alt="Pizza Maki">
+            <h3>PIZZA MAKI</h3>
+            <p class="description-plat">Base riz avec des sushis et des makis.</p>
+            <p class="prix">14.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/pizza_ananas.png" alt="Pizza Hawaïenne">
+            <h3>PIZZA HAWAÏENNE</h3>
+            <p class="description-plat">Base tomate avec des morceaux de jambon et d'ananas, on aime ou on déteste...</p>
+            <p class="prix">12.50 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+    </div>
+
+    <h2 class="categorie-titre">VARIÉTÉS</h2>
+    <div class="plats-populaires">
+        <div class="plat">
+            <img src="images/croissant_jambon.png" alt="Croissant Jambon">
+            <h3>CROISSANT JAMBON</h3>
+            <p class="description-plat">Jambon avec du fromage fondu dans un croissant pur beurre.</p>
+            <p class="prix">12.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/Frites_chocolat.png" alt="Frites Chocolat">
+            <h3>FRITES CHOCOLAT</h3>
+            <p class="description-plat">Frites dorées et salées, généreusement recouvertes de chocolat au lait.</p>
+            <p class="prix">5.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/croissant_salé.png" alt="Croissant Viande">
+            <h3>CROISSANT VIANDE</h3>
+            <p class="description-plat">Hachis de bœuf épicé avec du fromage fondu dans un croissant pur beurre.</p>
+            <p class="prix">7.50 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/spaghetti_chocolat.png" alt="Pates Chocolat">
+            <h3>PÂTES CHOCOLAT</h3>
+            <p class="description-plat">Spaghettis nappés d'une onctueuse sauce au chocolat et recouvertes de framboises.</p>
+            <p class="prix">9.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/chiken_waffle.png" alt="Chiken Waffle">
+            <h3>CHIKEN WAFFLE</h3>
+            <p class="description-plat">Gaufre moelleuse au sirop d'érable surmontée de poulet frit croustillant.</p>
+            <p class="prix">12.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/omelette_skittles.png" alt="Omelette Skittles">
+            <h3>OMELETTE SKITTLES</h3>
+            <p class="description-plat">Une omelette et des skittles arc-en-ciel, pour un max de saveurs.</p>
+            <p class="prix">8.50 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+    </div>
+
+    <h2 class="categorie-titre">DESSERTS</h2>
+    <div class="plats-populaires">
+        <div class="plat">
+            <img src="images/melon_jambon.png" alt="Jambon Melon">
+            <h3>MELON JAMBON</h3>
+            <p class="description-plat">Du melon, du jambon, c'est pas bon ?</p>
+            <p class="prix">6.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/tiramisu_vqr.png" alt="Tiramisu Vache qui rit">
+            <h3>TIRAMISU VACHE QUI RIT</h3>
+            <p class="description-plat">Cacao, café, biscuits à la cuillère et vache qui rit.</p>
+            <p class="prix">6.50 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/peche_mayo.png" alt="Pêche Mayonnaise">
+            <h3>PÊCHE MAYONNAISE</h3>
+            <p class="description-plat">Demi-pêches généreusement recouvertes de mayonnaise.</p>
+            <p class="prix">6.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+    </div>
+
+    <h2 class="categorie-titre">BOISSONS</h2>
+    <div class="plats-populaires">
+        <div class="plat">
+            <img src="images/soda_cornichon.png" alt="Limonade Cornichon">
+            <h3>SODA CORNICHON</h3>
+            <p class="description-plat">Une boisson gazeuse au goût vinaigré et audacieux de jus de cornichon.</p>
+            <p class="prix">3.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/soda_citrouille.png" alt="Soda Citrouille">
+            <h3>SODA CITROUILLE</h3>
+            <p class="description-plat">Une boisson gazeuse aux notes d'automne et de courge sucrée.</p>
+            <p class="prix">3.50 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/soda_noix2coco.png" alt="Soda Noix de Coco">
+            <h3>SODA NOIX DE COCO</h3>
+            <p class="description-plat">Une boisson gazeuse où l'exotisme de la coco rencontre de fines bulles.</p>
+            <p class="prix">3.50 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/smoothie_camembert_pomme.png" alt="Smoothie Camembert">
+            <h3>SMOOTHIE CAMEMBERT POMME</h3>
+            <p class="description-plat">Smoothie à la pomme et au camembert mixés ensemble.</p>
+            <p class="prix">4.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/smoothie_carotte_ananas.png" alt="Smoothie Carotte Ananas">
+            <h3>SMOOTHIE CAROTTES ANANAS</h3>
+            <p class="description-plat">Smoothie aux carottes et à l'ananas étonnament rafraîchissant.</p>
+            <p class="prix">4.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+
+        <div class="plat">
+            <img src="images/smoothie_tomate_mozarella.png" alt="Smoothie Tomate Mozarella">
+            <h3>SMOOTHIE TOMATES MOZARELLA</h3>
+            <p class="description-plat">Un smoothie aux tomates et à la mozarella, bellissima.</p>
+            <p class="prix">4.00 €</p>
+            <a href="#" class="btn-plat">AJOUTER</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-col">
+            <p><strong>CONTACT</strong></p>
+            <p>123 Rue du Crime Culinaire</p>
+            <p>01 23 45 67 89</p>
+        </div>
+
+        <div class="footer-col copyright-col">
+            <p>©2026 Flagrant Délice</p>
+            <p>Projet Creative-Yumland</p>
+            <p>CY Tech - Pré-Ing 2</p>
+        </div>
+
+        <div class="footer-col">
+            <p><strong>HORAIRES</strong></p>
+            <p>Lun - Sam : 11h - 23h</p>
+            <p>Dimanche : 12h - 22h</p>
+        </div>
+    </div>
+
 </body>
+</html>
