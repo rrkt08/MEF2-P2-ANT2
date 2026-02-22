@@ -289,12 +289,10 @@ body {
     margin-top: 15px; 
 }
 
-/* !!! AJOUTS POUR COMMANDES, LIVRAISON, NOTATION !!!!!! */
-
 /* Commande*/
 .conteneur-tableau {
     padding: 20px;
-    overflow-x: auto; /* pr scroll sur un petit écran */
+    overflow-x: auto; /* pour scroll sur un petit écran */
     text-align: center;
 }
 
