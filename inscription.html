@@ -17,7 +17,7 @@
             <li><a href="accueil.html">ACCUEIL</a></li>
             <li><a href="presentation.html">LA CARTE</a></li>
             <li><a href="connexion.html">CONNEXION</a></li>
-            <li><a href="inscription.html" class="btn-inscription actif" style="background-color: #e60012; color: #ffffff;">INSCRIPTION</a></li>
+            <li><a href="inscription.html" class="btn-inscription actif">INSCRIPTION</a></li>
         </ul>
     </div>
 
@@ -27,7 +27,7 @@
 
     <div class="conteneur-formulaire">
         
-        <p style="color: #333333; margin-bottom: 25px; font-family: Arial, sans-serif; line-height: 1.5;">
+        <p class="texte-intro-form">
             Complétez vos informations personnelles pour créer votre compte. Tous les champs marqués d'un * sont obligatoires.
         </p>
 
@@ -86,26 +86,25 @@
             <fieldset class="groupe-formulaire">
                 <legend>MES PRÉFÉRENCES</legend>
                 
-                <p style="color: #00a8e8; font-weight: bold; font-size: 16px; margin-bottom: 10px; margin-top: 0;">
+                <p class="texte-info-preferences">
                     J'accepte de recevoir des offres et actualités de la part de Flagrant Délice :
                 </p>
-                
+                                
                 <input type="checkbox" name="offres" value="email" id="offre-email">
-                <label for="offre-email" style="color: #333333; font-weight: normal;">Par e-mail</label>
-                &nbsp;&nbsp;&nbsp;
+                <label for="offre-email" class="label-checkbox marge-droite">Par e-mail</label>
                 <input type="checkbox" name="offres" value="sms" id="offre-sms">
-                <label for="offre-sms" style="color: #333333; font-weight: normal;">Par SMS</label>
-                
+                <label for="offre-sms" class="label-checkbox">Par SMS</label>
+                                
                 <br><br>
-                
+                                
                 <input type="checkbox" name="age" required id="age">
-                <label for="age" style="color: #333333; font-weight: normal;">Je certifie avoir un estomac solide. *</label>
+                <label for="age" class="label-checkbox">Je certifie avoir un estomac solide. *</label>
             </fieldset>
 
-            <div style="text-align: center;">
-                <button type="submit" class="btn-recherche" style="width: 100%; margin-left: 0; padding: 20px; font-size: 22px;">VALIDER MON INSCRIPTION</button>
+            <div class="form-actions">
+                <button type="submit" class="btn-recherche btn-submit-form">VALIDER MON INSCRIPTION</button>
                 <br><br>
-                <a href="connexion.html" style="color: #e60012; font-family: Arial, sans-serif; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px;">Vous avez déjà un compte ? ></a>
+                <a href="connexion.html" class="lien-redirection">Vous avez déjà un compte ? ></a>
             </div>
 
         </form>

@@ -32,18 +32,18 @@ body {
 }
 
 .header-menu ul {
-    list-style-type: none;
+    list-style-type: none; /* [cite: 520, 524] */
     margin: 0;
     padding: 0;
 }
 
 .header-menu li {
-    display: inline-block;
+    display: inline-block; /* [cite: 616, 617] */
     margin: 0 15px; 
 }
 
 .header-menu a {
-    text-decoration: none;
+    text-decoration: none; /* [cite: 1388, 1389, 1390] */
     color: #ffffff; 
     font-size: 18px;
     font-weight: bold;
@@ -61,26 +61,27 @@ body {
     color: #ffffff; 
 }
 
-/* Boutons d'inscription */
-.btn-inscription {
-    background-color: #ffffff !important;
-    color: #e60012 !important;
+/* Boutons d'inscription (Spécificité augmentée pour éviter !important) */
+.header-menu a.btn-inscription {
+    background-color: #ffffff;
+    color: #e60012;
     padding: 12px 30px; 
     border-radius: 25px;
-    border: 2px solid #ffffff;
+    border: 2px solid #ffffff; /* [cite: 1090, 1091, 1096] */
 }
 
-.btn-inscription:hover {
-    background-color: #e60012 !important;
-    color: #ffffff !important;
-    border-color: #e60012 !important;
+.header-menu a.btn-inscription:hover,
+.header-menu a.btn-inscription.actif {
+    background-color: #e60012;
+    color: #ffffff;
+    border-color: #e60012;
 }
 
 /* Banniere accueil */
 .banniere {
-    background-image: url('images/fondplat.png'); 
-    background-size: cover;
-    background-position: center;
+    background-image: url('images/fondplat.png'); /* [cite: 1039, 1044] */
+    background-size: cover; /* [cite: 1599] */
+    background-position: center; /* [cite: 1065] */
     text-align: center;
     padding-top: 380px; 
     padding-bottom: 20px;
@@ -89,7 +90,7 @@ body {
 
 .banniere h1 {
     color: #00a8e8; 
-    font-family: Impact, 'Arial Black', Arial, sans-serif;
+    font-family: Impact, 'Arial Black', Arial, sans-serif; /* [cite: 397] */
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 5px;
@@ -124,14 +125,14 @@ body {
 .btn-recherche {
     padding: 16px 35px;
     background-color: #e60012;
-    color: white;
+    color: white; /* [cite: 1004, 1007, 1008] */
     border: none;
     border-radius: 35px;
     font-family: Impact, sans-serif;
     font-size: 18px;
     letter-spacing: 2px;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 10px; /* [cite: 1173, 1178] */
     text-transform: uppercase;
 }
 
@@ -142,7 +143,7 @@ body {
 /* Titres intermédiaires */
 .bandeau-titre {
     background-color: #00a8e8; 
-    text-align: center;
+    text-align: center; /* [cite: 848, 851] */
     padding: 50px 0; 
     margin: 0;
     overflow: hidden;
@@ -205,29 +206,30 @@ body {
     margin-bottom: 15px;
 }
 
-.btn-plat {
+/* Bouton plats (Spécificité augmentée pour éviter !important) */
+.plats-populaires a.btn-plat {
     background-color: #ffffff; 
-    color: #e60012 !important; 
+    color: #e60012; 
     padding: 10px 25px;
-    text-decoration: none;
+    text-decoration: none; /* [cite: 1388, 1389, 1390] */
     border-radius: 25px;
     font-family: Impact, sans-serif;
     display: inline-block;
 }
 
-.btn-plat:hover {
+.plats-populaires a.btn-plat:hover {
     background-color: #e60012;
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
 /* Footer */
 .footer {
     background-color: #ffffff;
     color: #00a8e8;
-    padding: 50px 0;
+    padding: 50px 0; /* [cite: 1230, 1243] */
     border-top: 4px solid #00a8e8;
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; /* [cite: 1414, 1416] */
 }
 
 .footer-col {
@@ -289,20 +291,20 @@ body {
     margin-top: 15px; 
 }
 
-/* Commande*/
+/* Commande */
 .conteneur-tableau {
     padding: 20px;
-    overflow-x: auto; /* pour scroll sur un petit écran */
+    overflow-x: auto; /* [cite: 1559, 1561] */
     text-align: center;
 }
 
 .tableau-commandes {
     width: 90%;
     margin: 0 auto;
-    border-collapse: collapse; 
+    border-collapse: collapse; /* [cite: 1517, 1518, 1521] */
     font-family: Arial, sans-serif;
     background-color: #ffffff;
-    border: 3px solid #00a8e8;
+    border: 3px solid #00a8e8; /* [cite: 1511, 1516] */
 }
 
 .tableau-commandes th {
@@ -341,7 +343,7 @@ body {
     text-transform: uppercase;
 }
 
-/* LIVRAISON (optimisé l'utilisation avec les gants etc) */
+/* LIVRAISON */
 .bloc-livraison {
     padding: 20px;
     text-align: center;
@@ -380,7 +382,7 @@ body {
     border-radius: 10px;
     text-align: center;
     border: 3px solid transparent; 
-    box-sizing: border-box; 
+    box-sizing: border-box; /* [cite: 1281, 1289] */
     cursor: pointer;
 }
 
@@ -400,12 +402,11 @@ body {
     color: white;
 }
 
-
-/*  FORMULAIRES (Notation,Inscription et Connexion)*/
+/* FORMULAIRES (Notation, Inscription et Connexion) */
 .conteneur-formulaire {
     width: 60%;
     margin: 30px auto;
-    text-align: left;
+    text-align: left; /* [cite: 1375, 1376, 1383] */
     font-family: Arial, sans-serif;
 }
 
@@ -437,9 +438,66 @@ body {
     border: 2px solid #00a8e8;
     border-radius: 5px;
     font-family: Arial, sans-serif;
-    box-sizing: border-box; /* Pour gérer le padding sans casser la largeur */
+    box-sizing: border-box; /* [cite: 1281, 1289] */
 }
 
 .textarea-form {
     resize: vertical;
+}
+
+/* -- CLASSES SUPPLÉMENTAIRES POUR LES FORMULAIRES -- */
+
+/* Variante du conteneur pour la page de connexion */
+.conteneur-connexion {
+    width: 50%;
+    margin: 50px auto; 
+}
+
+/* Textes informatifs dans les formulaires */
+.texte-intro-form {
+    color: #333333;
+    margin-bottom: 25px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.texte-info-preferences {
+    color: #00a8e8;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+/* Cases à cocher (Spécificité augmentée pour éviter !important) */
+.groupe-formulaire label.label-checkbox {
+    color: #333333;
+    font-weight: normal;
+}
+
+/* Zone de validation (boutons en bas) */
+.form-actions {
+    text-align: center;
+}
+
+/* Grand bouton de soumission */
+.btn-submit-form {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px;
+    font-size: 22px;
+}
+
+/* Lien de bas de formulaire (redirection) */
+.lien-redirection {
+    color: #e60012;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.marge-droite {
+    margin-right: 12px; 
 }
