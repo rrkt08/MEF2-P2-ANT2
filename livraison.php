@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flagrant Délice - Espace Livreur</title>
+    <link rel="icon" type="image/png" href="images/logopageweb.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+    <div class="header-top">
+        <div class="logo-texte">FLAGRANT DÉLICE</div>
+    </div>
+
+    <div class="bandeau-titre">
+        <h2><u>LIVRAISON #CMD-003</u></h2>
+    </div>
+
+    <div class="bloc-livraison">
+        <h3 class="titre-livraison">ADRESSE CLIENT</h3>
+        <p class="info-livraison">
+            <strong>M. Cristiano Ronaldo</strong><br>
+            42 Avenue des Champs Elysées<br>
+            75008 Paris
+        </p>
+
+        <h3 class="titre-livraison">COMPLÉMENTS</h3>
+        <p class="info-livraison">
+            Digicode : <strong>6767A</strong><br>
+            Étage : <strong>3ème</strong><br>
+            Note : <em>"Attention à georgina"</em>
+        </p>
+
+        <div class="actions-livreur">
+            <a href="tel:0612345678" class="btn-livreur btn-tel">📞 APPELER CLIENT</a>
+            <a href="https://www.google.com/maps?q=42+Avenue+des+Champs+Elysées+75008+Paris" target="_blank" class="btn-livreur btn-gps">🗺️ OUVRIR GPS</a>
+            <button class="btn-livreur btn-valider">✅ LIVRAISON TERMINÉE</button>
+        </div>
+    </div>
+
+</body>
+</html>
