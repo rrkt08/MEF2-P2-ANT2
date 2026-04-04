@@ -32,7 +32,7 @@
     {
         "id_utilisateur": 2,
         "login": "cr7@email.com",
-        "mot_de_passe": "suiii",
+        "mot_de_passe": "suiii5Ldc",
         "role": "client",
         "informations": {
             "nom": "Ronaldo",
@@ -40,19 +40,19 @@
             "naissance": "1985-02-05",
             "adresse": {
                 "rue": "42 Avenue des Champs Elysées",
-                "complement": "Digicode : 6767A, Étage : 3ème",
+                "complement": "Étage : 3ème, Digicode : 6767A,",
                 "code_postal": "75008",
                 "ville": "Paris"
             },
             "telephone": "0698765432",
-            "preferences_alimentaires": "Régime strict.",
+            "preferences_alimentaires": "Que de l'eau pas de soda",
             "preferences_contact": [
                 "sms"
             ]
         },
         "fidelite": {
-            "statut": "NOVICE",
-            "points": 20
+            "statut": "CRIMINEL CROQUANT",
+            "points": 100
         },
         "dates": {
             "inscription": "2025-09-02T11:00:00",
@@ -70,11 +70,11 @@
             "naissance": "1990-04-20",
             "adresse": {
                 "rue": "10 Rue de la Paix",
-                "complement": "Bâtiment A",
+                "complement": "Bâtiment A, code porte 2398",
                 "code_postal": "95300",
                 "ville": "Pontoise"
             },
-            "telephone": "0655443322",
+            "telephone": "0724681357",
             "preferences_alimentaires": "",
             "preferences_contact": [
                 "email",
@@ -82,8 +82,8 @@
             ]
         },
         "fidelite": {
-            "statut": "AMATEUR",
-            "points": 45
+            "statut": "SERIAL CROQUEUR",
+            "points": 50
         },
         "dates": {
             "inscription": "2025-09-03T09:00:00",
@@ -92,27 +92,27 @@
     },
     {
         "id_utilisateur": 4,
-        "login": "marie@email.com",
-        "mot_de_passe": "marie123",
+        "login": "celine@email.com",
+        "mot_de_passe": "Minou1995",
         "role": "client",
         "informations": {
-            "nom": "Curie",
-            "prenom": "Marie",
+            "nom": "Evitable",
+            "prenom": "Celine",
             "naissance": "1995-11-07",
             "adresse": {
-                "rue": "8 Boulevard des Sciences",
+                "rue": "13 Boulevard Voltaire",
                 "complement": "",
-                "code_postal": "75005",
+                "code_postal": "75011",
                 "ville": "Paris"
             },
             "telephone": "0611223344",
-            "preferences_alimentaires": "Végétarienne",
+            "preferences_alimentaires": "pas de gluten",
             "preferences_contact": [
                 "email"
             ]
         },
         "fidelite": {
-            "statut": "HABITUÉ",
+            "statut": "SERIAL CROQUEUR",
             "points": 80
         },
         "dates": {
@@ -122,16 +122,16 @@
     },
     {
         "id_utilisateur": 5,
-        "login": "luc@email.com",
-        "mot_de_passe": "luc123",
+        "login": "jenifer@email.com",
+        "mot_de_passe": "Azertyuiop404",
         "role": "client",
         "informations": {
-            "nom": "Skywalker",
-            "prenom": "Luc",
+            "nom": "Rien",
+            "prenom": "Jenifer",
             "naissance": "2000-01-01",
             "adresse": {
-                "rue": "1 Chemin de la Force",
-                "complement": "",
+                "rue": "2 Rue de la Justice Pourpre",
+                "complement": "Code1: 0101, Code2: 0202",
                 "code_postal": "95000",
                 "ville": "Cergy"
             },
@@ -140,7 +140,7 @@
             "preferences_contact": []
         },
         "fidelite": {
-            "statut": "NOVICE",
+            "statut": "SUSPECT CULINAIRE",
             "points": 10
         },
         "dates": {
@@ -150,20 +150,20 @@
     },
     {
         "id_utilisateur": 6,
-        "login": "admin1@email.com",
-        "mot_de_passe": "adminA",
+        "login": "tarko@email.com",
+        "mot_de_passe": "Tarko8",
         "role": "admin",
         "informations": {
-            "nom": "Chef",
-            "prenom": "Admin",
-            "naissance": "1980-01-01",
+            "nom": "Super",
+            "prenom": "Tarko",
+            "naissance": "2006-08-08",
             "adresse": {
                 "rue": "Bureaux Flagrant Délice",
                 "complement": "",
                 "code_postal": "95000",
                 "ville": "Cergy"
             },
-            "telephone": "0123456789",
+            "telephone": "0609080705",
             "preferences_alimentaires": "",
             "preferences_contact": []
         },
@@ -175,20 +175,20 @@
     },
     {
         "id_utilisateur": 7,
-        "login": "admin2@email.com",
-        "mot_de_passe": "adminB",
+        "login": "naimoz@email.com",
+        "mot_de_passe": "Naimoz95",
         "role": "admin",
         "informations": {
-            "nom": "Sous-Chef",
-            "prenom": "Admin",
-            "naissance": "1985-05-05",
+            "nom": "Lucho",
+            "prenom": "Naimoz",
+            "naissance": "2006-09-05",
             "adresse": {
                 "rue": "Bureaux Flagrant Délice",
                 "complement": "",
                 "code_postal": "95000",
                 "ville": "Cergy"
             },
-            "telephone": "0123456789",
+            "telephone": "0601223344",
             "preferences_alimentaires": "",
             "preferences_contact": []
         },
@@ -200,20 +200,20 @@
     },
     {
         "id_utilisateur": 8,
-        "login": "resto@email.com",
-        "mot_de_passe": "resto123",
+        "login": "mario@email.com",
+        "mot_de_passe": "Yahou00",
         "role": "restaurateur",
         "informations": {
-            "nom": "Bocuse",
-            "prenom": "Paul",
-            "naissance": "1970-02-11",
+            "nom": "Nette",
+            "prenom": "Mario",
+            "naissance": "1996-02-11",
             "adresse": {
                 "rue": "Cuisine Flagrant Délice",
                 "complement": "",
                 "code_postal": "95000",
                 "ville": "Cergy"
             },
-            "telephone": "0123456789",
+            "telephone": "0608112233",
             "preferences_alimentaires": "",
             "preferences_contact": []
         },
@@ -225,11 +225,11 @@
     },
     {
         "id_utilisateur": 9,
-        "login": "livreur@email.com",
-        "mot_de_passe": "moto123",
+        "login": "paul@email.com",
+        "mot_de_passe": "Onepiece1",
         "role": "livreur",
         "informations": {
-            "nom": "Livreur",
+            "nom": "Air",
             "prenom": "Paul",
             "naissance": "1999-07-22",
             "adresse": {
