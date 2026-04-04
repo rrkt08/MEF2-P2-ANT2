@@ -1,0 +1,279 @@
+[
+    {
+        "id_plat": "CHIKEN_DONUT",
+        "nom": "Chiken Donut Burger",
+        "categorie": "donut-burgers",
+        "description": "Filet de poulet frit épicé entre deux donuts sucrés.",
+        "prix": 11.00,
+        "informations": {
+            "nutritionnelles": "950 kcal",
+            "allergenes": [
+                "gluten",
+                "oeuf"
+            ]
+        }
+    },
+    {
+        "id_plat": "STEAK_DONUT",
+        "nom": "Steak Donut Burger",
+        "categorie": "donut-burgers",
+        "description": "Le classique bœuf-cheddar entre deux donuts sucrés.",
+        "prix": 11.50,
+        "informations": {
+            "nutritionnelles": "1050 kcal",
+            "allergenes": [
+                "gluten",
+                "lactose",
+                "oeuf"
+            ]
+        }
+    },
+    {
+        "id_plat": "FISH_DONUT",
+        "nom": "Fish Donut Burger",
+        "categorie": "donut-burgers",
+        "description": "Filet de poisson pané croustillant entre deux donuts sucrés.",
+        "prix": 10.00,
+        "informations": {
+            "nutritionnelles": "800 kcal",
+            "allergenes": [
+                "gluten",
+                "poisson",
+                "oeuf"
+            ]
+        }
+    },
+    {
+        "id_plat": "PIZZA_FRAISE",
+        "nom": "Pizza Fraise",
+        "categorie": "pizzas",
+        "description": "Base crème diplomate et fraises fraîches.",
+        "prix": 9.00,
+        "informations": {
+            "nutritionnelles": "650 kcal",
+            "allergenes": [
+                "gluten",
+                "lactose"
+            ]
+        }
+    },
+    {
+        "id_plat": "PIZZA_MAKI",
+        "nom": "Pizza Maki",
+        "categorie": "pizzas",
+        "description": "Base riz avec des sushis et des makis.",
+        "prix": 12.00,
+        "informations": {
+            "nutritionnelles": "700 kcal",
+            "allergenes": [
+                "poisson",
+                "soja"
+            ]
+        }
+    },
+    {
+        "id_plat": "PIZZA_HAWAIENNE",
+        "nom": "Pizza Hawaïenne",
+        "categorie": "pizzas",
+        "description": "Base tomate avec des morceaux de jambon et d'ananas.",
+        "prix": 10.00,
+        "informations": {
+            "nutritionnelles": "850 kcal",
+            "allergenes": [
+                "gluten",
+                "lactose"
+            ]
+        }
+    },
+    {
+        "id_plat": "CROISSANT_JAMBON",
+        "nom": "Croissant Jambon",
+        "categorie": "varietes",
+        "description": "Jambon avec du fromage fondu dans un croissant pur beurre.",
+        "prix": 5.00,
+        "informations": {
+            "nutritionnelles": "450 kcal",
+            "allergenes": [
+                "gluten",
+                "lactose"
+            ]
+        }
+    },
+    {
+        "id_plat": "FRITES_CHOCO",
+        "nom": "Frites Chocolat",
+        "categorie": "varietes",
+        "description": "Frites dorées et salées, recouvertes de chocolat au lait.",
+        "prix": 5.00,
+        "informations": {
+            "nutritionnelles": "600 kcal",
+            "allergenes": [
+                "lactose"
+            ]
+        }
+    },
+    {
+        "id_plat": "CROISSANT_VIANDE",
+        "nom": "Croissant Viande",
+        "categorie": "varietes",
+        "description": "Hachis de bœuf épicé avec du fromage fondu dans un croissant pur beurre.",
+        "prix": 6.00,
+        "informations": {
+            "nutritionnelles": "500 kcal",
+            "allergenes": [
+                "gluten",
+                "lactose"
+            ]
+        }
+    },
+    {
+        "id_plat": "PATES_CHOCO",
+        "nom": "Pâtes Chocolat",
+        "categorie": "varietes",
+        "description": "Spaghettis nappés d'une onctueuse sauce au chocolat.",
+        "prix": 6.50,
+        "informations": {
+            "nutritionnelles": "750 kcal",
+            "allergenes": [
+                "gluten",
+                "lactose"
+            ]
+        }
+    },
+    {
+        "id_plat": "CHIKEN_WAFFLE",
+        "nom": "Chiken Waffle",
+        "categorie": "varietes",
+        "description": "Gaufre moelleuse au sirop d'érable surmontée de poulet frit.",
+        "prix": 5.50,
+        "informations": {
+            "nutritionnelles": "850 kcal",
+            "allergenes": [
+                "gluten",
+                "oeuf"
+            ]
+        }
+    },
+    {
+        "id_plat": "OMELETTE_SKITTLES",
+        "nom": "Omelette Skittles",
+        "categorie": "varietes",
+        "description": "Une omelette et des skittles arc-en-ciel.",
+        "prix": 4.50,
+        "informations": {
+            "nutritionnelles": "500 kcal",
+            "allergenes": [
+                "oeuf"
+            ]
+        }
+    },
+    {
+        "id_plat": "MELON_JAMBON",
+        "nom": "Melon Jambon",
+        "categorie": "desserts",
+        "description": "Du melon, du jambon, c'est pas bon ?",
+        "prix": 4.50,
+        "informations": {
+            "nutritionnelles": "200 kcal",
+            "allergenes": []
+        }
+    },
+    {
+        "id_plat": "TIRAMISU_VQR",
+        "nom": "Tiramisu Vache qui rit",
+        "categorie": "desserts",
+        "description": "Cacao, café, biscuits et vache qui rit.",
+        "prix": 3.50,
+        "informations": {
+            "nutritionnelles": "550 kcal",
+            "allergenes": [
+                "gluten",
+                "lactose",
+                "oeuf"
+            ]
+        }
+    },
+    {
+        "id_plat": "PECHE_MAYO",
+        "nom": "Pêche Mayonnaise",
+        "categorie": "desserts",
+        "description": "Demi-pêches recouvertes de mayonnaise.",
+        "prix": 3.00,
+        "informations": {
+            "nutritionnelles": "400 kcal",
+            "allergenes": [
+                "oeuf"
+            ]
+        }
+    },
+    {
+        "id_plat": "SODA_CORNICHON",
+        "nom": "Soda Cornichon",
+        "categorie": "boissons",
+        "description": "Boisson gazeuse au goût de jus de cornichon.",
+        "prix": 2.00,
+        "informations": {
+            "nutritionnelles": "50 kcal",
+            "allergenes": []
+        }
+    },
+    {
+        "id_plat": "SODA_CITROUILLE",
+        "nom": "Soda Citrouille",
+        "categorie": "boissons",
+        "description": "Boisson gazeuse aux notes d'automne et de courge.",
+        "prix": 2.00,
+        "informations": {
+            "nutritionnelles": "60 kcal",
+            "allergenes": []
+        }
+    },
+    {
+        "id_plat": "SODA_COCO",
+        "nom": "Soda Noix de Coco",
+        "categorie": "boissons",
+        "description": "L'exotisme de la coco rencontre de fines bulles.",
+        "prix": 2.50,
+        "informations": {
+            "nutritionnelles": "70 kcal",
+            "allergenes": []
+        }
+    },
+    {
+        "id_plat": "SMOOTHIE_CAMEMBERT",
+        "nom": "Smoothie Camembert Pomme",
+        "categorie": "boissons",
+        "description": "Smoothie à la pomme et au camembert.",
+        "prix": 4.00,
+        "informations": {
+            "nutritionnelles": "250 kcal",
+            "allergenes": [
+                "lactose"
+            ]
+        }
+    },
+    {
+        "id_plat": "SMOOTHIE_ANANAS",
+        "nom": "Smoothie Carottes Ananas",
+        "categorie": "boissons",
+        "description": "Smoothie aux carottes et à l'ananas.",
+        "prix": 4.00,
+        "informations": {
+            "nutritionnelles": "150 kcal",
+            "allergenes": []
+        }
+    },
+    {
+        "id_plat": "SMOOTHIE_TOMATE",
+        "nom": "Smoothie Tomates Mozarella",
+        "categorie": "boissons",
+        "description": "Un smoothie aux tomates et à la mozarella.",
+        "prix": 4.00,
+        "informations": {
+            "nutritionnelles": "200 kcal",
+            "allergenes": [
+                "lactose"
+            ]
+        }
+    }
+]

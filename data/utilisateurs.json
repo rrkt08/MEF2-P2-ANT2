@@ -1,0 +1,251 @@
+[
+    {
+        "id_utilisateur": 1,
+        "login": "tristan.douille@email.com",
+        "mot_de_passe": "Unmotdepasse13sécurisé!",
+        "role": "client",
+        "informations": {
+            "nom": "Douille",
+            "prenom": "Tristan",
+            "naissance": "1998-08-15",
+            "adresse": {
+                "rue": "12 Rue du Mauvais Goût",
+                "complement": "Bâtiment B, Interphone B421",
+                "code_postal": "95000",
+                "ville": "Cergy"
+            },
+            "telephone": "0612345678",
+            "preferences_alimentaires": "Intolérance au lactose, pas de cornichons svp.",
+            "preferences_contact": [
+                "email"
+            ]
+        },
+        "fidelite": {
+            "statut": "COMPLICE GOURMAND",
+            "points": 150
+        },
+        "dates": {
+            "inscription": "2025-09-01T10:00:00",
+            "derniere_connexion": "2025-10-15T14:30:00"
+        }
+    },
+    {
+        "id_utilisateur": 2,
+        "login": "cr7@email.com",
+        "mot_de_passe": "suiii",
+        "role": "client",
+        "informations": {
+            "nom": "Ronaldo",
+            "prenom": "Cristiano",
+            "naissance": "1985-02-05",
+            "adresse": {
+                "rue": "42 Avenue des Champs Elysées",
+                "complement": "Digicode : 6767A, Étage : 3ème",
+                "code_postal": "75008",
+                "ville": "Paris"
+            },
+            "telephone": "0698765432",
+            "preferences_alimentaires": "Régime strict.",
+            "preferences_contact": [
+                "sms"
+            ]
+        },
+        "fidelite": {
+            "statut": "NOVICE",
+            "points": 20
+        },
+        "dates": {
+            "inscription": "2025-09-02T11:00:00",
+            "derniere_connexion": "2025-10-12T12:00:00"
+        }
+    },
+    {
+        "id_utilisateur": 3,
+        "login": "jean@email.com",
+        "mot_de_passe": "jean123",
+        "role": "client",
+        "informations": {
+            "nom": "Dupont",
+            "prenom": "Jean",
+            "naissance": "1990-04-20",
+            "adresse": {
+                "rue": "10 Rue de la Paix",
+                "complement": "Bâtiment A",
+                "code_postal": "95300",
+                "ville": "Pontoise"
+            },
+            "telephone": "0655443322",
+            "preferences_alimentaires": "",
+            "preferences_contact": [
+                "email",
+                "sms"
+            ]
+        },
+        "fidelite": {
+            "statut": "AMATEUR",
+            "points": 45
+        },
+        "dates": {
+            "inscription": "2025-09-03T09:00:00",
+            "derniere_connexion": "2025-10-01T19:30:00"
+        }
+    },
+    {
+        "id_utilisateur": 4,
+        "login": "marie@email.com",
+        "mot_de_passe": "marie123",
+        "role": "client",
+        "informations": {
+            "nom": "Curie",
+            "prenom": "Marie",
+            "naissance": "1995-11-07",
+            "adresse": {
+                "rue": "8 Boulevard des Sciences",
+                "complement": "",
+                "code_postal": "75005",
+                "ville": "Paris"
+            },
+            "telephone": "0611223344",
+            "preferences_alimentaires": "Végétarienne",
+            "preferences_contact": [
+                "email"
+            ]
+        },
+        "fidelite": {
+            "statut": "HABITUÉ",
+            "points": 80
+        },
+        "dates": {
+            "inscription": "2025-09-05T14:00:00",
+            "derniere_connexion": "2025-10-10T20:15:00"
+        }
+    },
+    {
+        "id_utilisateur": 5,
+        "login": "luc@email.com",
+        "mot_de_passe": "luc123",
+        "role": "client",
+        "informations": {
+            "nom": "Skywalker",
+            "prenom": "Luc",
+            "naissance": "2000-01-01",
+            "adresse": {
+                "rue": "1 Chemin de la Force",
+                "complement": "",
+                "code_postal": "95000",
+                "ville": "Cergy"
+            },
+            "telephone": "0699887766",
+            "preferences_alimentaires": "",
+            "preferences_contact": []
+        },
+        "fidelite": {
+            "statut": "NOVICE",
+            "points": 10
+        },
+        "dates": {
+            "inscription": "2025-09-10T16:00:00",
+            "derniere_connexion": "2025-10-14T08:45:00"
+        }
+    },
+    {
+        "id_utilisateur": 6,
+        "login": "admin1@email.com",
+        "mot_de_passe": "adminA",
+        "role": "admin",
+        "informations": {
+            "nom": "Chef",
+            "prenom": "Admin",
+            "naissance": "1980-01-01",
+            "adresse": {
+                "rue": "Bureaux Flagrant Délice",
+                "complement": "",
+                "code_postal": "95000",
+                "ville": "Cergy"
+            },
+            "telephone": "0123456789",
+            "preferences_alimentaires": "",
+            "preferences_contact": []
+        },
+        "fidelite": null,
+        "dates": {
+            "inscription": "2025-08-01T08:00:00",
+            "derniere_connexion": "2025-10-16T09:00:00"
+        }
+    },
+    {
+        "id_utilisateur": 7,
+        "login": "admin2@email.com",
+        "mot_de_passe": "adminB",
+        "role": "admin",
+        "informations": {
+            "nom": "Sous-Chef",
+            "prenom": "Admin",
+            "naissance": "1985-05-05",
+            "adresse": {
+                "rue": "Bureaux Flagrant Délice",
+                "complement": "",
+                "code_postal": "95000",
+                "ville": "Cergy"
+            },
+            "telephone": "0123456789",
+            "preferences_alimentaires": "",
+            "preferences_contact": []
+        },
+        "fidelite": null,
+        "dates": {
+            "inscription": "2025-08-01T08:00:00",
+            "derniere_connexion": "2025-10-15T18:00:00"
+        }
+    },
+    {
+        "id_utilisateur": 8,
+        "login": "resto@email.com",
+        "mot_de_passe": "resto123",
+        "role": "restaurateur",
+        "informations": {
+            "nom": "Bocuse",
+            "prenom": "Paul",
+            "naissance": "1970-02-11",
+            "adresse": {
+                "rue": "Cuisine Flagrant Délice",
+                "complement": "",
+                "code_postal": "95000",
+                "ville": "Cergy"
+            },
+            "telephone": "0123456789",
+            "preferences_alimentaires": "",
+            "preferences_contact": []
+        },
+        "fidelite": null,
+        "dates": {
+            "inscription": "2025-08-01T08:00:00",
+            "derniere_connexion": "2025-10-16T11:00:00"
+        }
+    },
+    {
+        "id_utilisateur": 9,
+        "login": "livreur@email.com",
+        "mot_de_passe": "moto123",
+        "role": "livreur",
+        "informations": {
+            "nom": "Livreur",
+            "prenom": "Paul",
+            "naissance": "1999-07-22",
+            "adresse": {
+                "rue": "Local Livraisons",
+                "complement": "",
+                "code_postal": "95000",
+                "ville": "Cergy"
+            },
+            "telephone": "0677889900",
+            "preferences_alimentaires": "",
+            "preferences_contact": []
+        },
+        "fidelite": null,
+        "dates": {
+            "inscription": "2025-08-15T08:00:00",
+            "derniere_connexion": "2025-10-16T12:00:00"
+        }
+    }
+]

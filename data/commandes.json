@@ -1,0 +1,83 @@
+[
+    {
+        "id_commande": "CMD-001",
+        "id_client": 1,
+        "liste_articles": [
+            {
+                "type": "plat",
+                "id_article": "CHIKEN_DONUT",
+                "quantite": 1,
+                "options_choisies": []
+            },
+            {
+                "type": "plat",
+                "id_article": "FRITES_CHOCO",
+                "quantite": 1,
+                "options_choisies": []
+            }
+        ],
+        "lieu_consommation": "sur place",
+        "adresse_livraison": null,
+        "statut_paiement": "attente",
+        "date_heure": "2025-10-16T12:30:00",
+        "statut_preparation": "A PREPARER",
+        "id_livreur": null,
+        "prix_total": 16.00
+    },
+    {
+        "id_commande": "CMD-002",
+        "id_client": 3,
+        "liste_articles": [
+            {
+                "type": "plat",
+                "id_article": "PIZZA_HAWAIENNE",
+                "quantite": 2,
+                "options_choisies": [
+                    "SANS_FROMAGE"
+                ]
+            },
+            {
+                "type": "plat",
+                "id_article": "SODA_CORNICHON",
+                "quantite": 2,
+                "options_choisies": []
+            }
+        ],
+        "lieu_consommation": "livraison",
+        "adresse_livraison": {
+            "rue": "10 Rue de la Paix",
+            "complement": "Bâtiment A",
+            "code_postal": "95300",
+            "ville": "Pontoise"
+        },
+        "statut_paiement": "paye",
+        "date_heure": "2025-10-16T12:35:00",
+        "statut_preparation": "A PREPARER",
+        "id_livreur": null,
+        "prix_total": 24.00
+    },
+    {
+        "id_commande": "CMD-003",
+        "id_client": 2,
+        "liste_articles": [
+            {
+                "type": "menu",
+                "id_article": "M01",
+                "quantite": 1,
+                "options_choisies": []
+            }
+        ],
+        "lieu_consommation": "livraison",
+        "adresse_livraison": {
+            "rue": "42 Avenue des Champs Elysées",
+            "complement": "Digicode : 6767A, Étage : 3ème, Note : Attention à georgina",
+            "code_postal": "75008",
+            "ville": "Paris"
+        },
+        "statut_paiement": "paye",
+        "date_heure": "2025-10-16T12:45:00",
+        "statut_preparation": "EN LIVRAISON",
+        "id_livreur": 9,
+        "prix_total": 16.00
+    }
+]
