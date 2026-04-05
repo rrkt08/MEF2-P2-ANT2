@@ -23,6 +23,10 @@
         </ul>
     </div>
 
+    <div class="bandeau-titre">
+        <h2><u>CRÉATION DE COMPTE</u></h2>
+    </div>
+
     <?php
     // GESTION DES MESSAGES D'ERREUR
     if (isset($_GET['erreur'])) {
@@ -47,10 +51,6 @@
         }
     }
     ?>
-
-    <div class="bandeau-titre">
-        <h2><u>CRÉATION DE COMPTE</u></h2>
-    </div>
 
     <div class="conteneur-formulaire">
 

@@ -19,7 +19,7 @@
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="profil.php" class="actif">MON COMPTE</a></li>
-            <li><a href="connexion.php">DÉCONNEXION</a></li>
+            <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
         </ul>
     </div>
 

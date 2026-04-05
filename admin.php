@@ -35,7 +35,7 @@ if (file_exists($fichier)) {
         <ul>
             <li><a href="accueil.php">RETOUR SITE</a></li>
             <li><a href="admin.php" class="actif">DASHBOARD ADMIN (<?php echo $_SESSION['prenom']; ?>)</a></li>
-            <li><a href="connexion.php">DÉCONNEXION</a></li>
+            <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
         </ul>
     </div>
 
