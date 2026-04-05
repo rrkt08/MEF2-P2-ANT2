@@ -94,30 +94,29 @@ La Phase 2 marque le passage d'un site statique à une application web dynamique
 
 ## 🛠️ Problèmes connus & Solutions (Phase 2)
 
-Le passage au dynamique a présenté plusieurs défis techniques qui ont été résolus durant le développement :
+Le développement de cette phase a nécessité la résolution de plusieurs défis techniques :
 
-### 1. Synchronisation et Environnement
-* [cite_start]**Problème :** Des soucis de synchronisation entre VS Code et le navigateur faisaient apparaître les fichiers HTML comme vides[cite: 39, 40].
-* [cite_start]**Solution :** Création d'un dossier local propre (`Projet_Creative_Yumland`) avec activation de l'enregistrement automatique (Auto-Save) pour rétablir le lien direct avec le navigateur[cite: 50, 51].
+### 1. Environnement et Synchronisation
+* **Problème :** Conflit de synchronisation avec l'éditeur (fichiers apparaissant vides dans le navigateur lors de l'utilisation de dossiers distants).
+* **Solution :** Migration vers un dossier local dédié avec activation de l'enregistrement automatique (Auto-Save) pour garantir l'intégrité des fichiers.
 
-### 2. Ergonomie et Responsive (Interface Livreur)
-* [cite_start]**Problème :** Difficulté à adapter la taille des boutons pour un usage sur smartphone avec de "gros gants"[cite: 41, 42].
-* [cite_start]**Solution :** Utilisation de la propriété `box-sizing: border-box`, de largeurs en pourcentage (`90%`) et de bordures transparentes pour harmoniser la taille des éléments cliquables[cite: 52, 53].
+### 2. Ergonomie Mobile (Interface Livreur)
+* **Problème :** Difficulté à adapter l'interface pour un livreur utilisant un smartphone avec de "gros gants".
+* **Solution :** Utilisation de la propriété CSS `box-sizing: border-box`, de largeurs à `90%` et de `display: block` pour créer des zones cliquables larges et stables.
 
-### 3. Affichage Dynamique des Produits
-* [cite_start]**Problème :** Le plat "Croissant Viande" ne s'affichait pas sur la carte[cite: 88, 89].
-* [cite_start]**Solution :** Harmonisation de la nomenclature des catégories entre le fichier `plats.json` et les filtres codés en PHP[cite: 92].
+### 3. Affichage Dynamique
+* **Problème :** Erreur d'affichage sur certains produits (ex: "Croissant Viande") malgré des données correctes.
+* **Solution :** Harmonisation de la nomenclature des catégories entre le fichier `plats.json` et les filtres de la boucle PHP.
 
-### 4. Consultation des Profils par l'Administrateur
-* [cite_start]**Problème :** Conflit entre la session de l'admin et l'ID de l'utilisateur ciblé lors du clic sur "Voir Profil"[cite: 97, 98].
-* [cite_start]**Solution :** Restructuration de la logique dans `profil.php` pour donner la priorité à l'identifiant transmis par `$_GET['id']` lorsque le rôle actif est "admin"[cite: 100].
+### 4. Gestion des Profils (Admin)
+* **Problème :** Conflit entre la session de l'administrateur et l'affichage des informations d'un client spécifique.
+* **Solution :** Restructuration des conditions PHP pour donner la priorité à l'identifiant transmis par `$_GET['id']` lorsque l'utilisateur connecté possède le rôle admin.
 
-### 5. API de Paiement CYBank (Point d'attention)
-* [cite_start]**Problème :** Erreur "Code vendeur inconnu" et anomalie de clé de contrôle (Hash MD5) lors de la validation du panier[cite: 83].
-* [cite_start]**Statut :** Malgré l'utilisation du code vendeur "TEST" et des tentatives de correction du calcul de hachage, la validation automatique reste à finaliser en raison de conflits de sécurité sur l'URL de retour[cite: 84, 85, 86].
+### 5. Intégration Paiement CYBank
+* **Problème :** Erreurs de hachage MD5 et rejet de la transaction ("Code vendeur inconnu").
+* **Statut :** La structure est prête, mais la validation finale reste à finaliser en raison de contraintes de sécurité sur l'URL de retour de l'API.
 
 ---
-
 ## 🚀 Installation et Utilisation
 
 Cette section détaille la procédure pour installer et lancer l'application localement en utilisant un environnement serveur de type WAMP ou MAMP.
