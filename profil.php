@@ -1,3 +1,33 @@
+<?php
+session_start();
+
+// Vérification de la connexion
+if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != 'client') {
+    header("Location: connexion.php");
+    exit();
+}
+
+$user_id = $_SESSION['id_utilisateur']; // On utilise l'ID pour faire le lien avec le JSON
+
+// Récupération des informations de l'utilisateur connecté
+$profil_client = null;
+if (file_exists('data/utilisateurs.json')) {
+    $utilisateurs = json_decode(file_get_contents('data/utilisateurs.json'), true);
+    foreach ($utilisateurs as $user) {
+        if ($user['id_utilisateur'] == $user_id) {
+            $profil_client = $user;
+            break;
+        }
+    }
+}
+
+// Récupération des commandes
+$commandes = [];
+if (file_exists('data/commandes.json')) {
+    $commandes = json_decode(file_get_contents('data/commandes.json'), true);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -32,44 +62,28 @@
         <fieldset class="groupe-formulaire fidelite-box">
             <legend>MA FIDÉLITÉ</legend>
             <div class="fidelite-content">
-                <h3 class="fidelite-titre">STATUT : COMPLICE GOURMAND</h3>
-                <p class="fidelite-points">Points cumulés : <span class="fidelite-valeur">150 pts</span></p>
-                <p class="fidelite-desc">Plus que 50 points pour obtenir un <em>Burger Donut offert</em> !</p>
+                <h3 class="fidelite-titre">STATUT : <?php echo htmlspecialchars($profil_client['fidelite']['statut'] ?? 'NOUVEAU'); ?></h3>
+                <p class="fidelite-points">Points cumulés : <span class="fidelite-valeur"><?php echo htmlspecialchars($profil_client['fidelite']['points'] ?? 0); ?></span></p>
             </div>
         </fieldset>
 
         <fieldset class="groupe-formulaire">
-            <legend>MES INFORMATIONS</legend>
+            <legend>MES INFORMATIONS ✏️</legend>
+            
+            <label>Nom :</label><br>
+            <input type="text" value="<?php echo htmlspecialchars($profil_client['informations']['nom']); ?>" class="input-form" readonly><br><br>
 
             <label>Prénom :</label><br>
-            <div class="input-group-profil">
-                <input type="text" value="Tristan" class="input-form" readonly>
-                <button type="button" class="btn-action btn-edit-profil">✏️</button>
-            </div>
+            <input type="text" value="<?php echo htmlspecialchars($profil_client['informations']['prenom']); ?>" class="input-form" readonly><br><br>
 
-            <label>Nom :</label><br>
-            <div class="input-group-profil">
-                <input type="text" value="Douille" class="input-form" readonly>
-                <button type="button" class="btn-action btn-edit-profil">✏️</button>
-            </div>
+            <label>Adresse E-mail :</label><br>
+            <input type="email" value="<?php echo htmlspecialchars($profil_client['login']); ?>" class="input-form" readonly><br><br>
 
-            <label>Date de naissance :</label><br>
-            <div class="input-group-profil">
-                <input type="date" value="1998-08-15" class="input-form" readonly>
-                <button type="button" class="btn-action btn-edit-profil">✏️</button>
-            </div>
+            <label>Téléphone :</label><br>
+            <input type="text" value="<?php echo htmlspecialchars($profil_client['informations']['telephone']); ?>" class="input-form" readonly><br><br>
 
-            <label>E-mail :</label><br>
-            <div class="input-group-profil">
-                <input type="email" value="tristan.douille@email.com" class="input-form" readonly>
-                <button type="button" class="btn-action btn-edit-profil">✏️</button>
-            </div>
-
-            <label>Mot de passe :</label><br>
-            <div class="input-group-profil">
-                <input type="password" value="********" class="input-form" readonly>
-                <button type="button" class="btn-action btn-edit-profil">✏️</button>
-            </div>
+            <label>Adresse de livraison :</label><br>
+            <input type="text" value="<?php echo htmlspecialchars($profil_client['informations']['adresse']['rue'] . ', ' . $profil_client['informations']['adresse']['code_postal'] . ' ' . $profil_client['informations']['adresse']['ville']); ?>" class="input-form" readonly><br><br>
         </fieldset>
 
         <fieldset class="groupe-formulaire">
@@ -144,27 +158,41 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>12/10/2025</td>
-                    <td>2x Pizza Hawaïenne<br>1x Soda Cornichon</td>
-                    <td>22.00 €</td>
-                    <td class="statut-livre">LIVRÉ</td>
-                    <td><a href="presentation.php" class="lien-recommander">Recommander</a></td>
-                </tr>
-                <tr>
-                    <td>05/10/2025</td>
-                    <td>1x Fish Donut<br>1x Frites Chocolat</td>
-                    <td>15.00 €</td>
-                    <td class="statut-livre">LIVRÉ</td>
-                    <td><a href="presentation.php" class="lien-recommander">Recommander</a></td>
-                </tr>
-                <tr>
-                    <td>20/09/2025</td>
-                    <td>1x Omelette Skittles</td>
-                    <td>4.50 €</td>
-                    <td class="statut-annule">ANNULÉ</td>
-                    <td>-</td>
-                </tr>
+                <?php
+                $a_des_commandes = false;
+                foreach ($commandes as $commande) {
+                    if ($commande['id_client'] == $user_id) {
+                        $a_des_commandes = true;
+                        
+                        // Formatage de la date
+                        $date_cmd = date("d/m/Y", strtotime($commande['date_heure']));
+                        $statut = $commande['statut_preparation'];
+                        
+                        // Définir la classe CSS selon le statut (pour garder tes couleurs)
+                        $classe_statut = ($statut == 'LIVRÉ') ? 'statut-livre' : (($statut == 'ANNULÉ') ? 'statut-annule' : '');
+
+                        echo "<tr>";
+                        echo "<td>" . $date_cmd . "</td>";
+                        echo "<td>Commande " . $commande['id_commande'] . "</td>";
+                        echo "<td>" . number_format($commande['prix_total'], 2) . " €</td>";
+                        echo "<td class='" . $classe_statut . "'>" . $statut . "</td>";
+                        
+                        // Bouton de notation si la commande est livrée
+                        echo "<td>";
+                        if ($statut == 'LIVRÉ') {
+                            echo "<a href='notation.php?id_commande=" . $commande['id_commande'] . "' class='lien-recommander'>Noter</a>";
+                        } else {
+                            echo "-";
+                        }
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                }
+
+                if (!$a_des_commandes) {
+                    echo "<tr><td colspan='5'>Vous n'avez passé aucune commande.</td></tr>";
+                }
+                ?>
             </tbody>
         </table>
     </div>

@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+// Redirection si non connecté
+if (!isset($_SESSION['utilisateur_connecte'])) {
+    header("Location: connexion.php");
+    exit();
+}
+
+// On récupère l'ID de la commande depuis l'URL
+$id_commande = isset($_GET['id_commande']) ? $_GET['id_commande'] : '';
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -23,12 +36,13 @@
     </div>
 
     <div class="bandeau-titre">
-        <h2><u>NOTER VOTRE COMMANDE</u></h2>
+        <h2><u>NOTER LA COMMANDE <?php echo htmlspecialchars($id_commande); ?></u></h2>
     </div>
 
     <div class="conteneur-formulaire">
-        <form action="accueil.php" method="post">
-
+        <form action="verif/verification_notation.php" method="post">
+        <input type="hidden" name="id_commande" value="<?php echo htmlspecialchars($id_commande); ?>">
+        
             <fieldset class="groupe-formulaire">
                 <legend>LA LIVRAISON</legend>
                 <label for="note-livraison">Note du livreur :</label><br>
