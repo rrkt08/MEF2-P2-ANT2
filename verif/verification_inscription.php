@@ -1,11 +1,15 @@
 <?php
-// verif/verification_inscription.php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // 1. SÉCURITÉ : Vérification que les champs obligatoires ne sont pas vides
-    // (Au cas où l'utilisateur aurait trafiqué le HTML pour enlever les "required")
-    if (empty($_POST['email']) || empty($_POST['mdp']) || empty($_POST['nom']) || empty($_POST['prenom']) || empty($_POST['telephone'])) {
+    //Vérification des champs vides obligatoires
+    if (
+        empty($_POST['email']) || empty($_POST['mdp']) || empty($_POST['nom']) ||
+        empty($_POST['prenom']) || empty($_POST['telephone']) || empty($_POST['date_naissance']) ||
+        empty($_POST['adresse']) || empty($_POST['code_postal']) || empty($_POST['ville']) ||
+        empty($_POST['age'])
+    ) {
+
         header("Location: ../inscription.php?erreur=champs_vides");
         exit();
     }
@@ -20,28 +24,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $utilisateurs = json_decode($contenu, true);
 
-    // 2. SÉCURITÉ : Nettoyage absolu de TOUTES les chaînes de texte (Faille XSS)
-    // trim() enlève les espaces au début et à la fin.
-    // htmlspecialchars() transforme les chevrons < et > en texte inoffensif.
+    // Nettoyage
     $email_saisi  = htmlspecialchars(trim($_POST['email']));
-    $nom_propre   = htmlspecialchars(trim($_POST['nom']));
-    $prenom_propre = htmlspecialchars(trim($_POST['prenom']));
-    $adresse_propre = htmlspecialchars(trim($_POST['adresse']));
-    $complement_propre = htmlspecialchars(trim($_POST['complement_adresse']));
-    $cp_propre    = htmlspecialchars(trim($_POST['code_postal']));
-    $ville_propre = htmlspecialchars(trim($_POST['ville']));
-    $pref_alim_propre = htmlspecialchars(trim($_POST['preferences_alimentaires']));
-
-    // Nettoyage du téléphone
     $tel_propre = str_replace(' ', '', $_POST['telephone']);
+    $date_saisie = $_POST['date_naissance'];
 
     $type_erreur = "";
 
+    // Verif date de naissance
+    $annee_saisie = (int)date('Y', strtotime($date_saisie));
+    $date_aujourdhui = date('Y-m-d');
+
+    if ($annee_saisie < 1900 || $date_saisie > $date_aujourdhui) {
+        $type_erreur = "date_invalide";
+    }
     // Vérification du format du téléphone
-    if (strlen($tel_propre) != 10 || !ctype_digit($tel_propre) || $tel_propre[0] != '0') {
+    elseif (strlen($tel_propre) != 10 || !ctype_digit($tel_propre) || $tel_propre[0] != '0') {
         $type_erreur = "tel_invalide";
-    } else {
-        // Vérification des doublons avec l'email nettoyé
+    }
+    // Vérification des doublons (Email et Téléphone)
+    else {
         if (!empty($utilisateurs)) {
             foreach ($utilisateurs as $user) {
                 if ($user['login'] == $email_saisi) {
@@ -56,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Redirection en cas d'erreur
     if ($type_erreur != "") {
         header("Location: ../inscription.php?erreur=" . $type_erreur);
         exit();
@@ -68,30 +71,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nouvel_id = $dernier_user['id_utilisateur'] + 1;
     }
 
-    $preferences_contact = isset($_POST['offres']) ? $_POST['offres'] : [];
+    if (isset($_POST['offres'])) {
+        $preferences_contact = $_POST['offres'];
+    } else {
+        $preferences_contact = [];
+    }
 
-    // 3. SÉCURITÉ : Hachage du mot de passe
-    // Transforme "mdp123" en "$2y$10$wTfV6/b..."
-    $mdp_securise = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
-
-    // Création du nouvel utilisateur avec les variables PROPRES
+    // Création de l'utilisateur
     $nouvel_utilisateur = [
         "id_utilisateur" => $nouvel_id,
         "login" => $email_saisi,
-        "mot_de_passe" => $mdp_securise, // Mot de passe crypté !
+        "mot_de_passe" => $_POST['mdp'],
         "role" => "client",
         "informations" => [
-            "nom" => $nom_propre,
-            "prenom" => $prenom_propre,
-            "naissance" => $_POST['date_naissance'],
+            "nom" => htmlspecialchars(trim($_POST['nom'])),
+            "prenom" => htmlspecialchars(trim($_POST['prenom'])),
+            "naissance" => $date_saisie,
             "adresse" => [
-                "rue" => $adresse_propre,
-                "complement" => $complement_propre,
-                "code_postal" => $cp_propre,
-                "ville" => $ville_propre
+                "rue" => htmlspecialchars(trim($_POST['adresse'])),
+                "complement" => htmlspecialchars(trim($_POST['complement_adresse'])),
+                "code_postal" => htmlspecialchars(trim($_POST['code_postal'])),
+                "ville" => htmlspecialchars(trim($_POST['ville']))
             ],
             "telephone" => $tel_propre,
-            "preferences_alimentaires" => $pref_alim_propre,
+            "preferences_alimentaires" => htmlspecialchars(trim($_POST['preferences_alimentaires'])),
             "preferences_contact" => $preferences_contact
         ],
         "fidelite" => [
@@ -104,10 +107,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]
     ];
 
-    // Ajout au tableau
     $utilisateurs[] = $nouvel_utilisateur;
 
-    // 4. SÉCURITÉ : Utilisation de LOCK_EX pour éviter la corruption du fichier
+    // Sauvegarde
     file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
 
     header("Location: ../connexion.php?succes=1");
