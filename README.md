@@ -16,7 +16,7 @@ Le concept ? Un restaurant audacieux spécialisé dans les **"crimes culinaires"
 ## État d'Avancement du Projet
 
 - **Phase 1 : Interface Statique (HTML5 / CSS3)** - *Terminée* ✅
-- **Phase 2 : Dynamisation Serveur (PHP / MySQL)** - *En cours* 🚧
+- **Phase 2 : Dynamisation Serveur (PHP / MySQL)** - *Terminée* ✅
 - **Phase 3 : Dynamisation Client (JavaScript / AJAX)** - *À venir* ⏳
 - **Phase 4 : Bonnes Pratiques & Optimisation** - *À venir* ⏳
 
