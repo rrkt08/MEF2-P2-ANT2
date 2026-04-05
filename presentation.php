@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+// Récupération de tous les plats depuis le JSON
+$plats = [];
+if (file_exists('data/plats.json')) {
+    $plats = json_decode(file_get_contents('data/plats.json'), true);
+}
+
+// Calcul du nombre d'articles actuellement dans le panier
+$nb_articles_panier = 0;
+if (isset($_SESSION['panier'])) {
+    foreach ($_SESSION['panier'] as $qte) {
+        $nb_articles_panier += $qte;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -18,8 +36,14 @@
         <ul>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php" class="actif">LA CARTE</a></li>
-            <li><a href="connexion.php">CONNEXION</a></li>
-            <li><a href="inscription.php" class="btn-inscription">INSCRIPTION</a></li>
+            <?php if(isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
+                <li><a href="profil.php">MON COMPTE</a></li>
+                <li><a href="panier.php" style="color: #ffcc00; font-weight: bold;">🛒 PANIER (<?php echo $nb_articles_panier; ?>)</a></li>
+                <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
+            <?php else: ?>
+                <li><a href="connexion.php">CONNEXION</a></li>
+                <li><a href="inscription.php" class="btn-inscription">INSCRIPTION</a></li>
+            <?php endif; ?>
         </ul>
     </div>
 
@@ -50,186 +74,67 @@
         </form>
     </div>
 
-    <h2 class="categorie-titre premier-titre">DONUT BURGERS</h2>
-    <div class="plats-populaires">
-        <div class="plat">
-            <img src="images/Fish_donut.png" alt="Fish Donut Burger">
-            <h3>FISH DONUT BURGER</h3>
-            <p class="description-plat">Filet de poisson pané croustillant entre deux donuts sucrés.</p>
-            <p class="prix">10.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-        <div class="plat">
-            <img src="images/Steak_donut.png" alt="Steak Donut Burger">
-            <h3>STEAK DONUT BURGER</h3>
-            <p class="description-plat">Le classique bœuf-cheddar entre deux donuts sucrés.</p>
-            <p class="prix">11.50 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-        <div class="plat">
-            <img src="images/Chiken_donut.png" alt="Chiken Donut Burger">
-            <h3>CHIKEN DONUT BURGER</h3>
-            <p class="description-plat">Filet de poulet frit épicé entre deux donuts sucrés.</p>
-            <p class="prix">11.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-    </div>
+    <?php
+    // Gérer l'affichage d'un message de succès si un plat a été ajouté
+    if (isset($_GET['ajout']) && $_GET['ajout'] == 'ok') {
+        echo '<div style="background-color: #e6ffe6; color: #008000; text-align: center; padding: 10px; font-weight: bold; margin-bottom: 20px;">Article ajouté au panier avec succès !</div>';
+    }
+    ?>
 
-    <h2 class="categorie-titre">PIZZAS</h2>
-    <div class="plats-populaires">
-        <div class="plat">
-            <img src="images/pizza_fraise.png" alt="Pizza Fraise">
-            <h3>PIZZA FRAISE</h3>
-            <p class="description-plat">Base crème diplomate et fraises fraîches.</p>
-            <p class="prix">9.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
+    <?php
+    // On définit les catégories que l'on veut afficher dans l'ordre
+    $categories = [
+        "donut-burgers" => "DONUT BURGERS",
+        "pizzas" => "PIZZAS",
+        "varietes" => "VARIÉTÉS",
+        "desserts" => "DESSERTS",
+        "boissons" => "BOISSONS"
+    ];
 
-        <div class="plat">
-            <img src="images/pizza_maki.png" alt="Pizza Maki">
-            <h3>PIZZA MAKI</h3>
-            <p class="description-plat">Base riz avec des sushis et des makis.</p>
-            <p class="prix">12.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
+    foreach ($categories as $id_cat => $nom_cat) : ?>
+        <h2 class="categorie-titre"><?php echo $nom_cat; ?></h2>
+        <div class="plats-populaires">
+            <?php foreach ($plats as $plat) : ?>
+                <?php if ($plat['categorie'] == $id_cat) : ?>
+                    <div class="plat">
+                        <?php
+                    // Le code cherche le nom de l'image sans se soucier de l'extension (.jpg ou .png) écrite dans le JSON
+                    $nom_sans_extension = pathinfo($plat['image'], PATHINFO_FILENAME);
 
-        <div class="plat">
-            <img src="images/pizza_ananas.png" alt="Pizza Hawaïenne">
-            <h3>PIZZA HAWAÏENNE</h3>
-            <p class="description-plat">Base tomate avec des morceaux de jambon et d'ananas, on aime ou on déteste...</p>
-            <p class="prix">10.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
+                    if (file_exists("images/" . $nom_sans_extension . ".png")) {
+                        $chemin_image = "images/" . $nom_sans_extension . ".png";
+                    } elseif (file_exists("images/" . $nom_sans_extension . ".jpg")) {
+                        $chemin_image = "images/" . $nom_sans_extension . ".jpg";
+                    } else {
+                        // Si vraiment l'image est introuvable, on met ton image de secours
+                        $chemin_image = "images/fondplat.jpg"; 
+                    }
+                    ?>
+                    <img src="<?php echo $chemin_image; ?>" alt="<?php echo htmlspecialchars($plat['nom']); ?>">
+                        <h3><?php echo htmlspecialchars(strtoupper($plat['nom'])); ?></h3>
+                        <p class="description-plat"><?php echo htmlspecialchars($plat['description']); ?></p>
+                        <p class="prix"><?php echo number_format($plat['prix'], 2); ?> €</p>
+                        
+                        <form action="verif/ajouter_panier.php" method="POST">
+                            <input type="hidden" name="id_plat" value="<?php echo $plat['id_plat']; ?>">
+                            
+                            <div style="margin-bottom: 12px;">
+                                <label style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold;">Qté :</label>
+                                <input type="number" name="quantite" value="1" min="1" max="10" style="width: 40px; padding: 5px; border-radius: 5px; border: none; text-align: center; font-weight: bold; margin-left: 5px; color: #000000; background-color: #ffffff;">
+                            </div>
+                            
+                            <button type="submit" 
+                                style="background-color: #ffffff; color: #e60012; padding: 10px 25px; border: none; border-radius: 25px; font-family: Impact, sans-serif; font-size: 22px; cursor: pointer; text-transform: uppercase; transition: 0.2s;"
+                                onmouseover="this.style.backgroundColor='#e60012'; this.style.color='#ffffff';"
+                                onmouseout="this.style.backgroundColor='#ffffff'; this.style.color='#e60012';">
+                                AJOUTER
+                            </button>
+                        </form>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
-    </div>
-
-    <h2 class="categorie-titre">VARIÉTÉS</h2>
-    <div class="plats-populaires">
-        <div class="plat">
-            <img src="images/croissant_jambon.png" alt="Croissant Jambon">
-            <h3>CROISSANT JAMBON</h3>
-            <p class="description-plat">Jambon avec du fromage fondu dans un croissant pur beurre.</p>
-            <p class="prix">5.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/Frites_chocolat.png" alt="Frites Chocolat">
-            <h3>FRITES CHOCOLAT</h3>
-            <p class="description-plat">Frites dorées et salées, généreusement recouvertes de chocolat au lait.</p>
-            <p class="prix">5.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/croissant_salé.png" alt="Croissant Viande">
-            <h3>CROISSANT VIANDE</h3>
-            <p class="description-plat">Hachis de bœuf épicé avec du fromage fondu dans un croissant pur beurre.</p>
-            <p class="prix">6.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/spaghetti_chocolat.png" alt="Pates Chocolat">
-            <h3>PÂTES CHOCOLAT</h3>
-            <p class="description-plat">Spaghettis nappés d'une onctueuse sauce au chocolat et recouvertes de framboises.</p>
-            <p class="prix">6.50 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/chiken_waffle.png" alt="Chiken Waffle">
-            <h3>CHIKEN WAFFLE</h3>
-            <p class="description-plat">Gaufre moelleuse au sirop d'érable surmontée de poulet frit croustillant.</p>
-            <p class="prix">5.50 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/omelette_skittles.png" alt="Omelette Skittles">
-            <h3>OMELETTE SKITTLES</h3>
-            <p class="description-plat">Une omelette et des skittles arc-en-ciel, pour un max de saveurs.</p>
-            <p class="prix">4.50 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-    </div>
-
-    <h2 class="categorie-titre">DESSERTS</h2>
-    <div class="plats-populaires">
-        <div class="plat">
-            <img src="images/melon_jambon.png" alt="Jambon Melon">
-            <h3>MELON JAMBON</h3>
-            <p class="description-plat">Du melon, du jambon, c'est pas bon ?</p>
-            <p class="prix">4.50 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/tiramisu_vqr.png" alt="Tiramisu Vache qui rit">
-            <h3>TIRAMISU VACHE QUI RIT</h3>
-            <p class="description-plat">Cacao, café, biscuits à la cuillère et vache qui rit.</p>
-            <p class="prix">3.50 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/peche_mayo.png" alt="Pêche Mayonnaise">
-            <h3>PÊCHE MAYONNAISE</h3>
-            <p class="description-plat">Demi-pêches généreusement recouvertes de mayonnaise.</p>
-            <p class="prix">3.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-    </div>
-
-    <h2 class="categorie-titre">BOISSONS</h2>
-    <div class="plats-populaires">
-        <div class="plat">
-            <img src="images/soda_cornichon.png" alt="Limonade Cornichon">
-            <h3>SODA CORNICHON</h3>
-            <p class="description-plat">Une boisson gazeuse au goût vinaigré et audacieux de jus de cornichon.</p>
-            <p class="prix">2.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/soda_citrouille.png" alt="Soda Citrouille">
-            <h3>SODA CITROUILLE</h3>
-            <p class="description-plat">Une boisson gazeuse aux notes d'automne et de courge sucrée.</p>
-            <p class="prix">2.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/soda_noix2coco.png" alt="Soda Noix de Coco">
-            <h3>SODA NOIX DE COCO</h3>
-            <p class="description-plat">Une boisson gazeuse où l'exotisme de la coco rencontre de fines bulles.</p>
-            <p class="prix">2.50 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/smoothie_camembert_pomme.png" alt="Smoothie Camembert">
-            <h3>SMOOTHIE CAMEMBERT POMME</h3>
-            <p class="description-plat">Smoothie à la pomme et au camembert mixés ensemble.</p>
-            <p class="prix">4.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/smoothie_carotte_ananas.png" alt="Smoothie Carotte Ananas">
-            <h3>SMOOTHIE CAROTTES ANANAS</h3>
-            <p class="description-plat">Smoothie aux carottes et à l'ananas étonnament rafraîchissant.</p>
-            <p class="prix">4.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-
-        <div class="plat">
-            <img src="images/smoothie_tomate_mozarella.png" alt="Smoothie Tomate Mozarella">
-            <h3>SMOOTHIE TOMATES MOZARELLA</h3>
-            <p class="description-plat">Un smoothie aux tomates et à la mozarella, bellissima.</p>
-            <p class="prix">4.00 €</p>
-            <a href="#" class="btn-plat">AJOUTER</a>
-        </div>
-    </div>
+    <?php endforeach; ?>
 
     <div class="footer">
         <div class="footer-col">
