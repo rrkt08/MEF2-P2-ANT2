@@ -94,23 +94,27 @@ La Phase 2 marque le passage d'un site statique à une application web dynamique
 
 ## 🛠️ Problèmes connus & Solutions (Phase 2)
 
-L'implémentation de la logique serveur a nécessité de résoudre des problématiques de sécurité et de persistance des données.
+Le passage au dynamique a présenté plusieurs défis techniques qui ont été résolus durant le développement :
 
-* **Sécurisation des accès par rôle** :
-    * **Problème** : Risque d'accès non autorisé aux interfaces "Staff" (Cuisine, Livraison, Admin) par simple saisie de l'URL.
-    * **Solution** : Mise en place de vérifications de session systématiques au début de chaque fichier PHP sensible, redirigeant l'utilisateur vers `connexion.php` s'il ne possède pas le rôle requis.
-* **Fiabilité des transactions CYBank** :
-    * **Problème** : Risque d'altération du montant ou de l'URL de retour lors du processus de paiement.
-    * **Solution** : Utilisation d'un **hash de contrôle MD5** incluant l'API Key et les paramètres de transaction, vérifié par le script `validation_commande.php` dès le retour de la banque.
-* **Robustesse de la lecture JSON** :
-    * **Problème** : Erreur fatale potentielle si un fichier de données (`.json`) est absent ou corrompu lors du chargement.
-    * **Solution** : Utilisation de `file_exists()` couplé à une initialisation par défaut avec un tableau vide `[]` en cas d'erreur de décodage.
-* **Ergonomie Mobile Staff** :
-    * **Problème** : Difficulté de manipulation de l'interface livraison avec des "gros gants" sur smartphone.
-    * **Solution** : Conservation de boutons larges (90% de largeur) et simplification des actions via des formulaires directs pour valider la livraison.
-* **Validation des formulaires** :
-    * **Problème** : Inscription de doublons (e-mail ou téléphone déjà existants) ou données vides.
-    * **Solution** : Scripts de vérification backend parcourant le fichier `utilisateurs.json` avant toute nouvelle insertion, avec renvoi de codes d'erreurs explicites dans l'URL.
+### 1. Synchronisation et Environnement
+* [cite_start]**Problème :** Des soucis de synchronisation entre VS Code et le navigateur faisaient apparaître les fichiers HTML comme vides[cite: 39, 40].
+* [cite_start]**Solution :** Création d'un dossier local propre (`Projet_Creative_Yumland`) avec activation de l'enregistrement automatique (Auto-Save) pour rétablir le lien direct avec le navigateur[cite: 50, 51].
+
+### 2. Ergonomie et Responsive (Interface Livreur)
+* [cite_start]**Problème :** Difficulté à adapter la taille des boutons pour un usage sur smartphone avec de "gros gants"[cite: 41, 42].
+* [cite_start]**Solution :** Utilisation de la propriété `box-sizing: border-box`, de largeurs en pourcentage (`90%`) et de bordures transparentes pour harmoniser la taille des éléments cliquables[cite: 52, 53].
+
+### 3. Affichage Dynamique des Produits
+* [cite_start]**Problème :** Le plat "Croissant Viande" ne s'affichait pas sur la carte[cite: 88, 89].
+* [cite_start]**Solution :** Harmonisation de la nomenclature des catégories entre le fichier `plats.json` et les filtres codés en PHP[cite: 92].
+
+### 4. Consultation des Profils par l'Administrateur
+* [cite_start]**Problème :** Conflit entre la session de l'admin et l'ID de l'utilisateur ciblé lors du clic sur "Voir Profil"[cite: 97, 98].
+* [cite_start]**Solution :** Restructuration de la logique dans `profil.php` pour donner la priorité à l'identifiant transmis par `$_GET['id']` lorsque le rôle actif est "admin"[cite: 100].
+
+### 5. API de Paiement CYBank (Point d'attention)
+* [cite_start]**Problème :** Erreur "Code vendeur inconnu" et anomalie de clé de contrôle (Hash MD5) lors de la validation du panier[cite: 83].
+* [cite_start]**Statut :** Malgré l'utilisation du code vendeur "TEST" et des tentatives de correction du calcul de hachage, la validation automatique reste à finaliser en raison de conflits de sécurité sur l'URL de retour[cite: 84, 85, 86].
 
 ---
 
