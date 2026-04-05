@@ -101,16 +101,55 @@ if (isset($_SESSION['panier'])) {
                     TOTAL : <?php echo number_format($total_commande, 2); ?> €
                 </h3>
 
-                <form action="verif/validation_commande.php" method="POST" style="text-align: center; margin-top: 30px;">
+                <?php
+                require_once('verif/getapikey.php');
+                
+                // Préparation des données pour CYBank
+                $vendeur = "MEF-2_G"; 
+                $transaction = substr(md5(uniqid(mt_rand(), true)), 0, 15); 
+                $montant = number_format($total_commande, 2, '.', ''); 
+                $api_key = getAPIKey($vendeur);
+                
+                // URL où CYBank doit renvoyer le client 
+                $url_retour = "http://localhost/FlagrantDelice/verif/validation_commande.php?mode=";
+                
+                // Calcul de la valeur de contrôle (MD5) imposée par le sujet
+                $hash_control = md5($api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $url_retour);
+                ?>
+
+                <form action="https://www.plateforme-smc.fr/cybank/index.php" method="POST" style="text-align: center; margin-top: 30px;">
                     <label style="font-weight: bold; color: #00a8e8;">Mode de consommation :</label><br>
-                    <select name="mode_conso" class="input-form" style="width: 50%; margin-bottom: 20px;">
+                    <select name="mode_conso_choisi" id="mode_select" class="input-form" style="width: 50%; margin-bottom: 20px;" onchange="updateRetour()">
                         <option value="livraison">Livraison à domicile</option>
                         <option value="emporter">À emporter</option>
                         <option value="sur_place">Sur place</option>
                     </select>
+
+                    <input type="hidden" name="transaction" value="<?php echo $transaction; ?>">
+                    <input type="hidden" name="montant" value="<?php echo $montant; ?>">
+                    <input type="hidden" name="vendeur" value="<?php echo $vendeur; ?>">
+                    <input type="hidden" name="control" id="input_control" value="<?php echo $hash_control; ?>">
+                    <input type="hidden" name="retour" id="input_retour" value="<?php echo $url_retour . 'livraison'; ?>">
+
                     <br>
                     <button type="submit" class="btn-recherche btn-submit-form" style="background-color: #28a745;">Payer avec CYBank et Valider</button>
                 </form>
+
+                <script>
+                // Petit script pour mettre à jour l'URL de retour selon le mode choisi
+                function updateRetour() {
+                    var mode = document.getElementById('mode_select').value;
+                    var base_url = "<?php echo $url_retour; ?>";
+                    var api_key = "<?php echo $api_key; ?>";
+                    var trans = "<?php echo $transaction; ?>";
+                    var mt = "<?php echo $montant; ?>";
+                    var vend = "<?php echo $vendeur; ?>";
+                    
+                    var new_retour = base_url + mode;
+                    document.getElementById('input_retour').value = new_retour;
+                    
+                }
+                </script>
 
             <?php endif; ?>
         </fieldset>
