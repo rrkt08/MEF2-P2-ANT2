@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_saisi  = htmlspecialchars(trim($_POST['email']));
     $tel_propre = str_replace(' ', '', $_POST['telephone']);
     $date_saisie = $_POST['date_naissance'];
+    $mdp_saisi = $_POST['mdp'];
 
     $type_erreur = "";
 
@@ -38,6 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($annee_saisie < 1900 || $date_saisie > $date_aujourdhui) {
         $type_erreur = "date_invalide";
     }
+
+    //mdp avec 8 caractères minimum
+    elseif (strlen($mdp_saisi) < 8) {
+        $type_erreur = "mdp_invalide";
+    }
+
     // Vérification du format du téléphone
     elseif (strlen($tel_propre) != 10 || !ctype_digit($tel_propre) || $tel_propre[0] != '0') {
         $type_erreur = "tel_invalide";
@@ -81,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nouvel_utilisateur = [
         "id_utilisateur" => $nouvel_id,
         "login" => $email_saisi,
-        "mot_de_passe" => $_POST['mdp'],
+        "mot_de_passe" => $mdp_saisi,
         "role" => "client",
         "informations" => [
             "nom" => htmlspecialchars(trim($_POST['nom'])),
