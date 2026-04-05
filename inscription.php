@@ -23,6 +23,29 @@
         </ul>
     </div>
 
+    <?php
+    // GESTION DES MESSAGES D'ERREUR
+    if (isset($_GET['erreur'])) {
+        $message_erreur = "";
+
+        if ($_GET['erreur'] == "champs_vides") {
+            $message_erreur = "Veuillez remplir tous les champs obligatoires.";
+        } elseif ($_GET['erreur'] == "date_invalide") {
+            $message_erreur = "La date de naissance est invalide. Veuillez entrer une date cohérente.";
+        } elseif ($_GET['erreur'] == "tel_invalide") {
+            $message_erreur = "Le numéro de téléphone est invalide. Il doit contenir 10 chiffres et commencer par 0.";
+        } elseif ($_GET['erreur'] == "email_existant") {
+            $message_erreur = "Cet e-mail est déjà associé à un compte !";
+        } elseif ($_GET['erreur'] == "tel_existant") {
+            $message_erreur = "Ce numéro de téléphone est déjà associé à un compte !";
+        }
+
+        if ($message_erreur != "") {
+            echo '<div style="background-color: #ffe6e6; color: #e60012; text-align: center; padding: 15px; font-family: Impact, sans-serif; font-size: 20px; letter-spacing: 1px;">' . $message_erreur . '</div>';
+        }
+    }
+    ?>
+
     <div class="bandeau-titre">
         <h2><u>CRÉATION DE COMPTE</u></h2>
     </div>
@@ -33,7 +56,7 @@
             Complétez vos informations personnelles pour créer votre compte. Tous les champs marqués d'un * sont obligatoires.
         </p>
 
-        <form action="connexion.php" method="post">
+        <form action="verif/verification_inscription.php" method="post">
 
             <fieldset class="groupe-formulaire">
                 <legend>MES INFORMATIONS</legend>
@@ -92,9 +115,9 @@
                     J'accepte de recevoir des offres et actualités de la part de Flagrant Délice :
                 </p>
 
-                <input type="checkbox" name="offres" value="email" id="offre-email">
+                <input type="checkbox" name="offres[]" value="email" id="offre-email">
                 <label for="offre-email" class="label-checkbox marge-droite">Par e-mail</label>
-                <input type="checkbox" name="offres" value="sms" id="offre-sms">
+                <input type="checkbox" name="offres[]" value="sms" id="offre-sms">
                 <label for="offre-sms" class="label-checkbox">Par SMS</label>
 
                 <br><br>
