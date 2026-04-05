@@ -168,7 +168,7 @@ if (file_exists('data/commandes.json')) {
                         $date_cmd = date("d/m/Y", strtotime($commande['date_heure']));
                         $statut = $commande['statut_preparation'];
                         
-                        // Définir la classe CSS selon le statut (pour garder tes couleurs)
+                        // Définition de la classe CSS selon le statut
                         $classe_statut = ($statut == 'LIVRÉ') ? 'statut-livre' : (($statut == 'ANNULÉ') ? 'statut-annule' : '');
 
                         echo "<tr>";
