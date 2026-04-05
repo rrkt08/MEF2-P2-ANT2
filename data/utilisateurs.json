@@ -247,5 +247,30 @@
             "inscription": "2025-08-15T08:00:00",
             "derniere_connexion": "2025-10-16T12:00:00"
         }
+    },
+    {
+        "id_utilisateur": 10,
+        "login": "luc@email.com",
+        "mot_de_passe": "Rapide99",
+        "role": "livreur",
+        "informations": {
+            "nom": "Eclair",
+            "prenom": "Luc",
+            "naissance": "1995-05-05",
+            "adresse": {
+                "rue": "Local Livraisons",
+                "complement": "",
+                "code_postal": "95000",
+                "ville": "Cergy"
+            },
+            "telephone": "0655443322",
+            "preferences_alimentaires": "",
+            "preferences_contact": []
+        },
+        "fidelite": null,
+        "dates": {
+            "inscription": "2025-10-16T14:00:00",
+            "derniere_connexion": "2025-10-16T14:00:00"
+        }
     }
 ]
