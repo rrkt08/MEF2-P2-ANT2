@@ -100,19 +100,15 @@ Le développement de cette phase a nécessité la résolution de plusieurs défi
 * **Problème :** Conflit de synchronisation avec l'éditeur (fichiers apparaissant vides dans le navigateur lors de l'utilisation de dossiers distants).
 * **Solution :** Migration vers un dossier local dédié avec activation de l'enregistrement automatique (Auto-Save) pour garantir l'intégrité des fichiers.
 
-### 2. Ergonomie Mobile (Interface Livreur)
-* **Problème :** Difficulté à adapter l'interface pour un livreur utilisant un smartphone avec de "gros gants".
-* **Solution :** Utilisation de la propriété CSS `box-sizing: border-box`, de largeurs à `90%` et de `display: block` pour créer des zones cliquables larges et stables.
-
-### 3. Affichage Dynamique
+### 2. Affichage Dynamique
 * **Problème :** Erreur d'affichage sur certains produits (ex: "Croissant Viande") malgré des données correctes.
 * **Solution :** Harmonisation de la nomenclature des catégories entre le fichier `plats.json` et les filtres de la boucle PHP.
 
-### 4. Gestion des Profils (Admin)
+### 3. Gestion des Profils (Admin)
 * **Problème :** Conflit entre la session de l'administrateur et l'affichage des informations d'un client spécifique.
 * **Solution :** Restructuration des conditions PHP pour donner la priorité à l'identifiant transmis par `$_GET['id']` lorsque l'utilisateur connecté possède le rôle admin.
 
-### 5. Intégration Paiement CYBank
+### 4. Intégration Paiement CYBank
 * **Problème :** Erreurs de hachage MD5 et rejet de la transaction ("Code vendeur inconnu").
 * **Statut :** La structure est prête, mais la validation finale reste à finaliser en raison de contraintes de sécurité sur l'URL de retour de l'API.
 
