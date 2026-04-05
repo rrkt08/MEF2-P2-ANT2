@@ -2,32 +2,52 @@
 session_start();
 
 // Vérification de la connexion
-if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != 'client') {
+if (!isset($_SESSION['utilisateur_connecte'])) {
     header("Location: connexion.php");
     exit();
 }
 
-$user_id = $_SESSION['id_utilisateur']; // On utilise l'ID pour faire le lien avec le JSON
+// Quel profil on va afficher
+if ($_SESSION['role'] == "admin") {
+    // Si l'admin regarde un profil via le bouton "VOIR PROFIL" de la page admin
+    if (isset($_GET['id'])) {
+        $id_profil_a_afficher = $_GET['id'];
+    } else {
+        // Si l'admin clique sur "MON COMPTE" dans la barre de navigation
+        $id_profil_a_afficher = $_SESSION['id_utilisateur'];
+    }
+} else if ($_SESSION['role'] == "client") {
+    // Si c'est un client, on affiche son profil
+    $id_profil_a_afficher = $_SESSION['id_utilisateur'];
+} else {
+    header("Location: connexion.php");
+    exit();
+}
 
-// Récupération des informations de l'utilisateur connecté
-$profil_client = null;
-if (file_exists('data/utilisateurs.json')) {
-    $utilisateurs = json_decode(file_get_contents('data/utilisateurs.json'), true);
-    foreach ($utilisateurs as $user) {
-        if ($user['id_utilisateur'] == $user_id) {
-            $profil_client = $user;
-            break;
-        }
+// Chargement des données
+$utilisateurs = json_decode(file_get_contents('data/utilisateurs.json'), true);
+if ($utilisateurs === null) {
+    $utilisateurs = [];
+}
+
+$commandes = json_decode(file_get_contents('data/commandes.json'), true);
+if ($commandes === null) {
+    $commandes = [];
+}
+
+// Recherche info de l'utilisateur concerné
+$user_data = null;
+foreach ($utilisateurs as $u) {
+    if ($u['id_utilisateur'] == $id_profil_a_afficher) {
+        $user_data = $u;
+        break;
     }
 }
 
-// Récupération des commandes
-$commandes = [];
-if (file_exists('data/commandes.json')) {
-    $commandes = json_decode(file_get_contents('data/commandes.json'), true);
+if (!$user_data) {
+    die("Utilisateur introuvable dans la base de données.");
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -49,6 +69,12 @@ if (file_exists('data/commandes.json')) {
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="profil.php" class="actif">MON COMPTE</a></li>
+            <?php
+            // Si c'est l'admin il peut retourner a son tableau de bord
+            if ($_SESSION['role'] == 'admin'):
+            ?>
+                <li><a href="admin.php">RETOUR ADMIN</a></li>
+            <?php endif; ?>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
         </ul>
     </div>
@@ -59,86 +85,104 @@ if (file_exists('data/commandes.json')) {
 
     <div class="conteneur-formulaire">
 
-        <fieldset class="groupe-formulaire fidelite-box">
-            <legend>MA FIDÉLITÉ</legend>
-            <div class="fidelite-content">
-                <h3 class="fidelite-titre">STATUT : <?php echo htmlspecialchars($profil_client['fidelite']['statut'] ?? 'NOUVEAU'); ?></h3>
-                <p class="fidelite-points">Points cumulés : <span class="fidelite-valeur"><?php echo htmlspecialchars($profil_client['fidelite']['points'] ?? 0); ?></span></p>
+        <?php
+        // Le bloc fidélité ne s'affiche que si l'utilisateur a des points de fidélité (l'admin, restaurateur, livreur n'en ont pas par exemple)
+        if (isset($user_data['fidelite']) && $user_data['fidelite'] !== null):
+        ?>
+            <fieldset class="groupe-formulaire fidelite-box">
+                <legend>MA FIDÉLITÉ</legend>
+                <div class="fidelite-content">
+                    <h3 class="fidelite-titre">STATUT : <?php echo htmlspecialchars($user_data['fidelite']['statut']); ?></h3>
+                    <p class="fidelite-points">Points cumulés : <span class="fidelite-valeur"><?php echo htmlspecialchars($user_data['fidelite']['points']); ?></span></p>
+                </div>
+            </fieldset>
+        <?php endif; ?>
+
+        <fieldset class="groupe-formulaire">
+            <legend>INFORMATIONS DU COMPTE</legend>
+
+            <label>Nom :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="<?php echo htmlspecialchars($user_data['informations']['nom']); ?>" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+
+            <label>Prénom :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="<?php echo htmlspecialchars($user_data['informations']['prenom']); ?>" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+
+            <label>Adresse E-mail :</label><br>
+            <div class="input-group-profil">
+                <input type="email" value="<?php echo htmlspecialchars($user_data['login']); ?>" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
+            </div>
+
+            <label>Téléphone :</label><br>
+            <div class="input-group-profil">
+                <input type="text" value="<?php echo htmlspecialchars($user_data['informations']['telephone']); ?>" class="input-form" readonly>
+                <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
         </fieldset>
 
         <fieldset class="groupe-formulaire">
-            <legend>MES INFORMATIONS ✏️</legend>
-            
-            <label>Nom :</label><br>
-            <input type="text" value="<?php echo htmlspecialchars($profil_client['informations']['nom']); ?>" class="input-form" readonly><br><br>
-
-            <label>Prénom :</label><br>
-            <input type="text" value="<?php echo htmlspecialchars($profil_client['informations']['prenom']); ?>" class="input-form" readonly><br><br>
-
-            <label>Adresse E-mail :</label><br>
-            <input type="email" value="<?php echo htmlspecialchars($profil_client['login']); ?>" class="input-form" readonly><br><br>
-
-            <label>Téléphone :</label><br>
-            <input type="text" value="<?php echo htmlspecialchars($profil_client['informations']['telephone']); ?>" class="input-form" readonly><br><br>
-
-            <label>Adresse de livraison :</label><br>
-            <input type="text" value="<?php echo htmlspecialchars($profil_client['informations']['adresse']['rue'] . ', ' . $profil_client['informations']['adresse']['code_postal'] . ' ' . $profil_client['informations']['adresse']['ville']); ?>" class="input-form" readonly><br><br>
-        </fieldset>
-
-        <fieldset class="groupe-formulaire">
-            <legend>MA LIVRAISON</legend>
+            <legend>INFORMATIONS DE LIVRAISON</legend>
 
             <label>Adresse (N° et rue) :</label><br>
             <div class="input-group-profil">
-                <input type="text" value="12 Rue du Mauvais Goût" class="input-form" readonly>
+                <input type="text" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['rue']); ?>" class="input-form" readonly>
                 <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
 
             <label>Complément d'adresse :</label><br>
             <div class="input-group-profil">
-                <input type="text" value="Bâtiment B, Interphone B421" class="input-form" readonly>
+                <input type="text" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['complement']); ?>" class="input-form" readonly>
                 <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
 
             <label>Code Postal :</label><br>
             <div class="input-group-profil">
-                <input type="text" value="95000" class="input-form input-short" readonly>
+                <input type="text" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['code_postal']); ?>" class="input-form input-short" readonly>
                 <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
 
             <label>Ville :</label><br>
             <div class="input-group-profil">
-                <input type="text" value="Cergy" class="input-form" readonly>
-                <button type="button" class="btn-action btn-edit-profil">✏️</button>
-            </div>
-
-            <label>Numéro de téléphone :</label><br>
-            <div class="input-group-profil">
-                <input type="tel" value="06 12 34 56 78" class="input-form" readonly>
+                <input type="text" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['ville']); ?>" class="input-form" readonly>
                 <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
 
             <label>Préférences alimentaires / Allergies :</label><br>
             <div class="input-group-profil">
-                <textarea rows="2" class="textarea-form" readonly>Intolérance au lactose, pas de cornichons svp.</textarea>
+                <textarea rows="2" class="textarea-form" readonly><?php echo htmlspecialchars($user_data['informations']['preferences_alimentaires']); ?></textarea>
                 <button type="button" class="btn-action btn-edit-profil btn-edit-tall">✏️</button>
             </div>
         </fieldset>
 
         <fieldset class="groupe-formulaire">
-            <legend>MES PRÉFÉRENCES</legend>
+            <legend>PRÉFÉRENCES DE CONTACT</legend>
             <p class="texte-info-preferences">Offres et actualités de Flagrant Délice :</p>
 
             <div class="input-group-profil">
                 <div class="checkbox-wrapper">
-                    <input type="checkbox" id="profil-email" checked disabled>
+                    <?php
+                    $pref_email = '';
+                    if (in_array('email', $user_data['informations']['preferences_contact'])) {
+                        $pref_email = 'checked';
+                    }
+
+                    $pref_sms = '';
+                    if (in_array('sms', $user_data['informations']['preferences_contact'])) {
+                        $pref_sms = 'checked';
+                    }
+                    ?>
+                    <input type="checkbox" id="profil-email" <?php echo $pref_email; ?> disabled>
                     <label for="profil-email" class="label-checkbox marge-droite">Abonné par e-mail</label>
 
-                    <input type="checkbox" id="profil-sms" disabled>
+                    <input type="checkbox" id="profil-sms" <?php echo $pref_sms; ?> disabled>
                     <label for="profil-sms" class="label-checkbox">Abonné par SMS</label>
                 </div>
-
                 <button type="button" class="btn-action btn-edit-profil">✏️</button>
             </div>
         </fieldset>
@@ -161,22 +205,29 @@ if (file_exists('data/commandes.json')) {
                 <?php
                 $a_des_commandes = false;
                 foreach ($commandes as $commande) {
-                    if ($commande['id_client'] == $user_id) {
+
+                    // Vérification que l'ID de la commande correspond à l'ID du profil qu'on affiche
+                    if ($commande['id_client'] == $id_profil_a_afficher) {
                         $a_des_commandes = true;
-                        
+
                         // Formatage de la date
                         $date_cmd = date("d/m/Y", strtotime($commande['date_heure']));
                         $statut = $commande['statut_preparation'];
-                        
+
                         // Définition de la classe CSS selon le statut
-                        $classe_statut = ($statut == 'LIVRÉ') ? 'statut-livre' : (($statut == 'ANNULÉ') ? 'statut-annule' : '');
+                        $classe_statut = '';
+                        if ($statut == 'LIVRÉ') {
+                            $classe_statut = 'statut-livre';
+                        } else if ($statut == 'ANNULÉ') {
+                            $classe_statut = 'statut-annule';
+                        }
 
                         echo "<tr>";
                         echo "<td>" . $date_cmd . "</td>";
                         echo "<td>Commande " . $commande['id_commande'] . "</td>";
                         echo "<td>" . number_format($commande['prix_total'], 2) . " €</td>";
                         echo "<td class='" . $classe_statut . "'>" . $statut . "</td>";
-                        
+
                         // Bouton de notation si la commande est livrée
                         echo "<td>";
                         if ($statut == 'LIVRÉ') {
@@ -190,7 +241,7 @@ if (file_exists('data/commandes.json')) {
                 }
 
                 if (!$a_des_commandes) {
-                    echo "<tr><td colspan='5'>Vous n'avez passé aucune commande.</td></tr>";
+                    echo "<tr><td colspan='5'>Aucune commande associée à ce compte.</td></tr>";
                 }
                 ?>
             </tbody>
@@ -198,20 +249,8 @@ if (file_exists('data/commandes.json')) {
     </div>
 
     <div class="footer">
-        <div class="footer-col">
-            <p><strong>CONTACT</strong></p>
-            <p>123 Rue du Crime Culinaire</p>
-            <p>01 23 45 67 89</p>
-        </div>
-
         <div class="footer-col copyright-col">
             <p>©2026 Flagrant Délice</p>
-        </div>
-
-        <div class="footer-col">
-            <p><strong>HORAIRES</strong></p>
-            <p>Lun - Sam : 11h - 23h</p>
-            <p>Dimanche : 12h - 22h</p>
         </div>
     </div>
 
