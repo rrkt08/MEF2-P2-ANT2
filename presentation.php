@@ -1,13 +1,11 @@
 <?php
 session_start();
 
-// Récupération de tous les plats depuis le JSON
 $plats = [];
 if (file_exists('data/plats.json')) {
     $plats = json_decode(file_get_contents('data/plats.json'), true);
 }
 
-// Calcul du nombre d'articles actuellement dans le panier
 $nb_articles_panier = 0;
 if (isset($_SESSION['panier'])) {
     foreach ($_SESSION['panier'] as $qte) {
@@ -36,7 +34,7 @@ if (isset($_SESSION['panier'])) {
         <ul>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php" class="actif">LA CARTE</a></li>
-            <?php if(isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
+            <?php if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
                 <li><a href="profil.php">MON COMPTE</a></li>
                 <li><a href="panier.php" style="color: #ffcc00; font-weight: bold;">🛒 PANIER (<?php echo $nb_articles_panier; ?>)</a></li>
                 <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
@@ -75,14 +73,12 @@ if (isset($_SESSION['panier'])) {
     </div>
 
     <?php
-    // Gérer l'affichage d'un message de succès si un plat a été ajouté
     if (isset($_GET['ajout']) && $_GET['ajout'] == 'ok') {
         echo '<div style="background-color: #e6ffe6; color: #008000; text-align: center; padding: 10px; font-weight: bold; margin-bottom: 20px;">Article ajouté au panier avec succès !</div>';
     }
     ?>
 
     <?php
-    // On définit les catégories que l'on veut afficher dans l'ordre
     $categories = [
         "donut-burgers" => "DONUT BURGERS",
         "pizzas" => "PIZZAS",
@@ -98,32 +94,30 @@ if (isset($_SESSION['panier'])) {
                 <?php if ($plat['categorie'] == $id_cat) : ?>
                     <div class="plat">
                         <?php
-                    // Le code cherche le nom de l'image sans se soucier de l'extension (.jpg ou .png) écrite dans le JSON
-                    $nom_sans_extension = pathinfo($plat['image'], PATHINFO_FILENAME);
+                        $nom_sans_extension = pathinfo($plat['image'], PATHINFO_FILENAME);
 
-                    if (file_exists("images/" . $nom_sans_extension . ".png")) {
-                        $chemin_image = "images/" . $nom_sans_extension . ".png";
-                    } elseif (file_exists("images/" . $nom_sans_extension . ".jpg")) {
-                        $chemin_image = "images/" . $nom_sans_extension . ".jpg";
-                    } else {
-                        // Si vraiment l'image est introuvable, on met ton image de secours
-                        $chemin_image = "images/fondplat.jpg"; 
-                    }
-                    ?>
-                    <img src="<?php echo $chemin_image; ?>" alt="<?php echo htmlspecialchars($plat['nom']); ?>">
+                        if (file_exists("images/" . $nom_sans_extension . ".png")) {
+                            $chemin_image = "images/" . $nom_sans_extension . ".png";
+                        } elseif (file_exists("images/" . $nom_sans_extension . ".jpg")) {
+                            $chemin_image = "images/" . $nom_sans_extension . ".jpg";
+                        } else {
+                            $chemin_image = "images/fondplat.jpg";
+                        }
+                        ?>
+                        <img src="<?php echo $chemin_image; ?>" alt="<?php echo htmlspecialchars($plat['nom']); ?>">
                         <h3><?php echo htmlspecialchars(strtoupper($plat['nom'])); ?></h3>
                         <p class="description-plat"><?php echo htmlspecialchars($plat['description']); ?></p>
                         <p class="prix"><?php echo number_format($plat['prix'], 2); ?> €</p>
-                        
+
                         <form action="verif/ajouter_panier.php" method="POST">
                             <input type="hidden" name="id_plat" value="<?php echo $plat['id_plat']; ?>">
-                            
+
                             <div style="margin-bottom: 12px;">
                                 <label style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold;">Qté :</label>
                                 <input type="number" name="quantite" value="1" min="1" max="10" style="width: 40px; padding: 5px; border-radius: 5px; border: none; text-align: center; font-weight: bold; margin-left: 5px; color: #000000; background-color: #ffffff;">
                             </div>
-                            
-                            <button type="submit" 
+
+                            <button type="submit"
                                 style="background-color: #ffffff; color: #e60012; padding: 10px 25px; border: none; border-radius: 25px; font-family: Impact, sans-serif; font-size: 22px; cursor: pointer; text-transform: uppercase; transition: 0.2s;"
                                 onmouseover="this.style.backgroundColor='#e60012'; this.style.color='#ffffff';"
                                 onmouseout="this.style.backgroundColor='#ffffff'; this.style.color='#e60012';">
