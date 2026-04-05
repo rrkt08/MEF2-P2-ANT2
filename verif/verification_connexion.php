@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $utilisateur_trouve = false;
     $profil_utilisateur = null;
 
-    // Recherche de l'utilisateur dans le fichier JSON
+    // Recherche de l'utilisateur
     if (!empty($utilisateurs)) {
         foreach ($utilisateurs as $user) {
             if ($user['login'] == $email_saisi && $user['mot_de_passe'] == $mdp_saisi) {
