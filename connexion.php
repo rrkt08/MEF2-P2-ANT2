@@ -27,8 +27,28 @@
         <h2><u>IDENTIFICATION</u></h2>
     </div>
 
+    <?php
+    // Messages d'erreurs ou de succès
+    if (isset($_GET['succes']) && $_GET['succes'] == 1) {
+        echo '<div style="background-color: #e6ffe6; color: #008000; text-align: center; padding: 15px; font-family: Impact, sans-serif; font-size: 20px; letter-spacing: 1px;">Inscription réussie ! Vous pouvez maintenant vous connecter.</div>';
+    }
+
+    if (isset($_GET['erreur'])) {
+        $message_erreur = "";
+        if ($_GET['erreur'] == "identifiants") {
+            $message_erreur = "E-mail ou mot de passe incorrect !";
+        } elseif ($_GET['erreur'] == "vide") {
+            $message_erreur = "Veuillez remplir tous les champs.";
+        }
+
+        if ($message_erreur != "") {
+            echo '<div style="background-color: #ffe6e6; color: #e60012; text-align: center; padding: 15px; font-family: Impact, sans-serif; font-size: 20px; letter-spacing: 1px;">' . $message_erreur . '</div>';
+        }
+    }
+    ?>
+
     <div class="conteneur-formulaire conteneur-connexion">
-        <form action="profil.php" method="post">
+        <form action="verif/verification_connexion.php" method="post">
 
             <fieldset class="groupe-formulaire">
                 <legend>IDENTIFIANTS</legend>

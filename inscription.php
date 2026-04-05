@@ -32,6 +32,8 @@
             $message_erreur = "Veuillez remplir tous les champs obligatoires.";
         } elseif ($_GET['erreur'] == "date_invalide") {
             $message_erreur = "La date de naissance est invalide. Veuillez entrer une date cohérente.";
+        } elseif ($_GET['erreur'] == "mdp_invalide") {
+            $message_erreur = "Le mot de passe est trop court. Il doit contenir au moins 8 caractères.";
         } elseif ($_GET['erreur'] == "tel_invalide") {
             $message_erreur = "Le numéro de téléphone est invalide. Il doit contenir 10 chiffres et commencer par 0.";
         } elseif ($_GET['erreur'] == "email_existant") {
