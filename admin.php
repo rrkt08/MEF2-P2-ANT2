@@ -73,17 +73,22 @@ if (file_exists($fichier)) {
                         echo '<td>' . $user['login'] . '</td>';
 
                         // boutons
-                        echo '<td>';
-                        echo '<a href="profil.php?id=' . $user['id_utilisateur'] . '" class="btn-action" style="margin-right: 5px;">VOIR PROFIL</a>';
+                        echo '<td style="white-space: nowrap;">';
 
-                        // l'admin ne peut pas se bloquer (c'est logique)
+                        $style_bouton = "font-family: Arial, sans-serif; font-size: 12px; margin-right: 4px; width: 95px; text-align: center; box-sizing: border-box; padding: 10px 0;";
+
+                        echo '<button type="button" class="btn-action" style="background-color: #00a8e8; color: black; ' . $style_bouton . '" onclick="window.location.href=\'profil.php?id=' . $user['id_utilisateur'] . '\'">VOIR PROFIL</button>';
+                        echo '<button class="btn-action" style="background-color: #ff9900; color: black; ' . $style_bouton . '">STATUT</button>';
+                        echo '<button class="btn-action" style="background-color: #28a745; color: black; ' . $style_bouton . '">REMISE</button>';
+
+                        // L'admin ne peut pas se bloquer (c'est logique)
                         if ($role != 'ADMIN') {
-                            $style_bouton = "font-family: Arial, sans-serif; font-size: 12px; margin-right: 2px;";
-
-                            echo '<button class="btn-action" style="background-color: #ff9900; ' . $style_bouton . '">STATUT</button>';
-                            echo '<button class="btn-action" style="background-color: #28a745; ' . $style_bouton . '">REMISE</button>';
-                            echo '<button class="btn-action" style="background-color: #cc0000; ' . $style_bouton . '">BLOQUER</button>';
+                            echo '<button class="btn-action" style="background-color: #cc0000; color: black; ' . $style_bouton . '">BLOQUER</button>';
+                        } else {
+                            $style_tiret = "display: inline-block; color: #999; font-weight: bold; " . $style_bouton;
+                            echo '<span style="' . $style_tiret . '">-</span>';
                         }
+
                         echo '</td>';
                         echo '</tr>';
                     }

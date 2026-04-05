@@ -88,9 +88,15 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
                 echo $article['quantite'] . 'x ' . htmlspecialchars($nom_article) . '<br>';
             }
             echo '</td>';
-
             echo '<td>' . number_format($cmd['prix_total'], 2) . ' €</td>';
-            echo '<td><button class="btn-action btn-pret">' . $texte_bouton . '</button></td>';
+            echo '<td style="white-space: nowrap;">';
+            echo '<button type="button" class="btn-action" style="background-color: #00a8e8; color: white; margin-right: 2px;" onclick="window.location.href=\'details_commande.php?id=' . $cmd['id_commande'] . '\'">DÉTAILS</button>';
+
+            if ($texte_bouton !== "DÉTAILS") {
+                echo '<button type="button" class="btn-action btn-pret">' . $texte_bouton . '</button>';
+            }
+
+            echo '</td>';
             echo '</tr>';
         }
     }
@@ -137,7 +143,7 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
     afficherTableau("À PRÉPARER", "A PREPARER", $commandes, $plats, $menus, $livreurs, "PRÊT");
     afficherTableau("EN COURS", "EN COURS", $commandes, $plats, $menus, $livreurs, "TERMINER");
     afficherTableau("EN LIVRAISON", "EN LIVRAISON", $commandes, $plats, $menus, $livreurs, "DÉTAILS");
-    afficherTableau("EN ATTENTE", "EN ATTENTE", $commandes, $plats, $menus, $livreurs, "VOIR");
+    afficherTableau("EN ATTENTE", "EN ATTENTE", $commandes, $plats, $menus, $livreurs, "DÉTAILS");
     ?>
 
     <div class="footer">

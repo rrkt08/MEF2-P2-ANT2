@@ -16,8 +16,8 @@ body {
 
 .logo-texte {
     color: #e60012;
-    font-family: Impact, 'Arial Black', Arial, sans-serif; 
-    font-size: 13.5vw; 
+    font-family: Impact, 'Arial Black', Arial, sans-serif;
+    font-size: 13.5vw;
     white-space: nowrap;
     margin: 0;
     text-transform: uppercase;
@@ -28,7 +28,7 @@ body {
 .header-menu {
     background-color: #00a8e8;
     text-align: center;
-    padding: 25px 0; 
+    padding: 25px 0;
 }
 
 .header-menu ul {
@@ -39,33 +39,33 @@ body {
 
 .header-menu li {
     display: inline-block;
-    margin: 0 15px; 
+    margin: 0 15px;
 }
 
 .header-menu a {
     text-decoration: none;
-    color: #ffffff; 
+    color: #ffffff;
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
-    padding: 10px 20px; 
+    padding: 10px 20px;
     border-radius: 8px;
 }
 
 .header-menu a:hover {
-    background-color: #ffffff; 
-    color: #00a8e8; 
+    background-color: #ffffff;
+    color: #00a8e8;
 }
 
 .actif {
-    color: #ffffff; 
+    color: #ffffff;
 }
 
 /* Bouton inscription dans la nav (ou menu)*/
 .header-menu a.btn-inscription {
     background-color: #ffffff;
     color: #e60012;
-    padding: 12px 30px; 
+    padding: 12px 30px;
     border-radius: 25px;
     border: 2px solid #ffffff;
 }
@@ -83,19 +83,19 @@ body {
     background-size: cover;
     background-position: center;
     text-align: center;
-    padding-top: 380px; 
+    padding-top: 380px;
     padding-bottom: 20px;
     overflow: hidden;
 }
 
 .banniere h1 {
-    color: #00a8e8; 
+    color: #00a8e8;
     font-family: Impact, 'Arial Black', Arial, sans-serif;
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 5px;
     margin: 0;
-    font-size: 8vw; 
+    font-size: 8vw;
 }
 
 /* Barre de recherche (accueil et carte) */
@@ -142,19 +142,19 @@ body {
 
 /* Bandeaux de séparation avec titres */
 .bandeau-titre {
-    background-color: #00a8e8; 
+    background-color: #00a8e8;
     text-align: center;
-    padding: 50px 0; 
+    padding: 50px 0;
     margin: 0;
     overflow: hidden;
 }
 
 .bandeau-titre h2 {
-    color: #ffffff; 
+    color: #ffffff;
     font-family: Impact, 'Arial Black', Arial, sans-serif;
-    font-size: 5vw; 
+    font-size: 5vw;
     text-transform: uppercase;
-    letter-spacing: 5px; 
+    letter-spacing: 5px;
     margin: 0;
 }
 
@@ -208,8 +208,8 @@ body {
 
 /* Boutons pour commander/ajouter un plat */
 .plats-populaires a.btn-plat {
-    background-color: #ffffff; 
-    color: #e60012; 
+    background-color: #ffffff;
+    color: #e60012;
     padding: 10px 25px;
     text-decoration: none;
     border-radius: 25px;
@@ -254,7 +254,7 @@ body {
 
 /* Filtres de la page carte */
 .zone-filtres {
-    background-color: #ffffff; 
+    background-color: #ffffff;
     text-align: center;
     padding: 30px 0;
 }
@@ -274,7 +274,7 @@ body {
 }
 
 .zone-filtres .input-recherche {
-    width: 250px; 
+    width: 250px;
 }
 
 .categorie-titre {
@@ -288,13 +288,14 @@ body {
 }
 
 .premier-titre {
-    margin-top: 15px; 
+    margin-top: 15px;
 }
 
 /* Page des commandes (cuisine) */
 .conteneur-tableau {
     padding: 20px;
-    overflow-x: auto; /* pour le scroll sur mobile */
+    overflow-x: auto;
+    /* pour le scroll sur mobile */
     text-align: center;
 }
 
@@ -374,14 +375,14 @@ body {
 .btn-livreur {
     display: block;
     width: 90%;
-    margin: 30px auto; 
+    margin: 30px auto;
     padding: 20px;
     font-family: Impact, sans-serif;
     font-size: 22px;
     text-decoration: none;
     border-radius: 10px;
     text-align: center;
-    border: 3px solid transparent; 
+    border: 3px solid transparent;
     box-sizing: border-box;
     cursor: pointer;
 }
@@ -431,14 +432,17 @@ body {
     font-size: 16px;
 }
 
-.select-form, .textarea-form, .input-form {
+.select-form,
+.textarea-form,
+.input-form {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     border: 2px solid #00a8e8;
     border-radius: 5px;
     font-family: Arial, sans-serif;
-    box-sizing: border-box; /* Pour gérer le padding sans casser la largeur */ 
+    box-sizing: border-box;
+    /* Pour gérer le padding sans casser la largeur */
 }
 
 .textarea-form {
@@ -448,7 +452,7 @@ body {
 /* ajustement largeur pour la page de connexion */
 .conteneur-connexion {
     width: 50%;
-    margin: 50px auto; 
+    margin: 50px auto;
 }
 
 /* textes dans les formulaires */
@@ -497,7 +501,7 @@ body {
 
 /* Espacement checkbox (les cases à cocher e-mail, sms)*/
 .marge-droite {
-    margin-right: 12px; 
+    margin-right: 12px;
 }
 
 /* menu de debug pour la page admin */
@@ -605,10 +609,30 @@ body {
 
 /* petits fix pour profil et notation */
 .checkbox-wrapper {
-    flex-grow: 1; 
+    flex-grow: 1;
     padding: 10px 0;
 }
 
 .btn-edit-tall {
     height: 100%;
+}
+
+/* statuts et modes (Détails Commande)*/
+
+.texte-mode-conso {
+    color: #00a8e8;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.texte-statut-paye {
+    color: #28a745;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.texte-statut-attente {
+    color: #e60012;
+    font-weight: bold;
+    text-transform: uppercase;
 }
