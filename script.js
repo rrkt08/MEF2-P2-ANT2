@@ -21,3 +21,18 @@ function changerTheme() {
     dateExpiration.setTime(dateExpiration.getTime() + (30 * 24 * 60 * 60 * 1000));
     document.cookie = "theme=" + valeurCookie + "; expires=" + dateExpiration.toUTCString() + "; path=/";
 }
+
+function afficherMasquerMdp(idChamp, idIcone) {
+    var champMdp = document.getElementById(idChamp);
+    var iconeOeil = document.getElementById(idIcone);
+
+    if (champMdp && iconeOeil) {
+        if (champMdp.type === "password") {
+            champMdp.type = "text";
+            iconeOeil.textContent = "🙈";
+        } else {
+            champMdp.type = "password";
+            iconeOeil.textContent = "👁️";
+        }
+    }
+}

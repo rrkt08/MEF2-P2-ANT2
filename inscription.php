@@ -98,7 +98,10 @@ if (isset($_COOKIE['theme'])) {
                 <br><br>
 
                 <label for="mdp-insc">Mot de passe *</label><br>
-                <input type="password" id="mdp-insc" name="mdp" class="input-form" placeholder="ex: Unmotdepasse13sécurisé!" required>
+                <div class="conteneur-mdp-oeil">
+                    <input type="password" id="mdp-insc" name="mdp" class="input-form input-mdp-oeil" placeholder="8 caractères minimum" minlength="8" required>
+                    <span id="oeil-mdp" class="icone-oeil-form" onclick="afficherMasquerMdp('mdp-insc', 'oeil-mdp')">👁️</span>
+                </div>
             </fieldset>
 
             <fieldset class="groupe-formulaire">

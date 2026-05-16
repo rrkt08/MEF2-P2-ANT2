@@ -636,3 +636,27 @@ body {
     font-weight: bold;
     text-transform: uppercase;
 }
+
+/*style icone pour cacher/afficher le mdp*/
+.conteneur-mdp-oeil {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-mdp-oeil {
+    width: 100%;
+    padding-right: 40px;
+    /* Évite que le texte tapé passe sous l'œil */
+    box-sizing: border-box;
+}
+
+.icone-oeil-form {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    /* Évite de sélectionner l'émoji textuellement lors du clic */
+}

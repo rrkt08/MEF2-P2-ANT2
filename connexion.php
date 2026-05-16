@@ -76,7 +76,10 @@ if (isset($_COOKIE['theme'])) {
                 <br><br>
 
                 <label for="mdp-connexion">Mot de passe</label><br>
-                <input type="password" id="mdp-connexion" name="mdp" class="input-form" placeholder="Votre mot de passe" required>
+                <div class="conteneur-mdp-oeil">
+                    <input type="password" id="mdp-connexion" name="mdp" class="input-form input-mdp-oeil" placeholder="Votre mot de passe" required>
+                    <span id="oeil-mdp-connexion" class="icone-oeil-form" onclick="afficherMasquerMdp('mdp-connexion', 'oeil-mdp-connexion')">👁️</span>
+                </div>
             </fieldset>
 
             <div class="form-actions">
