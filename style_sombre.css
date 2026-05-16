@@ -1,0 +1,96 @@
+/* On importe le style de base pour la structure */
+@import url("style.css");
+
+/* --- 1. FONDS PRINCIPAUX (Remplacement du Blanc #ffffff) --- */
+body,
+.header-top {
+    background-color: #121212;
+    /* Fond principal très sombre */
+    color: #e0e0e0;
+    /* Texte clair cassé pour reposer les yeux */
+}
+
+/* --- 2. BOÎTES ET CONTENEURS (Remplacement du Gris très clair #f9f9f9) --- */
+.banniere,
+.conteneur-formulaire,
+.plat,
+.fidelite-box,
+.bloc-livraison,
+.panier-resume,
+.admin-debug-col {
+    background-color: #1e1e1e;
+    /* Légèrement plus clair que le fond pour détacher les éléments */
+    color: #e0e0e0;
+}
+
+/* --- 3. ZONES SECONDAIRES (Remplacement du Gris clair #f2f2f2) --- */
+.zone-recherche,
+.tableau-commandes tr:nth-child(even) td {
+    background-color: #252525;
+}
+
+/* --- 4. ZONES BLEU CLAIR (Remplacement du fond bleuté #e6f7ff) --- */
+/* On assombrit ce bleu clair en un bleu "nuit" élégant */
+.bandeau-titre,
+.tableau-commandes th,
+.panier-total {
+    background-color: #1a3644;
+    color: #ffffff;
+}
+
+/* Forcer les textes des titres dans ces zones à rester clairs */
+.bandeau-titre h2 {
+    color: #ffffff;
+}
+
+/* --- 5. CHAMPS DE FORMULAIRES --- */
+.input-recherche,
+.input-form,
+.select-form,
+.textarea-form,
+.input-short {
+    background-color: #121212;
+    /* Fond sombre pour les champs */
+    color: #ffffff;
+    /* Texte tapé en blanc */
+    border: 1px solid #444444;
+    /* Bordure discrète */
+}
+
+/* Couleur du texte indicatif (placeholder) */
+.input-recherche::placeholder,
+.input-form::placeholder,
+.textarea-form::placeholder {
+    color: #888888;
+}
+
+/* --- 6. TABLEAUX (Correction des bordures et fonds) --- */
+.tableau-commandes {
+    background-color: #1e1e1e;
+}
+
+.tableau-commandes th,
+.tableau-commandes td {
+    border-color: #333333;
+    /* Bordures sombres */
+    color: #e0e0e0;
+}
+
+/* --- 7. TEXTES SPÉCIFIQUES --- */
+.plat h3,
+legend,
+.titre-livraison {
+    color: #ffffff;
+}
+
+.plat p,
+.info-livraison,
+.fidelite-desc {
+    color: #cccccc;
+}
+
+/* Ajustement du rouge pour qu'il soit moins "agressif" sur fond noir, tout en restant votre couleur */
+.logo-texte,
+.fidelite-valeur {
+    color: #ff3344;
+}
