@@ -34,6 +34,16 @@ if (isset($_SESSION['panier'])) {
 $min_date = date('Y-m-d\TH:i');
 $limite = strtotime('+2 days');
 $max_date = date('Y-m-d\TH:i', $limite);
+
+//Vérification du cookie pour dark/light mode
+$theme_choisi = "style.css";
+if (isset($_COOKIE['theme'])) {
+    if ($_COOKIE['theme'] == 'sombre') {
+        $theme_choisi = "style_sombre.css";
+    } else if ($_COOKIE['theme'] == 'clair') {
+        $theme_choisi = "style.css";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -42,7 +52,7 @@ $max_date = date('Y-m-d\TH:i', $limite);
     <meta charset="UTF-8">
     <title>Flagrant Délice - Mon Panier</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
 <body>
@@ -53,6 +63,11 @@ $max_date = date('Y-m-d\TH:i', $limite);
 
     <div class="header-menu">
         <ul>
+            <li>
+                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
+                    🌓
+                </button>
+            </li>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="profil.php">MON COMPTE</a></li>
@@ -195,6 +210,7 @@ $max_date = date('Y-m-d\TH:i', $limite);
             <p>Lun - Sam : 11h - 23h</p>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

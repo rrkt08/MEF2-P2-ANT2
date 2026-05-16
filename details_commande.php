@@ -72,6 +72,16 @@ foreach ($utilisateurs as $u) {
         $livreurs[$u['id_utilisateur']] = $u['informations']['prenom'] . ' ' . $u['informations']['nom'];
     }
 }
+
+//Vérification du cookie pour dark/light mode
+$theme_choisi = "style.css";
+if (isset($_COOKIE['theme'])) {
+    if ($_COOKIE['theme'] == 'sombre') {
+        $theme_choisi = "style_sombre.css";
+    } else if ($_COOKIE['theme'] == 'clair') {
+        $theme_choisi = "style.css";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -80,7 +90,7 @@ foreach ($utilisateurs as $u) {
     <meta charset="UTF-8">
     <title>Détail <?php echo $id_commande; ?></title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
 <body>
@@ -91,6 +101,11 @@ foreach ($utilisateurs as $u) {
 
     <div class="header-menu">
         <ul>
+            <li>
+                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
+                    🌓
+                </button>
+            </li>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="commandes.php" class="actif">CUISINE</a></li>
@@ -252,7 +267,7 @@ foreach ($utilisateurs as $u) {
             <p>Gestion des commandes</p>
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

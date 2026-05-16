@@ -12,6 +12,16 @@ if (isset($_SESSION['panier'])) {
         $nb_articles_panier += $qte;
     }
 }
+
+//Vérification du cookie pour dark/light mode
+$theme_choisi = "style.css";
+if (isset($_COOKIE['theme'])) {
+    if ($_COOKIE['theme'] == 'sombre') {
+        $theme_choisi = "style_sombre.css";
+    } else if ($_COOKIE['theme'] == 'clair') {
+        $theme_choisi = "style.css";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +31,7 @@ if (isset($_SESSION['panier'])) {
     <meta charset="UTF-8">
     <title>Flagrant Délice - La Carte</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
 <body>
@@ -32,6 +42,11 @@ if (isset($_SESSION['panier'])) {
 
     <div class="header-menu">
         <ul>
+            <li>
+                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
+                    🌓
+                </button>
+            </li>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php" class="actif">LA CARTE</a></li>
             <?php if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
@@ -147,7 +162,7 @@ if (isset($_SESSION['panier'])) {
             <p>Dimanche : 12h - 22h</p>
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

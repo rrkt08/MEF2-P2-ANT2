@@ -14,6 +14,16 @@ if (file_exists($fichier)) {
 } else {
     $utilisateurs = [];
 }
+
+//Vérification du cookie pour dark/light mode
+$theme_choisi = "style.css";
+if (isset($_COOKIE['theme'])) {
+    if ($_COOKIE['theme'] == 'sombre') {
+        $theme_choisi = "style_sombre.css";
+    } else if ($_COOKIE['theme'] == 'clair') {
+        $theme_choisi = "style.css";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -22,7 +32,7 @@ if (file_exists($fichier)) {
     <meta charset="UTF-8">
     <title>Flagrant Délice - Administration</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
 <body>
@@ -33,6 +43,11 @@ if (file_exists($fichier)) {
 
     <div class="header-menu">
         <ul>
+            <li>
+                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
+                    🌓
+                </button>
+            </li>
             <li><a href="accueil.php">RETOUR SITE</a></li>
             <li><a href="admin.php" class="actif">DASHBOARD ADMIN (<?php echo $_SESSION['prenom']; ?>)</a></li>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
@@ -126,7 +141,7 @@ if (file_exists($fichier)) {
             <p>©2026 Flagrant Délice - Administration</p>
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

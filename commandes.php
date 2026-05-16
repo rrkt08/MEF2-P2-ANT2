@@ -109,6 +109,16 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
     echo '</table>';
     echo '</div>';
 }
+
+//Vérification du cookie pour dark/light mode
+$theme_choisi = "style.css";
+if (isset($_COOKIE['theme'])) {
+    if ($_COOKIE['theme'] == 'sombre') {
+        $theme_choisi = "style_sombre.css";
+    } else if ($_COOKIE['theme'] == 'clair') {
+        $theme_choisi = "style.css";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -117,7 +127,7 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
     <meta charset="UTF-8">
     <title>Flagrant Délice - Commandes</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
 <body>
@@ -128,6 +138,11 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
 
     <div class="header-menu">
         <ul>
+            <li>
+                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
+                    🌓
+                </button>
+            </li>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="commandes.php" class="actif">CUISINE</a></li>
@@ -163,7 +178,7 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
             <p>©2026 Flagrant Délice</p>
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

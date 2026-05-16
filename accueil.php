@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+//Vérification du cookie pour dark/light mode
+$theme_choisi = "style.css";
+if (isset($_COOKIE['theme'])) {
+    if ($_COOKIE['theme'] == 'sombre') {
+        $theme_choisi = "style_sombre.css";
+    } else if ($_COOKIE['theme'] == 'clair') {
+        $theme_choisi = "style.css";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -5,7 +18,7 @@
     <meta charset="UTF-8">
     <title>Flagrant Délice - Accueil</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
 <body>
@@ -16,6 +29,11 @@
 
     <div class="header-menu">
         <ul>
+            <li>
+                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
+                    🌓
+                </button>
+            </li>
             <li><a href="accueil.php" class="actif">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="connexion.php">CONNEXION</a></li>
@@ -99,7 +117,7 @@
             <p>Dimanche : 12h - 22h</p>
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

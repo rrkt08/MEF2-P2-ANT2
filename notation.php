@@ -9,6 +9,16 @@ if (!isset($_SESSION['utilisateur_connecte'])) {
 
 // On récupère l'ID de la commande depuis l'URL
 $id_commande = isset($_GET['id_commande']) ? $_GET['id_commande'] : '';
+
+//Vérification du cookie pour dark/light mode
+$theme_choisi = "style.css";
+if (isset($_COOKIE['theme'])) {
+    if ($_COOKIE['theme'] == 'sombre') {
+        $theme_choisi = "style_sombre.css";
+    } else if ($_COOKIE['theme'] == 'clair') {
+        $theme_choisi = "style.css";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +28,7 @@ $id_commande = isset($_GET['id_commande']) ? $_GET['id_commande'] : '';
     <meta charset="UTF-8">
     <title>Flagrant Délice - Votre Avis</title>
     <link rel="icon" type="image/png" href="images/logopageweb.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
 <body>
@@ -29,6 +39,11 @@ $id_commande = isset($_GET['id_commande']) ? $_GET['id_commande'] : '';
 
     <div class="header-menu">
         <ul>
+            <li>
+                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
+                    🌓
+                </button>
+            </li>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="profil.php">MON COMPTE</a></li>
@@ -41,8 +56,8 @@ $id_commande = isset($_GET['id_commande']) ? $_GET['id_commande'] : '';
 
     <div class="conteneur-formulaire">
         <form action="verif/verification_notation.php" method="post">
-        <input type="hidden" name="id_commande" value="<?php echo htmlspecialchars($id_commande); ?>">
-        
+            <input type="hidden" name="id_commande" value="<?php echo htmlspecialchars($id_commande); ?>">
+
             <fieldset class="groupe-formulaire">
                 <legend>LA LIVRAISON</legend>
                 <label for="note-livraison">Note du livreur :</label><br>
@@ -94,7 +109,7 @@ $id_commande = isset($_GET['id_commande']) ? $_GET['id_commande'] : '';
             <p>Dimanche : 12h - 22h</p>
         </div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 
 </html>
