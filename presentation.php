@@ -47,7 +47,7 @@ if (isset($_COOKIE['theme'])) {
             <li><a href="presentation.php" class="actif">LA CARTE</a></li>
             <?php if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
                 <li><a href="profil.php">MON COMPTE</a></li>
-                <li><a href="panier.php" style="color: #ffcc00; font-weight: bold;">🛒 PANIER (<?php echo $nb_articles_panier; ?>)</a></li>
+                <li><a href="panier.php" class="actif menu-panier-actif">🛒 PANIER (<?php echo $nb_articles_panier; ?>)</a></li>
                 <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
             <?php else: ?>
                 <li><a href="connexion.php">CONNEXION</a></li>
@@ -85,7 +85,7 @@ if (isset($_COOKIE['theme'])) {
 
     <?php
     if (isset($_GET['ajout']) && $_GET['ajout'] == 'ok') {
-        echo '<div style="background-color: #e6ffe6; color: #008000; text-align: center; padding: 10px; font-weight: bold; margin-bottom: 20px;">Article ajouté au panier avec succès !</div>';
+        echo '<div class="message-alerte alerte-succes">Article ajouté au panier avec succès !</div>';
     }
     ?>
 
@@ -123,19 +123,14 @@ if (isset($_COOKIE['theme'])) {
                         <form action="verif/ajouter_panier.php" method="POST" onsubmit="return validerAjoutPanier(event)">
                             <input type="hidden" name="id_plat" value="<?php echo $plat['id_plat']; ?>">
 
-                            <div style="margin-bottom: 12px;">
-                                <label style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold;">Qté :</label>
-                                <input type="number" name="quantite" value="1" min="1" max="10" style="width: 40px; padding: 5px; border-radius: 5px; border: none; text-align: center; font-weight: bold; margin-left: 5px; color: #000000; background-color: #ffffff;">
+                            <div class="bloc-qte">
+                                <label class="label-qte">Qté :</label>
+                                <input type="number" name="quantite" value="1" min="1" max="10" class="input-qte">
                                 <br>
-                                <span class="message-erreur-js erreur-qte" style="color: #ffcc00; display: block; margin-top: 5px;"></span>
+                                <span class="message-erreur-js erreur-qte"></span>
                             </div>
 
-                            <button type="submit"
-                                style="background-color: #ffffff; color: #e60012; padding: 10px 25px; border: none; border-radius: 25px; font-family: Impact, sans-serif; font-size: 22px; cursor: pointer; text-transform: uppercase; transition: 0.2s;"
-                                onmouseover="this.style.backgroundColor='#e60012'; this.style.color='#ffffff';"
-                                onmouseout="this.style.backgroundColor='#ffffff'; this.style.color='#e60012';">
-                                AJOUTER
-                            </button>
+                            <button type="submit" class="btn-ajouter">AJOUTER</button>
                         </form>
                     </div>
                 <?php endif; ?>

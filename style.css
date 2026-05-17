@@ -712,6 +712,92 @@ body {
     color: #e60012;
 }
 
+/*boutons et txt (livraison)*/
+.btn-abandon {
+    background-color: #333333;
+    color: white;
+}
+
+.texte-repos {
+    margin-top: 50px;
+}
+
+/*panier*/
+.menu-panier-actif {
+    color: #ffcc00 !important;
+    font-weight: bold;
+}
+
+.panier-vide-texte {
+    text-align: center;
+    font-weight: bold;
+    color: #e60012;
+    font-size: 18px;
+}
+
+.btn-crime {
+    background-color: #00a8e8;
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    font-family: Impact, sans-serif;
+}
+
+.tableau-panier {
+    width: 100%;
+    border-color: #333333;
+}
+
+.total-panier {
+    text-align: right;
+    color: #e60012;
+    font-family: Impact, sans-serif;
+    font-size: 28px;
+    margin-top: 20px;
+}
+
+#champ_date_heure {
+    display: none;
+}
+
+/*paiement*/
+.form-paiement {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.label-paiement {
+    font-weight: bold;
+    color: #00a8e8;
+}
+
+.input-moitie {
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.bloc-radios-paiement {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.radio-margin {
+    margin-right: 15px;
+}
+
+.bloc-date-paiement {
+    margin-bottom: 20px;
+}
+
+/*CYBank*/
+.btn-payer {
+    background-color: #28a745;
+}
+
+.btn-payer:hover {
+    background-color: #218838;
+}
+
 /*bouton dark/light mode*/
 .btn-theme {
     background: none;
@@ -724,6 +810,56 @@ body {
 
 .btn-theme:hover {
     transform: scale(1.1);
+}
+
+/*carte (presentation)*/
+
+.bloc-qte {
+    margin-bottom: 12px;
+}
+
+.label-qte {
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.input-qte {
+    width: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+    margin-left: 5px;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+.erreur-qte {
+    color: #ffcc00 !important;
+    /* Force le jaune pour être lisible sur fond bleu */
+    display: block;
+    margin-top: 5px;
+}
+
+.btn-ajouter {
+    background-color: #ffffff;
+    color: #e60012;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    font-family: Impact, sans-serif;
+    font-size: 22px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.btn-ajouter:hover {
+    background-color: #e60012;
+    color: #ffffff;
 }
 
 /*style icone pour cacher/afficher le mdp*/

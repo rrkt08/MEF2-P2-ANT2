@@ -125,7 +125,7 @@ if (isset($_COOKIE['theme'])) {
         echo '<p class="titre-livraison">STATUT DE LA COMMANDE</p>';
         echo '<form action="#" method="get" onsubmit="return confirmerLivraison(event)">';
         echo '<button type="submit" name="action_livraison" value="terminee" class="btn-livreur btn-valider">✅ LIVRAISON TERMINÉE</button>';
-        echo '<button type="submit" name="action_livraison" value="abandonnee" class="btn-livreur" style="background-color: #333; color: white;">❌ ABANDONNÉE</button>';
+        echo '<button type="submit" name="action_livraison" value="abandonnee" class="btn-livreur btn-abandon">❌ ABANDONNÉE</button>';
         echo '</form>';
 
         echo '</div>';
@@ -137,7 +137,7 @@ if (isset($_COOKIE['theme'])) {
         echo '</div>';
 
         echo '<div class="bloc-livraison">';
-        echo '<p class="info-livraison" style="margin-top: 50px;">Vous n\'avez aucune commande en cours de livraison pour le moment. Détendez-vous ! ☕</p>';
+        echo '<p class="info-livraison texte-repos">Vous n\'avez aucune commande à livrer pour le moment. Détendez-vous !</p>';
         echo '</div>';
     }
     ?>

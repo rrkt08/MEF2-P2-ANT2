@@ -67,7 +67,7 @@ if (isset($_COOKIE['theme'])) {
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="profil.php">MON COMPTE</a></li>
-            <li><a href="panier.php" class="actif" style="color: #ffcc00; font-weight: bold;">🛒 PANIER (<?php echo $nb_articles_panier; ?>)</a></li>
+            <li><a href="panier.php" class="actif menu-panier-actif">🛒 PANIER (<?php echo $nb_articles_panier; ?>)</a></li>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
         </ul>
     </div>
@@ -79,7 +79,7 @@ if (isset($_COOKIE['theme'])) {
     <?php
     if (isset($_GET['erreur'])) {
         if ($_GET['erreur'] == "date_invalide") {
-            echo '<div style="background-color: #ffe6e6; color: #e60012; text-align: center; padding: 15px; font-family: Impact, sans-serif; font-size: 20px; letter-spacing: 1px;">La date choisie est invalide. Veuillez choisir une date entre maintenant et dans 2 jours.</div>';
+            echo '<div class="message-alerte alerte-erreur">La date choisie est invalide. Veuillez choisir une date entre maintenant et dans 2 jours.</div>';
         }
     }
     ?>
@@ -89,12 +89,12 @@ if (isset($_COOKIE['theme'])) {
             <legend>RÉCAPITULATIF</legend>
 
             <?php if (empty($_SESSION['panier'])): ?>
-                <p style="text-align: center; font-weight: bold; color: #e60012; font-size: 18px;">Votre panier est cruellement vide.</p>
+                <p class="panier-vide-texte">Votre panier est cruellement vide.</p>
                 <div class="form-actions">
-                    <a href="presentation.php" class="btn-action" style="background-color: #00a8e8; color: white; text-decoration: none; padding: 15px 30px; font-family: Impact, sans-serif;">COMMETTRE UN CRIME CULINAIRE</a>
+                    <a href="presentation.php" class="btn-action btn-crime">COMMETTRE UN CRIME CULINAIRE</a>
                 </div>
             <?php else: ?>
-                <table class="tableau-commandes" style="width: 100%; border-color: #333;">
+                <table class="tableau-commandes tableau-panier">
                     <thead>
                         <tr>
                             <th>Article</th>
@@ -125,44 +125,42 @@ if (isset($_COOKIE['theme'])) {
                     </tbody>
                 </table>
 
-                <h3 style="text-align: right; color: #e60012; font-family: Impact, sans-serif; font-size: 28px; margin-top: 20px;">
+                <h3 class="total-panier">
                     TOTAL : <?php echo number_format($total_commande, 2); ?> €
                 </h3>
 
                 <?php
                 require_once('verif/getapikey.php');
-
                 $vendeur = "MEF-2_G";
                 $transaction = substr(md5(uniqid(mt_rand(), true)), 0, 15);
                 $montant = number_format($total_commande, 2, '.', '');
                 $api_key = getAPIKey($vendeur);
-
                 $url_retour = "http://localhost/FlagrantDelice/verif/validation_commande.php?mode=";
-
                 $hash_control = md5($api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $url_retour);
                 ?>
 
-                <form action="https://www.plateforme-smc.fr/cybank/index.php" method="POST" style="text-align: center; margin-top: 30px;" onsubmit="return validerPanier(event)">
-                    <label style="font-weight: bold; color: #00a8e8;">Mode de consommation :</label><br>
-                    <select name="mode_conso_choisi" id="mode_select" class="input-form" style="width: 50%; margin-bottom: 20px;" onchange="updateRetour()">
+                <form action="https://www.plateforme-smc.fr/cybank/index.php" method="POST" class="form-paiement" onsubmit="return validerPanier(event)">
+
+                    <label class="label-paiement">Mode de consommation :</label><br>
+                    <select name="mode_conso_choisi" id="mode_select" class="input-form input-moitie" onchange="updateRetour()">
                         <option value="livraison">Livraison à domicile</option>
                         <option value="emporter">À emporter</option>
                         <option value="sur_place">Sur place</option>
                     </select>
 
                     <br>
-                    <label style="font-weight: bold; color: #00a8e8;">Moment de la préparation :</label><br>
-                    <div style="margin-bottom: 20px; margin-top: 10px;">
+                    <label class="label-paiement">Moment de la préparation :</label><br>
+                    <div class="bloc-radios-paiement">
                         <input type="radio" id="prep_immediate" name="type_preparation" value="immediate" checked onclick="document.getElementById('champ_date_heure').style.display='none'; updateRetour();">
-                        <label for="prep_immediate" style="margin-right: 15px;">Préparation immédiate</label>
+                        <label for="prep_immediate" class="radio-margin">Préparation immédiate</label>
 
                         <input type="radio" id="prep_plustard" name="type_preparation" value="plustard" onclick="document.getElementById('champ_date_heure').style.display='block'; updateRetour();">
                         <label for="prep_plustard">Pour plus tard</label>
                     </div>
 
-                    <div id="champ_date_heure" style="display: none; margin-bottom: 20px;">
-                        <label for="date_commande" style="font-weight: bold; color: #00a8e8;">Date et heure souhaitées :</label><br>
-                        <input type="datetime-local" id="date_commande" name="date_commande" class="input-form" style="width: 50%;" min="<?php echo $min_date; ?>" max="<?php echo $max_date; ?>" onchange="updateRetour()">
+                    <div id="champ_date_heure" class="bloc-date-paiement">
+                        <label for="date_commande" class="label-paiement">Date et heure souhaitées :</label><br>
+                        <input type="datetime-local" id="date_commande" name="date_commande" class="input-form input-moitie" min="<?php echo $min_date; ?>" max="<?php echo $max_date; ?>" onchange="updateRetour()">
                         <br>
                         <span id="erreur-date-panier" class="message-erreur-js"></span>
                     </div>
@@ -174,9 +172,8 @@ if (isset($_COOKIE['theme'])) {
                     <input type="hidden" name="retour" id="input_retour" value="<?php echo $url_retour . 'livraison&type_preparation=immediate&date_commande='; ?>">
 
                     <br>
-                    <button type="submit" class="btn-recherche btn-submit-form" style="background-color: #28a745;">Payer avec CYBank et Valider</button>
+                    <button type="submit" class="btn-recherche btn-submit-form btn-payer">Payer avec CYBank et Valider</button>
                 </form>
-
                 <script>
                     function updateRetour() {
                         var mode = document.getElementById('mode_select').value;
