@@ -127,9 +127,9 @@ if (isset($_COOKIE['theme'])) {
         echo '<a href="' . $lien_gps . '" target="_blank" class="btn-livreur btn-gps">🗺️ OUVRIR GPS</a>';
 
         echo '<p class="titre-livraison">STATUT DE LA COMMANDE</p>';
-        echo '<form action="#" method="get">';
-        echo '<button type="button" class="btn-livreur btn-valider">✅ LIVRAISON TERMINÉE</button>';
-        echo '<button type="button" class="btn-livreur" style="background-color: #333; color: white;">❌ ABANDONNÉE</button>';
+        echo '<form action="#" method="get" onsubmit="return confirmerLivraison(event)">';
+        echo '<button type="submit" name="action_livraison" value="terminee" class="btn-livreur btn-valider">✅ LIVRAISON TERMINÉE</button>';
+        echo '<button type="submit" name="action_livraison" value="abandonnee" class="btn-livreur" style="background-color: #333; color: white;">❌ ABANDONNÉE</button>';
         echo '</form>';
 
         echo '</div>';

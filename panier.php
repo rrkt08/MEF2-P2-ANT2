@@ -146,7 +146,7 @@ if (isset($_COOKIE['theme'])) {
                 $hash_control = md5($api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $url_retour);
                 ?>
 
-                <form action="https://www.plateforme-smc.fr/cybank/index.php" method="POST" style="text-align: center; margin-top: 30px;">
+                <form action="https://www.plateforme-smc.fr/cybank/index.php" method="POST" style="text-align: center; margin-top: 30px;" onsubmit="return validerPanier(event)">
                     <label style="font-weight: bold; color: #00a8e8;">Mode de consommation :</label><br>
                     <select name="mode_conso_choisi" id="mode_select" class="input-form" style="width: 50%; margin-bottom: 20px;" onchange="updateRetour()">
                         <option value="livraison">Livraison à domicile</option>
@@ -167,6 +167,8 @@ if (isset($_COOKIE['theme'])) {
                     <div id="champ_date_heure" style="display: none; margin-bottom: 20px;">
                         <label for="date_commande" style="font-weight: bold; color: #00a8e8;">Date et heure souhaitées :</label><br>
                         <input type="datetime-local" id="date_commande" name="date_commande" class="input-form" style="width: 50%;" min="<?php echo $min_date; ?>" max="<?php echo $max_date; ?>" onchange="updateRetour()">
+                        <br>
+                        <span id="erreur-date-panier" class="message-erreur-js"></span>
                     </div>
 
                     <input type="hidden" name="transaction" value="<?php echo $transaction; ?>">

@@ -124,12 +124,14 @@ if (isset($_COOKIE['theme'])) {
                         <p class="description-plat"><?php echo htmlspecialchars($plat['description']); ?></p>
                         <p class="prix"><?php echo number_format($plat['prix'], 2); ?> €</p>
 
-                        <form action="verif/ajouter_panier.php" method="POST">
+                        <form action="verif/ajouter_panier.php" method="POST" onsubmit="return validerAjoutPanier(event)">
                             <input type="hidden" name="id_plat" value="<?php echo $plat['id_plat']; ?>">
 
                             <div style="margin-bottom: 12px;">
                                 <label style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold;">Qté :</label>
                                 <input type="number" name="quantite" value="1" min="1" max="10" style="width: 40px; padding: 5px; border-radius: 5px; border: none; text-align: center; font-weight: bold; margin-left: 5px; color: #000000; background-color: #ffffff;">
+                                <br>
+                                <span class="message-erreur-js erreur-qte" style="color: #ffcc00; display: block; margin-top: 5px;"></span>
                             </div>
 
                             <button type="submit"

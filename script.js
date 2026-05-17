@@ -233,3 +233,100 @@ function validerMiseAJour(event) {
 
     return valide;
 }
+
+function confirmerLivraison(event) {
+    //La fonction confirm bloque l'écran et pose une question au livreur
+    var choix = confirm("Êtes-vous sûr de vouloir valider cette action ? Cette opération est définitive.");
+
+    //Abandonnée => choix = false => l'envoi du formulaire est bloqué
+    if (choix === false) {
+        event.preventDefault();
+        return false;
+    }
+
+    //Livraison terminée => le formulaire s'envoie
+    return true;
+}
+
+function validerNotation(event) {
+    var valide = true;
+    var champCommentaire = document.getElementById("commentaire-avis");
+    var erreurCommentaire = document.getElementById("erreur-commentaire");
+
+    if (erreurCommentaire) erreurCommentaire.innerHTML = "";
+
+    //commentaire < 250 caractères
+    if (champCommentaire && champCommentaire.value.length > 250) {
+        if (erreurCommentaire) {
+            erreurCommentaire.innerHTML = "Votre commentaire est trop long (250 caractères maximum).";
+        }
+        valide = false;
+    }
+
+    if (valide === false) {
+        event.preventDefault();
+    }
+
+    return valide;
+}
+
+function validerPanier(event) {
+    var valide = true;
+
+    var radioPlusTard = document.getElementById("prep_plustard");
+    var champDate = document.getElementById("date_commande");
+    var erreurDate = document.getElementById("erreur-date-panier");
+
+    if (erreurDate) {
+        erreurDate.innerHTML = "";
+    }
+
+    if (radioPlusTard && radioPlusTard.checked === true) {
+        //date vide
+        if (champDate && champDate.value === "") {
+            if (erreurDate) {
+                erreurDate.innerHTML = "Veuillez choisir une date et une heure avant de payer.";
+            }
+            valide = false;
+        }
+    }
+
+    if (valide === false) {
+        event.preventDefault();
+    }
+
+    return valide;
+}
+
+/*pour la page presentation*/
+function validerAjoutPanier(event) {
+    var valide = true;
+
+    //"event.target" = formulaire qui vient d'être soumis
+    var formulaire = event.target;
+
+    var champQte = formulaire.elements["quantite"];
+    var erreurQte = formulaire.querySelector(".erreur-qte");
+
+    if (erreurQte) {
+        erreurQte.innerHTML = "";
+    }
+
+    if (champQte) {
+        var quantite = parseInt(champQte.value);
+
+        //1 < nbr < 10
+        if (isNaN(quantite) || quantite < 1 || quantite > 10) {
+            if (erreurQte) {
+                erreurQte.innerHTML = "Quantité invalide (1 à 10 max).";
+            }
+            valide = false;
+        }
+    }
+
+    if (valide === false) {
+        event.preventDefault();
+    }
+
+    return valide;
+}

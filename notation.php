@@ -55,7 +55,7 @@ if (isset($_COOKIE['theme'])) {
     </div>
 
     <div class="conteneur-formulaire">
-        <form action="verif/verification_notation.php" method="post">
+        <form action="verif/verification_notation.php" method="post" onsubmit="return validerNotation(event)">
             <input type="hidden" name="id_commande" value="<?php echo htmlspecialchars($id_commande); ?>">
 
             <fieldset class="groupe-formulaire">
@@ -84,6 +84,7 @@ if (isset($_COOKIE['theme'])) {
                 <br><br>
                 <label for="commentaire-avis">Un commentaire ?</label><br>
                 <textarea id="commentaire-avis" name="commentaire" rows="5" placeholder="Dites-nous ce que vous avez pensé de ce mélange..." class="textarea-form"></textarea>
+                <span id="erreur-commentaire" class="message-erreur-js"></span>
             </fieldset>
 
             <div class="form-actions">
