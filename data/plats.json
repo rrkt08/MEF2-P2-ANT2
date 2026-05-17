@@ -123,7 +123,7 @@
     {
         "id_plat": "CROISSANT_VIANDE",
         "nom": "Croissant Viande",
-        "image": "croissant_salé.jpg",
+        "image": "croissant_sale.jpg",
         "categorie": "varietes",
         "description": "Hachis de bœuf épicé avec du fromage fondu dans un croissant pur beurre.",
         "prix": 6.00,
