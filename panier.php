@@ -11,7 +11,6 @@ if ($_SESSION['role'] != 'client') {
     exit();
 }
 
-// Phase 3 : vérification du blocage
 require_once('verif/check_session.php');
 
 $plats = [];
@@ -22,6 +21,7 @@ if (file_exists('data/plats.json')) {
     }
 }
 
+// dico id_plat -> infos
 $catalogue = [];
 foreach ($plats as $p) {
     $catalogue[$p['id_plat']] = $p;
@@ -34,11 +34,12 @@ if (isset($_SESSION['panier'])) {
     }
 }
 
+// limites pour la date "plus tard"
 $min_date = date('Y-m-d\TH:i');
 $limite = strtotime('+2 days');
 $max_date = date('Y-m-d\TH:i', $limite);
 
-//Vérification du cookie pour dark/light mode
+// cookie thème
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -140,20 +141,15 @@ if (isset($_COOKIE['theme'])) {
                     TOTAL : <?php echo number_format($total_commande, 2); ?> €
                 </h3>
 
-                <?php
-                require_once('verif/getapikey.php');
-                $vendeur = "MEF-2_G";
-                $transaction = substr(md5(uniqid(mt_rand(), true)), 0, 15);
-                $montant = number_format($total_commande, 2, '.', '');
-                $api_key = getAPIKey($vendeur);
-                $url_retour = "http://localhost/FlagrantDelice/verif/validation_commande.php?mode=";
-                $hash_control = md5($api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $url_retour);
-                ?>
-
-                <form action="https://www.plateforme-smc.fr/cybank/index.php" method="POST" class="form-paiement" onsubmit="return validerPanier(event)">
+                <!--
+                    On passe par preparer_paiement.php qui stocke les choix
+                    en session puis renvoie vers cybank avec une url retour fixe.
+                    (sinon le hash de controle est cassé)
+                -->
+                <form action="verif/preparer_paiement.php" method="POST" class="form-paiement" onsubmit="return validerPanier(event)">
 
                     <label class="label-paiement">Mode de consommation :</label><br>
-                    <select name="mode_conso_choisi" id="mode_select" class="input-form input-moitie" onchange="updateRetour()">
+                    <select name="mode_conso_choisi" id="mode_select" class="input-form input-moitie">
                         <option value="livraison">Livraison à domicile</option>
                         <option value="emporter">À emporter</option>
                         <option value="sur_place">Sur place</option>
@@ -162,42 +158,25 @@ if (isset($_COOKIE['theme'])) {
                     <br>
                     <label class="label-paiement">Moment de la préparation :</label><br>
                     <div class="bloc-radios-paiement">
-                        <input type="radio" id="prep_immediate" name="type_preparation" value="immediate" checked onclick="document.getElementById('champ_date_heure').style.display='none'; updateRetour();">
+                        <input type="radio" id="prep_immediate" name="type_preparation" value="immediate" checked onclick="document.getElementById('champ_date_heure').style.display='none'">
                         <label for="prep_immediate" class="radio-margin">Préparation immédiate</label>
 
-                        <input type="radio" id="prep_plustard" name="type_preparation" value="plustard" onclick="document.getElementById('champ_date_heure').style.display='block'; updateRetour();">
+                        <input type="radio" id="prep_plustard" name="type_preparation" value="plustard" onclick="document.getElementById('champ_date_heure').style.display='block'">
                         <label for="prep_plustard">Pour plus tard</label>
                     </div>
 
                     <div id="champ_date_heure" class="bloc-date-paiement">
                         <label for="date_commande" class="label-paiement">Date et heure souhaitées :</label><br>
-                        <input type="datetime-local" id="date_commande" name="date_commande" class="input-form input-moitie" min="<?php echo $min_date; ?>" max="<?php echo $max_date; ?>" onchange="updateRetour()">
+                        <input type="datetime-local" id="date_commande" name="date_commande" class="input-form input-moitie" min="<?php echo $min_date; ?>" max="<?php echo $max_date; ?>">
                         <br>
                         <span id="erreur-date-panier" class="message-erreur-js"></span>
                     </div>
 
-                    <input type="hidden" name="transaction" value="<?php echo $transaction; ?>">
-                    <input type="hidden" name="montant" value="<?php echo $montant; ?>">
-                    <input type="hidden" name="vendeur" value="<?php echo $vendeur; ?>">
-                    <input type="hidden" name="control" id="input_control" value="<?php echo $hash_control; ?>">
-                    <input type="hidden" name="retour" id="input_retour" value="<?php echo $url_retour . 'livraison&type_preparation=immediate&date_commande='; ?>">
+                    <input type="hidden" name="montant" value="<?php echo number_format($total_commande, 2, '.', ''); ?>">
 
                     <br>
                     <button type="submit" class="btn-recherche btn-submit-form btn-payer">Payer avec CYBank et Valider</button>
                 </form>
-                <script>
-                    function updateRetour() {
-                        var mode = document.getElementById('mode_select').value;
-                        var prep = document.querySelector('input[name="type_preparation"]:checked').value;
-                        var date_cmd = document.getElementById('date_commande').value;
-
-                        var base_url = "<?php echo $url_retour; ?>";
-                        var new_retour = base_url + mode + "&type_preparation=" + prep + "&date_commande=" + encodeURIComponent(date_cmd);
-
-                        document.getElementById('input_retour').value = new_retour;
-                    }
-                    window.addEventListener("load", updateRetour);
-                </script>
 
             <?php endif; ?>
         </fieldset>

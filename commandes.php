@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-// Que l'admin ou le restaurateur
+// que les pros (resto + admin)
 if (!isset($_SESSION['utilisateur_connecte']) || ($_SESSION['role'] != "restaurateur" && $_SESSION['role'] != "admin")) {
     header("Location: connexion.php");
     exit();
 }
 
-// Phase 3 : vérification du blocage
 require_once('verif/check_session.php');
 
 $commandes = [];
@@ -15,6 +14,7 @@ if (file_exists('data/commandes.json')) {
     $commandes = json_decode(file_get_contents('data/commandes.json'), true);
 }
 
+// dico id_plat => nom (pour l'affichage)
 $plats = [];
 if (file_exists('data/plats.json')) {
     $donnees_plats = json_decode(file_get_contents('data/plats.json'), true);
@@ -23,6 +23,7 @@ if (file_exists('data/plats.json')) {
     }
 }
 
+// pareil pour les menus
 $menus = [];
 if (file_exists('data/menus.json')) {
     $donnees_menus = json_decode(file_get_contents('data/menus.json'), true);
@@ -31,6 +32,7 @@ if (file_exists('data/menus.json')) {
     }
 }
 
+// récup les livreurs (pour afficher leur prénom)
 $livreurs = [];
 if (file_exists('data/utilisateurs.json')) {
     $donnees_users = json_decode(file_get_contents('data/utilisateurs.json'), true);
@@ -48,6 +50,7 @@ function getNomArticle($id, $type, $plats, $menus)
     return $id;
 }
 
+// génère un tableau de commandes pour un statut donné
 function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $livreurs, $texte_bouton, $statut_suivant)
 {
     echo '<h2 class="categorie-titre">' . $titre . '</h2>';
@@ -97,7 +100,7 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
             echo '<td class="colonne-actions">';
             echo '<button type="button" class="btn-action btn-details" onclick="window.location.href=\'details_commande.php?id=' . $cmd['id_commande'] . '\'">DÉTAILS</button>';
 
-            // Phase 3 : bouton de changement de statut en AJAX (sauf pour DÉTAILS)
+            // bouton de progression ajax (sauf pour les commandes en livraison où c'est le livreur qui valide)
             if ($texte_bouton !== "DÉTAILS") {
                 echo '<button type="button" class="btn-action btn-pret" onclick="changerStatutCmd(\'' . $cmd['id_commande'] . '\', this, \'' . $statut_suivant . '\')">' . $texte_bouton . '</button>';
             }
@@ -116,7 +119,7 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
     echo '</div>';
 }
 
-//Vérification du cookie pour dark/light mode
+// theme
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -157,11 +160,11 @@ if (isset($_COOKIE['theme'])) {
         <h2><u>COMMANDES</u></h2>
     </div>
 
-    <!-- Zone d'affichage des messages AJAX -->
+    <!-- zone retour ajax -->
     <div id="message-commandes"></div>
 
     <?php
-    // statut_suivant : statut vers lequel passer quand on clique le bouton
+    // statut_suivant = vers quoi on passe quand on clique le bouton
     afficherTableau("À PRÉPARER", "A PREPARER", $commandes, $plats, $menus, $livreurs, "EN COURS", "EN COURS");
     afficherTableau("EN COURS", "EN COURS", $commandes, $plats, $menus, $livreurs, "PRÊT À LIVRER", "EN LIVRAISON");
     afficherTableau("EN LIVRAISON", "EN LIVRAISON", $commandes, $plats, $menus, $livreurs, "DÉTAILS", "");

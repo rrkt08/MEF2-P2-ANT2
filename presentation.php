@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Phase 3 : si l'utilisateur est connecté, on vérifie qu'il n'a pas été bloqué
 require_once('verif/check_session.php');
 
 $plats = [];
@@ -9,6 +8,7 @@ if (file_exists('data/plats.json')) {
     $plats = json_decode(file_get_contents('data/plats.json'), true);
 }
 
+// compte le nb d'articles déjà au panier (pour le badge dans la nav)
 $nb_articles_panier = 0;
 if (isset($_SESSION['panier'])) {
     foreach ($_SESSION['panier'] as $qte) {
@@ -16,13 +16,13 @@ if (isset($_SESSION['panier'])) {
     }
 }
 
-// Pré-remplissage de la recherche si on vient de l'accueil
+// si recherche depuis l'accueil, on pré-remplit
 $recherche_initiale = "";
 if (isset($_GET['q'])) {
     $recherche_initiale = htmlspecialchars(trim($_GET['q']));
 }
 
-//Vérification du cookie pour dark/light mode
+// theme
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -74,10 +74,13 @@ if (isset($_SESSION['utilisateur_connecte'])) {
         <h2><u>TOUS NOS CRIMES CULINAIRES</u></h2>
     </div>
 
-    <!-- Filtres AJAX + tri JS -->
+    <!-- filtres en ajax + tri en js sur les data deja affichées -->
     <div class="zone-filtres">
         <form action="#" method="get" onsubmit="return filtrerPlatsAjax(event)">
-            <input type="text" id="filtre-recherche" name="q" placeholder="Rechercher un crime..." class="input-recherche" value="<?php echo $recherche_initiale; ?>">
+            <div class="conteneur-input-recherche">
+                <input type="text" id="filtre-recherche" name="q" placeholder="Rechercher un crime..." class="input-recherche" value="<?php echo $recherche_initiale; ?>" maxlength="40" data-compteur="cpt-recherche-presentation">
+                <span id="cpt-recherche-presentation" class="compteur-caracteres"></span>
+            </div>
 
             <select name="categorie" id="filtre-categorie" class="menu-deroulant">
                 <option value="">Toutes les catégories</option>
@@ -117,7 +120,7 @@ if (isset($_SESSION['utilisateur_connecte'])) {
     }
     ?>
 
-    <!-- Zone qui sera remplie en AJAX -->
+    <!-- la zone qui se rafraichit en ajax quand on filtre -->
     <div id="zone-plats">
         <?php
         $categories = [
@@ -131,7 +134,7 @@ if (isset($_SESSION['utilisateur_connecte'])) {
         $plats_affiches = 0;
 
         foreach ($categories as $id_cat => $nom_cat) :
-            // Filtre côté serveur initial : si q est dans l'URL on filtre dès le chargement
+            // filtre initial coté serveur (si on arrive avec q dans l'url)
             $plats_filtres = [];
             foreach ($plats as $plat) {
                 if ($plat['categorie'] != $id_cat) continue;
@@ -148,6 +151,7 @@ if (isset($_SESSION['utilisateur_connecte'])) {
                 <div class="plats-populaires">
                     <?php foreach ($plats_filtres as $plat) : ?>
                         <?php
+                        // ptit fix : png/jpg fallback
                         $nom_sans_extension = pathinfo($plat['image'], PATHINFO_FILENAME);
 
                         if (file_exists("images/" . $nom_sans_extension . ".png")) {

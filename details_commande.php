@@ -11,7 +11,6 @@ if ($_SESSION['role'] != "restaurateur" && $_SESSION['role'] != "admin") {
     exit();
 }
 
-// Phase 3 : vérification du blocage
 require_once('verif/check_session.php');
 
 if (!isset($_GET['id'])) {
@@ -40,7 +39,7 @@ if (file_exists('data/menus.json')) {
     $menus = json_decode(file_get_contents('data/menus.json'), true);
 }
 
-// Recherche commande
+// on cherche la commande
 $commande_actuelle = null;
 foreach ($commandes as $cmd) {
     if ($cmd['id_commande'] == $id_commande) {
@@ -53,7 +52,7 @@ if ($commande_actuelle == null) {
     die("Commande introuvable.");
 }
 
-// Recherche du client
+// le client lié
 $client = null;
 foreach ($utilisateurs as $u) {
     if ($u['id_utilisateur'] == $commande_actuelle['id_client']) {
@@ -62,6 +61,7 @@ foreach ($utilisateurs as $u) {
     }
 }
 
+// id_article => nom (pour les plats ET les menus)
 $noms_articles = [];
 foreach ($plats as $p) {
     $noms_articles[$p['id_plat']] = $p['nom'];
@@ -70,7 +70,7 @@ foreach ($menus as $m) {
     $noms_articles[$m['id_menu']] = $m['nom'];
 }
 
-// Recherche du livreur
+// liste des livreurs dispo pour le select
 $livreurs = [];
 foreach ($utilisateurs as $u) {
     if ($u['role'] == 'livreur') {
@@ -78,7 +78,7 @@ foreach ($utilisateurs as $u) {
     }
 }
 
-//Vérification du cookie pour dark/light mode
+// theme
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -119,7 +119,7 @@ if (isset($_COOKIE['theme'])) {
         <h2><u>DÉTAIL : <?php echo $id_commande; ?></u></h2>
     </div>
 
-    <!-- Zone messages AJAX -->
+    <!-- zone retour ajax -->
     <div id="message-details"></div>
 
     <div class="conteneur-formulaire">
@@ -131,6 +131,7 @@ if (isset($_COOKIE['theme'])) {
             <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($client['informations']['telephone']); ?></p>
             <p><strong>Mode :</strong> <span class="texte-mode-conso"><?php echo htmlspecialchars($commande_actuelle['lieu_consommation']); ?></span></p>
             <?php
+            // si livraison, on affiche l'adresse complète
             if ($commande_actuelle['lieu_consommation'] == "livraison") {
                 echo '<br><label>Adresse de livraison :</label>';
                 echo '<div class="input-group-profil">';
@@ -191,8 +192,8 @@ if (isset($_COOKIE['theme'])) {
             <br>
             <label>Statut du paiement :</label>
             <?php
+            // couleur selon paiement
             $classe_css_paiement = "texte-statut-attente";
-
             if ($commande_actuelle['statut_paiement'] == "paye") {
                 $classe_css_paiement = "texte-statut-paye";
             }

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Livreur ou admin ont l'accès
+// livreur ou admin
 if (!isset($_SESSION['utilisateur_connecte'])) {
     header("Location: connexion.php");
     exit();
@@ -12,7 +12,6 @@ if ($_SESSION['role'] != "livreur" && $_SESSION['role'] != "admin") {
     exit();
 }
 
-// Phase 3 : vérification du blocage
 require_once('verif/check_session.php');
 
 $commandes = [];
@@ -25,12 +24,11 @@ if (file_exists('data/utilisateurs.json')) {
     $utilisateurs = json_decode(file_get_contents('data/utilisateurs.json'), true);
 }
 
-// Recherche commande du livreur
+// on cherche la cmd assignée à ce livreur (ou la 1ère en livraison si admin)
 $commande_a_livrer = null;
 
 foreach ($commandes as $cmd) {
     if ($cmd['statut_preparation'] == "EN LIVRAISON") {
-        // Si c'est le bon livreur, ou si c'est l'admin
         if ($cmd['id_livreur'] == $_SESSION['id_utilisateur'] || $_SESSION['role'] == 'admin') {
             $commande_a_livrer = $cmd;
             break;
@@ -38,7 +36,7 @@ foreach ($commandes as $cmd) {
     }
 }
 
-// Recherche infos client
+// infos du client si on a une cmd
 $client = null;
 if ($commande_a_livrer != null) {
     foreach ($utilisateurs as $u) {
@@ -49,7 +47,7 @@ if ($commande_a_livrer != null) {
     }
 }
 
-//Vérification du cookie pour dark/light mode
+// theme
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -91,6 +89,7 @@ if (isset($_COOKIE['theme'])) {
     <?php
     if ($commande_a_livrer != null) {
 
+        // construit l'url google maps avec l'adresse
         $adresse_complete = $commande_a_livrer['adresse_livraison']['rue'] . ', ' . $commande_a_livrer['adresse_livraison']['code_postal'] . ' ' . $commande_a_livrer['adresse_livraison']['ville'];
         $lien_gps = "https://www.google.com/maps/search/?api=1&query=" . urlencode($adresse_complete);
 
@@ -109,6 +108,7 @@ if (isset($_COOKIE['theme'])) {
         echo htmlspecialchars($commande_a_livrer['adresse_livraison']['code_postal'] . ' ' . $commande_a_livrer['adresse_livraison']['ville']);
         echo '</p>';
 
+        // compléments si y en a (digicode, étage...)
         if ($commande_a_livrer['adresse_livraison']['complement'] != "") {
             echo '<h3 class="titre-livraison">COMPLÉMENTS</h3>';
             echo '<p class="info-livraison">';
@@ -124,13 +124,14 @@ if (isset($_COOKIE['theme'])) {
         echo '<a href="' . htmlspecialchars($lien_gps) . '" target="_blank" class="btn-livreur btn-gps">🗺️ OUVRIR GPS</a>';
 
         echo '<p class="titre-livraison">STATUT DE LA COMMANDE</p>';
-        // Phase 3 : boutons en AJAX
+        // boutons ajax
         echo '<button type="button" class="btn-livreur btn-valider" onclick="confirmerLivraison(\'terminee\')">✅ LIVRAISON TERMINÉE</button>';
         echo '<button type="button" class="btn-livreur btn-abandon" onclick="confirmerLivraison(\'abandonnee\')">❌ ABANDONNÉE</button>';
 
         echo '</div>';
         echo '</div>';
     } else {
+        // pas de cmd en livraison pour ce livreur
         echo '<div class="bandeau-titre">';
         echo '<h2><u>AUCUNE LIVRAISON</u></h2>';
         echo '</div>';

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-//Vérification du cookie pour dark/light mode
+// theme clair/sombre via cookie
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -42,7 +42,7 @@ if (isset($_COOKIE['theme'])) {
     </div>
 
     <?php
-    // GESTION DES MESSAGES D'ERREUR
+    // gestion des erreurs (passées en GET par la page de vérif)
     if (isset($_GET['erreur'])) {
         $message_erreur = "";
 

@@ -1,6 +1,4 @@
-/* =====================================================================
-   THEME (dark/light) - Phase 3 : sauvegarde du choix dans un cookie
-   ===================================================================== */
+// switch clair/sombre, on garde le choix dans un cookie 30j
 function changerTheme() {
     var themeLink = document.getElementById("theme-css");
     var themeActuel = themeLink.getAttribute("href");
@@ -8,7 +6,6 @@ function changerTheme() {
     var nouveauTheme = "";
     var valeurCookie = "";
 
-    //Si on est en lightmode on switch en darkmode...
     if (themeActuel === "style.css") {
         nouveauTheme = "style_sombre.css";
         valeurCookie = "sombre";
@@ -19,15 +16,13 @@ function changerTheme() {
 
     themeLink.setAttribute("href", nouveauTheme);
 
-    //La sauvegarde dans un cookie dure 30j
     var dateExpiration = new Date();
     dateExpiration.setTime(dateExpiration.getTime() + (30 * 24 * 60 * 60 * 1000));
     document.cookie = "theme=" + valeurCookie + "; expires=" + dateExpiration.toUTCString() + "; path=/";
 }
 
-/* =====================================================================
-   AFFICHAGE / MASQUAGE DU MOT DE PASSE (icone oeil)
-   ===================================================================== */
+
+// icone oeil pour afficher/cacher le mdp
 function afficherMasquerMdp(idChamp, idIcone) {
     var champMdp = document.getElementById(idChamp);
     var iconeOeil = document.getElementById(idIcone);
@@ -43,13 +38,11 @@ function afficherMasquerMdp(idChamp, idIcone) {
     }
 }
 
-/* =====================================================================
-   VALIDATION INSCRIPTION
-   ===================================================================== */
+
+/* ======== validation inscription ======== */
 function validerInscription(event) {
     var valide = true;
 
-    //Récupération des id
     var champNom = document.getElementById("nom-insc");
     var champPrenom = document.getElementById("prenom-insc");
     var champDate = document.getElementById("date-naissance-insc");
@@ -61,7 +54,7 @@ function validerInscription(event) {
     var champMdp = document.getElementById("mdp-insc");
     var champCertif = document.getElementById("age");
 
-    //On vide les messages d'erreur
+    // on reset tous les msgs d'erreur
     document.getElementById("erreur-nom").innerHTML = "";
     document.getElementById("erreur-prenom").innerHTML = "";
     document.getElementById("erreur-date").innerHTML = "";
@@ -73,7 +66,6 @@ function validerInscription(event) {
     document.getElementById("erreur-mdp").innerHTML = "";
     document.getElementById("erreur-certification").innerHTML = "";
 
-    //Vérifs
     if (champNom && champNom.value.length < 2) {
         document.getElementById("erreur-nom").innerHTML = "Le nom est trop court.";
         valide = false;
@@ -91,45 +83,41 @@ function validerInscription(event) {
         valide = false;
     }
 
-    //code postal, 5 caractères, que des chiffres
+    // CP : 5 chiffres
     if (champCp && (champCp.value.length !== 5 || isNaN(champCp.value))) {
         document.getElementById("erreur-cp").innerHTML = "Le code postal doit contenir exactement 5 chiffres.";
         valide = false;
     }
 
-    //Téléphone, 10 chiffres
+    // tél : 10 chiffres (espaces ok)
     if (champTel) {
-        //numéro sans espace
         var telSansEspaces = champTel.value.replaceAll(" ", "");
-
         if (telSansEspaces.length !== 10 || isNaN(telSansEspaces)) {
             document.getElementById("erreur-telephone").innerHTML = "Le numéro doit contenir exactement 10 chiffres.";
             valide = false;
         }
     }
 
-    //E-mail, un "@" et un "."
+    // email : juste un @ et un .
     if (champEmail && (champEmail.value.indexOf("@") === -1 || champEmail.value.indexOf(".") === -1)) {
         document.getElementById("erreur-email").innerHTML = "Veuillez saisir une adresse e-mail valide.";
         valide = false;
     }
 
-    //Mdp, 8 caractères minimum
+    // mdp 8 cara mini
     if (champMdp && champMdp.value.length < 8) {
         document.getElementById("erreur-mdp").innerHTML = "Le mot de passe doit contenir au moins 8 caractères.";
         valide = false;
     }
 
-    //date de naissance, il faut avoir 18 ans pour commander en ligne
+    // 18 ans mini
     if (champDate && champDate.value !== "") {
         var dateSaisie = new Date(champDate.value);
         var aujourdhui = new Date();
 
-        var anneeSaisie = dateSaisie.getFullYear();
-        var anneeAujourdhui = aujourdhui.getFullYear();
-        var age = anneeAujourdhui - anneeSaisie;
+        var age = aujourdhui.getFullYear() - dateSaisie.getFullYear();
 
-        // On ajuste si le mois d'anniversaire n'est pas encore passé
+        // si anniv pas encore passé cette année
         if (aujourdhui.getMonth() < dateSaisie.getMonth() || (aujourdhui.getMonth() === dateSaisie.getMonth() && aujourdhui.getDate() < dateSaisie.getDate())) {
             age = age - 1;
         }
@@ -140,13 +128,12 @@ function validerInscription(event) {
         }
     }
 
-    //case à cocher a la fin du formulaire
+    // case "j'ai un estomac solide" obligatoire
     if (champCertif && champCertif.checked === false) {
         document.getElementById("erreur-certification").innerHTML = "Vous devez certifier avoir un estomac solide.";
         valide = false;
     }
 
-    //une règle pas respectée = on annule l'envoi
     if (valide === false) {
         event.preventDefault();
     }
@@ -154,9 +141,8 @@ function validerInscription(event) {
     return valide;
 }
 
-/* =====================================================================
-   VALIDATION CONNEXION
-   ===================================================================== */
+
+// validation form connexion
 function validerConnexion(event) {
     var valide = true;
 
@@ -183,9 +169,8 @@ function validerConnexion(event) {
     return valide;
 }
 
-/* =====================================================================
-   VALIDATION RECHERCHE (accueil)
-   ===================================================================== */
+
+// barre de recherche accueil : pas de champ vide
 function validerRecherche(event) {
     var valide = true;
 
@@ -210,9 +195,8 @@ function validerRecherche(event) {
     return valide;
 }
 
-/* =====================================================================
-   VALIDATION NOTATION
-   ===================================================================== */
+
+// commentaire avis < 250 cara
 function validerNotation(event) {
     var valide = true;
     var champCommentaire = document.getElementById("commentaire-avis");
@@ -234,9 +218,8 @@ function validerNotation(event) {
     return valide;
 }
 
-/* =====================================================================
-   VALIDATION PANIER (date pour préparation plus tard)
-   ===================================================================== */
+
+// si pour plus tard, date oblig
 function validerPanier(event) {
     var valide = true;
 
@@ -264,9 +247,8 @@ function validerPanier(event) {
     return valide;
 }
 
-/* =====================================================================
-   VALIDATION AJOUT PANIER (présentation)
-   ===================================================================== */
+
+// quantité ajout panier (1 à 10)
 function validerAjoutPanier(event) {
     var valide = true;
     var formulaire = event.target;
@@ -280,7 +262,6 @@ function validerAjoutPanier(event) {
 
     if (champQte) {
         var quantite = parseInt(champQte.value);
-
         if (isNaN(quantite) || quantite < 1 || quantite > 10) {
             if (erreurQte) {
                 erreurQte.innerHTML = "Quantité invalide (1 à 10 max).";
@@ -296,12 +277,10 @@ function validerAjoutPanier(event) {
     return valide;
 }
 
-/* =====================================================================
-   CONFIRMATION LIVRAISON (livreur)
-   ===================================================================== */
+
+/* ======== livreur : validation/abandon livraison en ajax ======== */
 function confirmerLivraison(action) {
-    var message = "Êtes-vous sûr de vouloir valider cette action ? Cette opération est définitive.";
-    var choix = confirm(message);
+    var choix = confirm("Êtes-vous sûr de vouloir valider cette action ? Cette opération est définitive.");
 
     if (choix === false) {
         return;
@@ -310,7 +289,6 @@ function confirmerLivraison(action) {
     var idCmd = document.getElementById("id-cmd-livraison").value;
     var msgZone = document.getElementById("message-livraison");
 
-    // Requête AJAX vers le serveur (Phase 3)
     var formData = new FormData();
     formData.append("id_commande", idCmd);
     formData.append("action_livraison", action);
@@ -324,7 +302,7 @@ function confirmerLivraison(action) {
             if (data.succes === true) {
                 msgZone.className = "message-alerte alerte-succes";
                 msgZone.innerHTML = data.message;
-                // On masque les boutons une fois la livraison validée
+                // on cache les boutons une fois validé
                 var blocActions = document.getElementById("actions-livreur-bloc");
                 if (blocActions) {
                     blocActions.style.display = "none";
@@ -340,10 +318,9 @@ function confirmerLivraison(action) {
         });
 }
 
-/* =====================================================================
-   PHASE 3 : COMPTEURS DE CARACTÈRES EN TEMPS RÉEL
-   On cherche tous les inputs/textarea qui ont un attribut "data-compteur"
-   ===================================================================== */
+
+/* ======== compteurs de cara temps réel ======== */
+// on prend tous les champs qui ont data-compteur="id_du_span" et on bind l'event
 function initCompteursCaracteres() {
     var champs = document.querySelectorAll("[data-compteur]");
 
@@ -353,8 +330,8 @@ function initCompteursCaracteres() {
         var compteur = document.getElementById(idCompteur);
 
         if (compteur) {
-            // On crée une fonction par champ pour bien isoler la variable
-            var maj = function (c, cp) {
+            // closure pour bien isoler la var champ/compteur
+            var maj = (function (c, cp) {
                 return function () {
                     var max = c.getAttribute("maxlength");
                     if (max) {
@@ -363,21 +340,16 @@ function initCompteursCaracteres() {
                         cp.innerHTML = c.value.length + " caractères";
                     }
                 };
-            }(champ, compteur);
+            })(champ, compteur);
 
-            // Mise à jour au chargement
             maj();
-            // Mise à jour à chaque frappe
             champ.addEventListener("input", maj);
         }
     }
 }
 
-/* =====================================================================
-   PHASE 3 : PROFIL - Modification en AJAX
-   - Clic sur le crayon -> champ éditable, le bouton devient "✅ Valider"
-   - Clic sur ✅ -> envoie en fetch() vers verif/maj_profil.php
-   ===================================================================== */
+
+/* ======== profil : modif d'un champ en ajax ======== */
 function modifierChampProfil(bouton) {
     var champ = bouton.parentNode.querySelector(".input-form, .textarea-form");
     var nomChamp = champ.getAttribute("data-champ");
@@ -386,7 +358,7 @@ function modifierChampProfil(bouton) {
         return;
     }
 
-    // Si le champ est en mode lecture seule => on passe en édition
+    // si le champ est readonly => on passe en mode édition
     if (champ.hasAttribute("readonly") || champ.hasAttribute("disabled")) {
         champ.removeAttribute("readonly");
         champ.removeAttribute("disabled");
@@ -394,10 +366,10 @@ function modifierChampProfil(bouton) {
         bouton.innerHTML = "✅";
         bouton.classList.add("btn-edit-valider");
     } else {
-        // Sinon, on sauvegarde via AJAX
+        // sinon on sauvegarde
         var nouvelleValeur = champ.value;
 
-        // Cas particulier : checkboxes (préférences contact)
+        // cas spécial : checkboxes pref contact
         if (nomChamp === "preferences_contact") {
             var checkboxes = bouton.parentNode.querySelectorAll("input[type='checkbox']");
             var liste = [];
@@ -408,7 +380,7 @@ function modifierChampProfil(bouton) {
             }
             nouvelleValeur = liste.join(",");
 
-            // On re-désactive les checkboxes
+            // on re-disable les cases
             for (var j = 0; j < checkboxes.length; j = j + 1) {
                 checkboxes[j].setAttribute("disabled", "disabled");
             }
@@ -452,7 +424,7 @@ function modifierChampProfil(bouton) {
     }
 }
 
-// Activation des checkboxes "préférences contact"
+// pour les checkboxes (pref contact) : 1er clic = activation, 2eme = save
 function activerCheckboxesContact(bouton) {
     var checkboxes = bouton.parentNode.querySelectorAll("input[type='checkbox']");
 
@@ -467,10 +439,8 @@ function activerCheckboxesContact(bouton) {
     }
 }
 
-/* =====================================================================
-   PHASE 3 : FILTRES sur la page présentation - AJAX
-   La connexion asynchrone récupère uniquement les plats filtrés.
-   ===================================================================== */
+
+/* ======== présentation : filtres ajax + tri js ======== */
 function filtrerPlatsAjax(event) {
     if (event) {
         event.preventDefault();
@@ -506,18 +476,15 @@ function filtrerPlatsAjax(event) {
     return false;
 }
 
-/* =====================================================================
-   PHASE 3 : TRIS sur la page présentation - JS pur (données déjà chargées)
-   ===================================================================== */
+// le tri est en js pur sur les data déjà chargées
 function trierPlats(critere) {
-    // On récupère tous les groupes de plats par catégorie
     var grilles = document.querySelectorAll(".plats-populaires");
 
     for (var g = 0; g < grilles.length; g = g + 1) {
         var grille = grilles[g];
         var plats = grille.querySelectorAll(".plat");
 
-        // On convertit la NodeList en tableau pour pouvoir trier
+        // on convertit en tableau pour pouvoir trier
         var tableauPlats = [];
         for (var i = 0; i < plats.length; i = i + 1) {
             tableauPlats.push(plats[i]);
@@ -541,16 +508,15 @@ function trierPlats(critere) {
             return 0;
         });
 
-        // On re-place les plats triés dans la grille
+        // on remet les plats triés en place
         for (var j = 0; j < tableauPlats.length; j = j + 1) {
             grille.appendChild(tableauPlats[j]);
         }
     }
 }
 
-/* =====================================================================
-   PHASE 3 : MODIFICATION DU PANIER (quantités) - AJAX
-   ===================================================================== */
+
+/* ======== panier : ajout/retrait qté ======== */
 function modifierQuantitePanier(idPlat, delta) {
     var formData = new FormData();
     formData.append("id_plat", idPlat);
@@ -563,7 +529,7 @@ function modifierQuantitePanier(idPlat, delta) {
         .then(function (reponse) { return reponse.json(); })
         .then(function (data) {
             if (data.succes === true) {
-                // On rafraîchit la page pour voir les nouveaux totaux
+                // on reload pour voir les nouveaux totaux
                 window.location.reload();
             } else {
                 alert(data.message);
@@ -597,9 +563,8 @@ function supprimerArticlePanier(idPlat) {
         });
 }
 
-/* =====================================================================
-   PHASE 3 : RESTAURATEUR - Changement de statut commande - AJAX
-   ===================================================================== */
+
+/* ======== cuisine : changer le statut d'une commande ======== */
 function changerStatutCmd(idCmd, ligne, nouveauStatut) {
     var formData = new FormData();
     formData.append("id_commande", idCmd);
@@ -612,7 +577,7 @@ function changerStatutCmd(idCmd, ligne, nouveauStatut) {
         .then(function (reponse) { return reponse.json(); })
         .then(function (data) {
             if (data.succes === true) {
-                // On retire la ligne du tableau actuel sans recharger la page
+                // on retire la ligne du tableau actuel
                 var ligneTr = document.getElementById("ligne-" + idCmd);
                 if (ligneTr) {
                     ligneTr.parentNode.removeChild(ligneTr);
@@ -631,9 +596,8 @@ function changerStatutCmd(idCmd, ligne, nouveauStatut) {
         });
 }
 
-/* =====================================================================
-   PHASE 3 : DETAILS COMMANDE - Sauvegarder statut + livreur - AJAX
-   ===================================================================== */
+
+/* ======== détail commande : sauver statut + livreur ======== */
 function validerMiseAJour(event) {
     if (event) {
         event.preventDefault();
@@ -697,9 +661,8 @@ function validerMiseAJour(event) {
     return false;
 }
 
-/* =====================================================================
-   PHASE 3 : ADMIN - Bloquer / Débloquer un utilisateur - AJAX
-   ===================================================================== */
+
+/* ======== admin : bloquer / débloquer ======== */
 function bloquerUtilisateurAjax(idUser, bouton) {
     var actionActuelle = bouton.getAttribute("data-action");
 
@@ -726,16 +689,34 @@ function bloquerUtilisateurAjax(idUser, bouton) {
         .then(function (reponse) { return reponse.json(); })
         .then(function (data) {
             if (data.succes === true) {
+                // on switch le bouton bloqué <-> débloqué
                 if (actionActuelle === "bloquer") {
                     bouton.innerHTML = "DÉBLOQUER";
                     bouton.setAttribute("data-action", "debloquer");
                     bouton.classList.remove("btn-bloquer");
                     bouton.classList.add("btn-debloquer");
+                    // on met aussi à jour la cellule "état"
+                    var tr = bouton.closest("tr");
+                    if (tr) {
+                        var cellEtat = tr.children[4];
+                        if (cellEtat) {
+                            cellEtat.innerHTML = "BLOQUÉ";
+                            cellEtat.className = "statut-annule";
+                        }
+                    }
                 } else {
                     bouton.innerHTML = "BLOQUER";
                     bouton.setAttribute("data-action", "bloquer");
                     bouton.classList.remove("btn-debloquer");
                     bouton.classList.add("btn-bloquer");
+                    var tr2 = bouton.closest("tr");
+                    if (tr2) {
+                        var cellEtat2 = tr2.children[4];
+                        if (cellEtat2) {
+                            cellEtat2.innerHTML = "ACTIF";
+                            cellEtat2.className = "statut-livre";
+                        }
+                    }
                 }
 
                 var zoneMsg = document.getElementById("message-admin");
@@ -752,10 +733,86 @@ function bloquerUtilisateurAjax(idUser, bouton) {
         });
 }
 
-/* =====================================================================
-   PHASE 3 : Vérification AJAX si l'utilisateur est bloqué
-   Appelée toutes les 30 secondes sur les pages connectées
-   ===================================================================== */
+
+/* ======== admin : changer statut fidélité ======== */
+function changerStatutFidelite(idUser) {
+    if (!confirm("Faire passer cet utilisateur au statut fidélité suivant ?")) {
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append("id_utilisateur", idUser);
+    formData.append("action", "statut");
+
+    fetch("verif/maj_fidelite.php", {
+        method: "POST",
+        body: formData
+    })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            var zoneMsg = document.getElementById("message-admin");
+            if (data.succes === true) {
+                if (zoneMsg) {
+                    zoneMsg.className = "message-alerte alerte-succes";
+                    zoneMsg.innerHTML = data.message;
+                }
+            } else {
+                if (zoneMsg) {
+                    zoneMsg.className = "message-alerte alerte-erreur";
+                    zoneMsg.innerHTML = data.message;
+                } else {
+                    alert(data.message);
+                }
+            }
+        })
+        .catch(function () {
+            alert("Erreur réseau, veuillez réessayer.");
+        });
+}
+
+
+/* ======== admin : accorder une remise (en points) ======== */
+function accorderRemise(idUser) {
+    var saisie = prompt("Combien de points fidélité ajouter ? (peut être négatif pour retirer)", "50");
+    if (saisie === null) {
+        return;
+    }
+
+    var pts = parseInt(saisie);
+    if (isNaN(pts)) {
+        alert("Valeur invalide.");
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append("id_utilisateur", idUser);
+    formData.append("action", "remise");
+    formData.append("valeur", pts);
+
+    fetch("verif/maj_fidelite.php", {
+        method: "POST",
+        body: formData
+    })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            var zoneMsg = document.getElementById("message-admin");
+            if (data.succes === true) {
+                if (zoneMsg) {
+                    zoneMsg.className = "message-alerte alerte-succes";
+                    zoneMsg.innerHTML = data.message;
+                }
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(function () {
+            alert("Erreur réseau, veuillez réessayer.");
+        });
+}
+
+
+/* ======== check si on s'est fait bloquer entre temps ======== */
+// (poll toutes les 30s sur les pages connectées)
 function verifierBlocage() {
     fetch("verif/verifier_blocage.php")
         .then(function (reponse) { return reponse.json(); })
@@ -766,20 +823,17 @@ function verifierBlocage() {
             }
         })
         .catch(function () {
-            // Silencieux pour ne pas gêner l'utilisateur en cas de coupure brève
+            // on dit rien, ça ré-essayera
         });
 }
 
-/* =====================================================================
-   INITIALISATION DES LISTENERS AU CHARGEMENT DE LA PAGE
-   ===================================================================== */
+
+// init au chargement de la page
 window.addEventListener("load", function () {
-    // Compteurs de caractères
     initCompteursCaracteres();
 
-    // Si on est sur une page connectée, on vérifie périodiquement le blocage
+    // si on est co, on check périodiquement si on a été bloqué
     if (document.body.getAttribute("data-connecte") === "1") {
-        // Toutes les 30s
         setInterval(verifierBlocage, 30000);
     }
 });

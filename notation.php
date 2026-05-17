@@ -1,20 +1,17 @@
 <?php
 session_start();
 
-// Redirection si non connecté
 if (!isset($_SESSION['utilisateur_connecte'])) {
     header("Location: connexion.php");
     exit();
 }
 
-// Phase 3 : vérification du blocage
 require_once('verif/check_session.php');
 
-// On récupère l'ID de la commande depuis l'URL
+// l'id de cmd vient dans l'url
 $id_commande = isset($_GET['id_commande']) ? $_GET['id_commande'] : '';
 
-// Phase 3 : vérification que la commande appartient au client, qu'elle est livrée
-// et qu'elle n'a pas déjà été notée (pas de notation pour sur place / à emporter)
+// on check que la commande est notable
 $commande_a_noter = null;
 $erreur_acces = "";
 
@@ -42,7 +39,7 @@ if ($id_commande == "") {
     }
 }
 
-//Vérification du cookie pour dark/light mode
+// theme
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {

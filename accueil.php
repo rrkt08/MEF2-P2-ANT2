@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-//Vérification du cookie pour dark/light mode
+// cookie thème (clair / sombre)
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -11,7 +11,7 @@ if (isset($_COOKIE['theme'])) {
     }
 }
 
-// Phase 3 : si l'utilisateur est connecté, on vérifie qu'il n'a pas été bloqué
+// si user co => check qu'il est pas bloqué entre temps
 require_once('verif/check_session.php');
 
 $est_connecte = "0";
@@ -57,7 +57,8 @@ if (isset($_SESSION['utilisateur_connecte'])) {
     <div class="zone-recherche">
         <form action="presentation.php" method="get" onsubmit="return validerRecherche(event)">
             <div class="conteneur-input-recherche">
-                <input type="text" id="recherche-accueil" name="q" placeholder="RECHERCHER UN CRIME CULINAIRE..." class="input-recherche">
+                <input type="text" id="recherche-accueil" name="q" placeholder="RECHERCHER UN CRIME CULINAIRE..." class="input-recherche" maxlength="40" data-compteur="cpt-recherche-accueil">
+                <span id="cpt-recherche-accueil" class="compteur-caracteres"></span>
                 <span id="erreur-recherche" class="message-erreur-js"></span>
             </div>
             <button type="submit" class="btn-recherche">RECHERCHER</button>

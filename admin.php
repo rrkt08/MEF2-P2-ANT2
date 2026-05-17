@@ -1,16 +1,16 @@
 <?php
 session_start();
 
-// utilisateur != admin
+// si pas admin => dégage
 if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != "admin") {
     header("Location: connexion.php");
     exit();
 }
 
-// Phase 3 : vérification du blocage (cas où un autre admin viendrait à bloquer celui-ci)
+// au cas où un autre admin t'aurait bloqué
 require_once('verif/check_session.php');
 
-//Récupération des données
+// charge les users
 $fichier = 'data/utilisateurs.json';
 if (file_exists($fichier)) {
     $utilisateurs = json_decode(file_get_contents($fichier), true);
@@ -18,7 +18,7 @@ if (file_exists($fichier)) {
     $utilisateurs = [];
 }
 
-//Vérification du cookie pour dark/light mode
+// theme
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -57,7 +57,7 @@ if (isset($_COOKIE['theme'])) {
         <h2><u>GESTION DES UTILISATEURS</u></h2>
     </div>
 
-    <!-- Zone d'affichage des messages AJAX -->
+    <!-- zone msg ajax (statut/remise/blocage) -->
     <div id="message-admin"></div>
 
     <div class="conteneur-tableau">
@@ -81,6 +81,7 @@ if (isset($_COOKIE['theme'])) {
 
                         $role = strtoupper($user['role']);
 
+                        // classe rouge pour les admins
                         $classe_role = "";
                         if ($role == 'ADMIN') {
                             $classe_role = "role-admin";
@@ -90,7 +91,7 @@ if (isset($_COOKIE['theme'])) {
                         echo '<td><strong>' . htmlspecialchars($user['informations']['prenom'] . ' ' . $user['informations']['nom']) . '</strong></td>';
                         echo '<td>' . htmlspecialchars($user['login']) . '</td>';
 
-                        // Phase 3 : Affichage de l'état (bloqué ou non)
+                        // colonne état (bloqué / actif)
                         $est_bloque = (isset($user['bloque']) && $user['bloque'] == true);
                         if ($est_bloque) {
                             echo '<td class="statut-annule">BLOQUÉ</td>';
@@ -101,10 +102,19 @@ if (isset($_COOKIE['theme'])) {
                         echo '<td class="colonne-actions">';
 
                         echo '<button type="button" class="btn-admin btn-voir-profil" onclick="window.location.href=\'profil.php?id=' . $user['id_utilisateur'] . '\'">VOIR PROFIL</button>';
-                        echo '<button type="button" class="btn-admin btn-statut">STATUT</button>';
-                        echo '<button type="button" class="btn-admin btn-remise">REMISE</button>';
 
-                        // L'admin ne peut pas se bloquer / bloquer un autre admin
+                        // statut + remise : que pour les users avec fidélité (= clients)
+                        $a_fidelite = isset($user['fidelite']) && $user['fidelite'] !== null;
+
+                        if ($a_fidelite) {
+                            echo '<button type="button" class="btn-admin btn-statut" onclick="changerStatutFidelite(' . $user['id_utilisateur'] . ')">STATUT</button>';
+                            echo '<button type="button" class="btn-admin btn-remise" onclick="accorderRemise(' . $user['id_utilisateur'] . ')">REMISE</button>';
+                        } else {
+                            echo '<span class="btn-admin admin-tiret">-</span>';
+                            echo '<span class="btn-admin admin-tiret">-</span>';
+                        }
+
+                        // on bloque pas les admins, et on se bloque pas soi-même
                         if ($role != 'ADMIN') {
                             if ($est_bloque) {
                                 echo '<button type="button" class="btn-admin btn-debloquer" data-action="debloquer" onclick="bloquerUtilisateurAjax(' . $user['id_utilisateur'] . ', this)">DÉBLOQUER</button>';

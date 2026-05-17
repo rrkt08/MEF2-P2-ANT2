@@ -1,39 +1,36 @@
 <?php
 session_start();
 
-// Vérification de la connexion
 if (!isset($_SESSION['utilisateur_connecte'])) {
     header("Location: connexion.php");
     exit();
 }
 
-// Phase 3 : vérification du blocage
 require_once('verif/check_session.php');
 
-// Quel profil on va afficher
+// quel profil afficher ?
 if ($_SESSION['role'] == "admin") {
-    // Si l'admin regarde un profil via le bouton "VOIR PROFIL" de la page admin
+    // admin qui regarde un autre profil via "VOIR PROFIL"
     if (isset($_GET['id'])) {
         $id_profil_a_afficher = (int)$_GET['id'];
     } else {
-        // Si l'admin clique sur "MON COMPTE" dans la barre de navigation
         $id_profil_a_afficher = $_SESSION['id_utilisateur'];
     }
 } else if ($_SESSION['role'] == "client") {
-    // Si c'est un client, on affiche son profil
     $id_profil_a_afficher = $_SESSION['id_utilisateur'];
 } else {
     header("Location: connexion.php");
     exit();
 }
 
-// Seul le client lui-même (ou l'admin) peut modifier
+// seul le client peut modifier son profil
+// (l'admin a juste un droit de regard ici)
 $peut_modifier = false;
 if ($_SESSION['role'] == "client") {
     $peut_modifier = true;
 }
 
-// Chargement des données
+// charge les data
 $utilisateurs = json_decode(file_get_contents('data/utilisateurs.json'), true);
 if ($utilisateurs === null) {
     $utilisateurs = [];
@@ -44,7 +41,7 @@ if ($commandes === null) {
     $commandes = [];
 }
 
-// Recherche info de l'utilisateur concerné
+// trouve l'user
 $user_data = null;
 foreach ($utilisateurs as $u) {
     if ($u['id_utilisateur'] == $id_profil_a_afficher) {
@@ -57,7 +54,7 @@ if (!$user_data) {
     die("Utilisateur introuvable dans la base de données.");
 }
 
-//Vérification du cookie pour dark/light mode
+// theme
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -103,7 +100,7 @@ if (isset($_COOKIE['theme'])) {
     </div>
 
     <?php
-    // Messages issus du paiement / modification de commande
+    // messages divers (retour de paiement, retour notation, etc)
     if (isset($_GET['commande']) && $_GET['commande'] == 'succes') {
         echo '<div class="message-alerte alerte-succes">Votre commande a bien été enregistrée. Merci !</div>';
     }
@@ -122,13 +119,13 @@ if (isset($_COOKIE['theme'])) {
     }
     ?>
 
-    <!-- Zone d'affichage des messages AJAX -->
+    <!-- la zone où on affiche les retours ajax (succès / erreur de modif) -->
     <div id="message-profil"></div>
 
     <div class="conteneur-formulaire">
 
         <?php
-        // Le bloc fidélité ne s'affiche que si l'utilisateur a des points de fidélité
+        // que le client a une fidélité (les admins/restaurateurs/livreurs non)
         if (isset($user_data['fidelite']) && $user_data['fidelite'] !== null):
         ?>
             <fieldset class="groupe-formulaire fidelite-box">
@@ -145,35 +142,39 @@ if (isset($_COOKIE['theme'])) {
 
             <label>Nom :</label><br>
             <div class="input-group-profil">
-                <input type="text" data-champ="nom" value="<?php echo htmlspecialchars($user_data['informations']['nom']); ?>" class="input-form" readonly>
+                <input type="text" data-champ="nom" maxlength="40" data-compteur="cpt-profil-nom" value="<?php echo htmlspecialchars($user_data['informations']['nom']); ?>" class="input-form" readonly>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-nom" class="compteur-caracteres"></span>
 
             <label>Prénom :</label><br>
             <div class="input-group-profil">
-                <input type="text" data-champ="prenom" value="<?php echo htmlspecialchars($user_data['informations']['prenom']); ?>" class="input-form" readonly>
+                <input type="text" data-champ="prenom" maxlength="40" data-compteur="cpt-profil-prenom" value="<?php echo htmlspecialchars($user_data['informations']['prenom']); ?>" class="input-form" readonly>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-prenom" class="compteur-caracteres"></span>
 
             <label>Adresse E-mail :</label><br>
             <div class="input-group-profil">
-                <input type="email" data-champ="login" value="<?php echo htmlspecialchars($user_data['login']); ?>" class="input-form" readonly>
+                <input type="email" data-champ="login" maxlength="60" data-compteur="cpt-profil-email" value="<?php echo htmlspecialchars($user_data['login']); ?>" class="input-form" readonly>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-email" class="compteur-caracteres"></span>
 
             <label>Téléphone :</label><br>
             <div class="input-group-profil">
-                <input type="text" data-champ="telephone" value="<?php echo htmlspecialchars($user_data['informations']['telephone']); ?>" class="input-form" readonly>
+                <input type="text" data-champ="telephone" maxlength="14" data-compteur="cpt-profil-tel" value="<?php echo htmlspecialchars($user_data['informations']['telephone']); ?>" class="input-form" readonly>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-tel" class="compteur-caracteres"></span>
         </fieldset>
 
         <fieldset class="groupe-formulaire">
@@ -181,43 +182,48 @@ if (isset($_COOKIE['theme'])) {
 
             <label>Adresse (N° et rue) :</label><br>
             <div class="input-group-profil">
-                <input type="text" data-champ="rue" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['rue']); ?>" class="input-form" readonly>
+                <input type="text" data-champ="rue" maxlength="80" data-compteur="cpt-profil-rue" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['rue']); ?>" class="input-form" readonly>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-rue" class="compteur-caracteres"></span>
 
             <label>Complément d'adresse :</label><br>
             <div class="input-group-profil">
-                <input type="text" data-champ="complement" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['complement']); ?>" class="input-form" readonly>
+                <input type="text" data-champ="complement" maxlength="100" data-compteur="cpt-profil-comp" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['complement']); ?>" class="input-form" readonly>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-comp" class="compteur-caracteres"></span>
 
             <label>Code Postal :</label><br>
             <div class="input-group-profil">
-                <input type="text" data-champ="code_postal" maxlength="5" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['code_postal']); ?>" class="input-form input-short" readonly>
+                <input type="text" data-champ="code_postal" maxlength="5" data-compteur="cpt-profil-cp" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['code_postal']); ?>" class="input-form input-short" readonly>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-cp" class="compteur-caracteres"></span>
 
             <label>Ville :</label><br>
             <div class="input-group-profil">
-                <input type="text" data-champ="ville" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['ville']); ?>" class="input-form" readonly>
+                <input type="text" data-champ="ville" maxlength="40" data-compteur="cpt-profil-ville" value="<?php echo htmlspecialchars($user_data['informations']['adresse']['ville']); ?>" class="input-form" readonly>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-ville" class="compteur-caracteres"></span>
 
             <label>Préférences alimentaires / Allergies :</label><br>
             <div class="input-group-profil">
-                <textarea rows="2" data-champ="preferences_alimentaires" class="textarea-form" maxlength="250" readonly><?php echo htmlspecialchars($user_data['informations']['preferences_alimentaires']); ?></textarea>
+                <textarea rows="2" data-champ="preferences_alimentaires" class="textarea-form" maxlength="250" data-compteur="cpt-profil-pref" readonly><?php echo htmlspecialchars($user_data['informations']['preferences_alimentaires']); ?></textarea>
                 <?php if ($peut_modifier): ?>
                     <button type="button" class="btn-action btn-edit-profil btn-edit-tall" onclick="modifierChampProfil(this)">✏️</button>
                 <?php endif; ?>
             </div>
+            <span id="cpt-profil-pref" class="compteur-caracteres"></span>
         </fieldset>
 
         <fieldset class="groupe-formulaire">
@@ -243,7 +249,7 @@ if (isset($_COOKIE['theme'])) {
                     <input type="checkbox" id="profil-sms" value="sms" <?php echo $pref_sms; ?> disabled>
                     <label for="profil-sms" class="label-checkbox">Abonné par SMS</label>
 
-                    <!-- Champ caché qui sert juste à indiquer le nom du champ -->
+                    <!-- champ caché juste pour qu'on retrouve le nom data-champ -->
                     <input type="hidden" data-champ="preferences_contact" class="input-form" value="">
                 </div>
                 <?php if ($peut_modifier): ?>
@@ -290,7 +296,7 @@ if (isset($_COOKIE['theme'])) {
                         echo "<td>" . number_format($commande['prix_total'], 2) . " €</td>";
                         echo "<td class='" . $classe_statut . "'>" . $statut . "</td>";
 
-                        // Bouton de notation si la commande est livrée ET en livraison (pas sur place / à emporter)
+                        // notation seulement si livré + livraison + pas déjà noté
                         echo "<td>";
                         $deja_note = (isset($commande['deja_note']) && $commande['deja_note'] == true);
 

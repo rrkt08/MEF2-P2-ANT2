@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-//Vérification du cookie pour dark/light mode
+// cookie pour le thème (clair par défaut)
 $theme_choisi = "style.css";
 if (isset($_COOKIE['theme'])) {
     if ($_COOKIE['theme'] == 'sombre') {
@@ -42,7 +42,7 @@ if (isset($_COOKIE['theme'])) {
     </div>
 
     <?php
-    // Messages d'erreurs ou de succès
+    // msgs de succès / erreur passés via $_GET
     if (isset($_GET['succes']) && $_GET['succes'] == 1) {
         echo '<div class="message-alerte alerte-succes">Inscription réussie ! Vous pouvez maintenant vous connecter.</div>';
     }
