@@ -637,6 +637,20 @@ body {
     text-transform: uppercase;
 }
 
+/*bouton dark/light mode*/
+.btn-theme {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-family: Impact, sans-serif;
+    font-size: 18px;
+}
+
+.btn-theme:hover {
+    transform: scale(1.1);
+}
+
 /*style icone pour cacher/afficher le mdp*/
 .conteneur-mdp-oeil {
     position: relative;

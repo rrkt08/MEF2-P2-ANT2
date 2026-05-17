@@ -77,11 +77,7 @@ if (isset($_COOKIE['theme'])) {
 
     <div class="header-menu">
         <ul>
-            <li>
-                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
-                    🌓
-                </button>
-            </li>
+            <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
             <?php
             if ($_SESSION['role'] == 'admin') {
                 echo '<li><a href="admin.php">RETOUR ADMIN</a></li>';

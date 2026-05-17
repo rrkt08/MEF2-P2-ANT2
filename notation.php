@@ -39,11 +39,7 @@ if (isset($_COOKIE['theme'])) {
 
     <div class="header-menu">
         <ul>
-            <li>
-                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
-                    🌓
-                </button>
-            </li>
+            <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="profil.php">MON COMPTE</a></li>

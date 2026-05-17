@@ -42,11 +42,7 @@ if (isset($_COOKIE['theme'])) {
 
     <div class="header-menu">
         <ul>
-            <li>
-                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
-                    🌓
-                </button>
-            </li>
+            <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php" class="actif">LA CARTE</a></li>
             <?php if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
