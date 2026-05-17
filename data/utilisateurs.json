@@ -4,6 +4,7 @@
         "login": "tristan.douille@email.com",
         "mot_de_passe": "Unmotdepasse13sécurisé!",
         "role": "client",
+        "bloque": false,
         "informations": {
             "nom": "Douille",
             "prenom": "Tristan",
@@ -34,6 +35,7 @@
         "login": "cr7@email.com",
         "mot_de_passe": "suiii5Ldc",
         "role": "client",
+        "bloque": false,
         "informations": {
             "nom": "Ronaldo",
             "prenom": "Cristiano",
@@ -64,6 +66,7 @@
         "login": "jean@email.com",
         "mot_de_passe": "jean12345",
         "role": "client",
+        "bloque": false,
         "informations": {
             "nom": "Dupont",
             "prenom": "Jean",
@@ -95,6 +98,7 @@
         "login": "celine@email.com",
         "mot_de_passe": "Minou1995",
         "role": "client",
+        "bloque": false,
         "informations": {
             "nom": "Evitable",
             "prenom": "Celine",
@@ -125,6 +129,7 @@
         "login": "jenifer@email.com",
         "mot_de_passe": "Azertyuiop404",
         "role": "client",
+        "bloque": false,
         "informations": {
             "nom": "Rien",
             "prenom": "Jenifer",
@@ -153,6 +158,7 @@
         "login": "tarko@email.com",
         "mot_de_passe": "TarkoOcho8",
         "role": "admin",
+        "bloque": false,
         "informations": {
             "nom": "Super",
             "prenom": "Tarko",
@@ -178,6 +184,7 @@
         "login": "naimoz@email.com",
         "mot_de_passe": "Naimoz95",
         "role": "admin",
+        "bloque": false,
         "informations": {
             "nom": "Lucho",
             "prenom": "Naimoz",
@@ -203,6 +210,7 @@
         "login": "mario@email.com",
         "mot_de_passe": "Yahou005",
         "role": "restaurateur",
+        "bloque": false,
         "informations": {
             "nom": "Nette",
             "prenom": "Mario",
@@ -228,6 +236,7 @@
         "login": "paul@email.com",
         "mot_de_passe": "Onepiece1",
         "role": "livreur",
+        "bloque": false,
         "informations": {
             "nom": "Air",
             "prenom": "Paul",
@@ -253,6 +262,7 @@
         "login": "luc@email.com",
         "mot_de_passe": "Rapide99",
         "role": "livreur",
+        "bloque": false,
         "informations": {
             "nom": "Eclair",
             "prenom": "Luc",

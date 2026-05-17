@@ -22,7 +22,8 @@
         "date_heure": "2025-10-16T12:30:00",
         "statut_preparation": "A PREPARER",
         "id_livreur": null,
-        "prix_total": 16.00
+        "prix_total": 16.00,
+        "deja_note": false
     },
     {
         "id_commande": "CMD-002",
@@ -54,7 +55,8 @@
         "date_heure": "2025-10-16T12:35:00",
         "statut_preparation": "A PREPARER",
         "id_livreur": null,
-        "prix_total": 24.00
+        "prix_total": 24.00,
+        "deja_note": false
     },
     {
         "id_commande": "CMD-003",
@@ -78,7 +80,8 @@
         "date_heure": "2025-10-16T12:45:00",
         "statut_preparation": "EN LIVRAISON",
         "id_livreur": 9,
-        "prix_total": 16.00
+        "prix_total": 16.00,
+        "deja_note": false
     },
     {
         "id_commande": "CMD-004",
@@ -97,7 +100,8 @@
         "date_heure": "2025-10-16T18:00:00",
         "statut_preparation": "EN ATTENTE",
         "id_livreur": null,
-        "prix_total": 12.00
+        "prix_total": 12.00,
+        "deja_note": false
     },
     {
         "id_commande": "CMD-005",
@@ -116,6 +120,32 @@
         "date_heure": "2025-10-16T12:50:00",
         "statut_preparation": "EN COURS",
         "id_livreur": null,
-        "prix_total": 6.50
+        "prix_total": 6.50,
+        "deja_note": false
+    },
+    {
+        "id_commande": "CMD-006",
+        "id_client": 1,
+        "liste_articles": [
+            {
+                "type": "plat",
+                "id_article": "STEAK_DONUT",
+                "quantite": 1,
+                "options_choisies": []
+            }
+        ],
+        "lieu_consommation": "livraison",
+        "adresse_livraison": {
+            "rue": "12 Rue du Mauvais Goût",
+            "complement": "Bâtiment B, Interphone B421",
+            "code_postal": "95000",
+            "ville": "Cergy"
+        },
+        "statut_paiement": "paye",
+        "date_heure": "2025-10-14T19:30:00",
+        "statut_preparation": "LIVRÉ",
+        "id_livreur": 9,
+        "prix_total": 11.50,
+        "deja_note": false
     }
 ]
