@@ -10,6 +10,14 @@ if (isset($_COOKIE['theme'])) {
         $theme_choisi = "style.css";
     }
 }
+
+// Phase 3 : si l'utilisateur est connecté, on vérifie qu'il n'a pas été bloqué
+require_once('verif/check_session.php');
+
+$est_connecte = "0";
+if (isset($_SESSION['utilisateur_connecte'])) {
+    $est_connecte = "1";
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -21,7 +29,7 @@ if (isset($_COOKIE['theme'])) {
     <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
-<body>
+<body data-connecte="<?php echo $est_connecte; ?>">
 
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
@@ -32,8 +40,13 @@ if (isset($_COOKIE['theme'])) {
             <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
             <li><a href="accueil.php" class="actif">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
-            <li><a href="connexion.php">CONNEXION</a></li>
-            <li><a href="inscription.php" class="btn-inscription">INSCRIPTION</a></li>
+            <?php if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
+                <li><a href="profil.php">MON COMPTE</a></li>
+                <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
+            <?php else: ?>
+                <li><a href="connexion.php">CONNEXION</a></li>
+                <li><a href="inscription.php" class="btn-inscription">INSCRIPTION</a></li>
+            <?php endif; ?>
         </ul>
     </div>
 

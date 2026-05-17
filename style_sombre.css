@@ -19,7 +19,6 @@ body,
 .panier-resume,
 .admin-debug-col {
     background-color: #1e1e1e;
-    /* Légèrement plus clair que le fond pour détacher les éléments */
     color: #e0e0e0;
 }
 
@@ -30,7 +29,6 @@ body,
 }
 
 /* --- 4. ZONES BLEU CLAIR (Remplacement du fond bleuté #e6f7ff) --- */
-/* On assombrit ce bleu clair en un bleu "nuit" élégant */
 .bandeau-titre,
 .tableau-commandes th,
 .panier-total {
@@ -38,7 +36,6 @@ body,
     color: #ffffff;
 }
 
-/* Forcer les textes des titres dans ces zones à rester clairs */
 .bandeau-titre h2 {
     color: #ffffff;
 }
@@ -50,21 +47,17 @@ body,
 .textarea-form,
 .input-short {
     background-color: #121212;
-    /* Fond sombre pour les champs */
     color: #ffffff;
-    /* Texte tapé en blanc */
     border: 1px solid #444444;
-    /* Bordure discrète */
 }
 
-/* Couleur du texte indicatif (placeholder) */
 .input-recherche::placeholder,
 .input-form::placeholder,
 .textarea-form::placeholder {
     color: #888888;
 }
 
-/* --- 6. TABLEAUX (Correction des bordures et fonds) --- */
+/* --- 6. TABLEAUX --- */
 .tableau-commandes {
     background-color: #1e1e1e;
 }
@@ -72,7 +65,6 @@ body,
 .tableau-commandes th,
 .tableau-commandes td {
     border-color: #333333;
-    /* Bordures sombres */
     color: #e0e0e0;
 }
 
@@ -89,8 +81,21 @@ legend,
     color: #cccccc;
 }
 
-/* Ajustement du rouge pour qu'il soit moins "agressif" sur fond noir, tout en restant votre couleur */
 .logo-texte,
 .fidelite-valeur {
     color: #ff3344;
+}
+
+/* Phase 3 : compteur de caractères en sombre */
+.compteur-caracteres {
+    color: #888888;
+}
+
+/* Phase 3 : zone de filtres en sombre */
+.zone-filtres {
+    background-color: #1e1e1e;
+}
+
+.label-tri {
+    color: #00a8e8;
 }

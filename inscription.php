@@ -21,7 +21,7 @@ if (isset($_COOKIE['theme'])) {
     <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
-<body>
+<body data-connecte="0">
 
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
@@ -78,12 +78,14 @@ if (isset($_COOKIE['theme'])) {
                 <legend>MES INFORMATIONS</legend>
 
                 <label for="prenom-insc">Prénom *</label><br>
-                <input type="text" id="prenom-insc" name="prenom" class="input-form" placeholder="ex: Tristan" required>
+                <input type="text" id="prenom-insc" name="prenom" class="input-form" placeholder="ex: Tristan" maxlength="40" data-compteur="cpt-prenom" required>
+                <span id="cpt-prenom" class="compteur-caracteres"></span>
                 <span id="erreur-prenom" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="nom-insc">Nom *</label><br>
-                <input type="text" id="nom-insc" name="nom" class="input-form" placeholder="ex: Douille" required>
+                <input type="text" id="nom-insc" name="nom" class="input-form" placeholder="ex: Douille" maxlength="40" data-compteur="cpt-nom" required>
+                <span id="cpt-nom" class="compteur-caracteres"></span>
                 <span id="erreur-nom" class="message-erreur-js"></span>
                 <br><br>
 
@@ -93,48 +95,56 @@ if (isset($_COOKIE['theme'])) {
                 <br><br>
 
                 <label for="email-insc">E-mail *</label><br>
-                <input type="email" id="email-insc" name="email" class="input-form" placeholder="ex: tristan.douille@email.com" required>
+                <input type="email" id="email-insc" name="email" class="input-form" placeholder="ex: tristan.douille@email.com" maxlength="60" data-compteur="cpt-email" required>
+                <span id="cpt-email" class="compteur-caracteres"></span>
                 <span id="erreur-email" class="message-erreur-js"></span>
 
                 <br><br>
 
                 <label for="mdp-insc">Mot de passe *</label><br>
                 <div class="conteneur-mdp-oeil">
-                    <input type="password" id="mdp-insc" name="mdp" class="input-form input-mdp-oeil" placeholder="8 caractères minimum" minlength="8" required>
-                    <span id="erreur-mdp" class="message-erreur-js"></span>
+                    <input type="password" id="mdp-insc" name="mdp" class="input-form input-mdp-oeil" placeholder="8 caractères minimum" minlength="8" maxlength="40" data-compteur="cpt-mdp" required>
                     <span id="oeil-mdp" class="icone-oeil-form" onclick="afficherMasquerMdp('mdp-insc', 'oeil-mdp')">👁️</span>
                 </div>
+                <span id="cpt-mdp" class="compteur-caracteres"></span>
+                <span id="erreur-mdp" class="message-erreur-js"></span>
             </fieldset>
 
             <fieldset class="groupe-formulaire">
                 <legend>MA LIVRAISON</legend>
 
                 <label for="adresse-insc">Adresse (N° et rue) *</label><br>
-                <input type="text" id="adresse-insc" name="adresse" class="input-form" placeholder="ex: 42 Avenue des Champs Elysées" required>
+                <input type="text" id="adresse-insc" name="adresse" class="input-form" placeholder="ex: 42 Avenue des Champs Elysées" maxlength="80" data-compteur="cpt-adresse" required>
+                <span id="cpt-adresse" class="compteur-caracteres"></span>
                 <span id="erreur-adresse" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="complement-insc">Complément d'adresse</label><br>
-                <input type="text" id="complement-insc" name="complement_adresse" class="input-form" placeholder="Bâtiment, digicode, étage, interphone...">
+                <input type="text" id="complement-insc" name="complement_adresse" class="input-form" placeholder="Bâtiment, digicode, étage, interphone..." maxlength="100" data-compteur="cpt-complement">
+                <span id="cpt-complement" class="compteur-caracteres"></span>
                 <br><br>
 
                 <label for="cp-insc">Code Postal *</label><br>
-                <input type="text" id="cp-insc" name="code_postal" class="input-form" maxlength="5" placeholder="ex: 75008" required>
+                <input type="text" id="cp-insc" name="code_postal" class="input-form" maxlength="5" placeholder="ex: 75008" data-compteur="cpt-cp" required>
+                <span id="cpt-cp" class="compteur-caracteres"></span>
                 <span id="erreur-cp" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="ville-insc">Ville *</label><br>
-                <input type="text" id="ville-insc" name="ville" class="input-form" placeholder="ex: Paris" required>
+                <input type="text" id="ville-insc" name="ville" class="input-form" placeholder="ex: Paris" maxlength="40" data-compteur="cpt-ville" required>
+                <span id="cpt-ville" class="compteur-caracteres"></span>
                 <span id="erreur-ville" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="tel-insc">Numéro de téléphone *</label><br>
-                <input type="tel" id="tel-insc" name="telephone" class="input-form" placeholder="ex: 06 12 34 56 78" required>
+                <input type="tel" id="tel-insc" name="telephone" class="input-form" placeholder="ex: 06 12 34 56 78" maxlength="14" data-compteur="cpt-tel" required>
+                <span id="cpt-tel" class="compteur-caracteres"></span>
                 <span id="erreur-telephone" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="pref-insc">Préférences alimentaires / Allergies</label><br>
-                <textarea id="pref-insc" name="preferences_alimentaires" rows="3" class="textarea-form" placeholder="Sans gluten, intolérance au lactose, etc..."></textarea>
+                <textarea id="pref-insc" name="preferences_alimentaires" rows="3" class="textarea-form" placeholder="Sans gluten, intolérance au lactose, etc..." maxlength="250" data-compteur="cpt-pref"></textarea>
+                <span id="cpt-pref" class="compteur-caracteres"></span>
             </fieldset>
 
             <fieldset class="groupe-formulaire">

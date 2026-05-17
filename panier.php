@@ -11,6 +11,9 @@ if ($_SESSION['role'] != 'client') {
     exit();
 }
 
+// Phase 3 : vérification du blocage
+require_once('verif/check_session.php');
+
 $plats = [];
 if (file_exists('data/plats.json')) {
     $plats = json_decode(file_get_contents('data/plats.json'), true);
@@ -55,7 +58,7 @@ if (isset($_COOKIE['theme'])) {
     <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
-<body>
+<body data-connecte="1">
 
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
@@ -80,6 +83,8 @@ if (isset($_COOKIE['theme'])) {
     if (isset($_GET['erreur'])) {
         if ($_GET['erreur'] == "date_invalide") {
             echo '<div class="message-alerte alerte-erreur">La date choisie est invalide. Veuillez choisir une date entre maintenant et dans 2 jours.</div>';
+        } elseif ($_GET['erreur'] == "paiement_refuse") {
+            echo '<div class="message-alerte alerte-erreur">Le paiement a été refusé. Veuillez réessayer.</div>';
         }
     }
     ?>
@@ -101,6 +106,7 @@ if (isset($_COOKIE['theme'])) {
                             <th>Prix Unitaire</th>
                             <th>Quantité</th>
                             <th>Sous-total</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -117,6 +123,11 @@ if (isset($_COOKIE['theme'])) {
                                     <td><?php echo number_format($plat['prix'], 2); ?> €</td>
                                     <td><strong><?php echo $quantite; ?></strong></td>
                                     <td><strong><?php echo number_format($sous_total, 2); ?> €</strong></td>
+                                    <td class="colonne-actions">
+                                        <button type="button" class="btn-action btn-qte-moins" onclick="modifierQuantitePanier('<?php echo $id_plat; ?>', -1)">−</button>
+                                        <button type="button" class="btn-action btn-qte-plus" onclick="modifierQuantitePanier('<?php echo $id_plat; ?>', 1)">+</button>
+                                        <button type="button" class="btn-action btn-supprimer-article" onclick="supprimerArticlePanier('<?php echo $id_plat; ?>')">✖</button>
+                                    </td>
                                 </tr>
                         <?php
                             endif;
@@ -185,7 +196,7 @@ if (isset($_COOKIE['theme'])) {
 
                         document.getElementById('input_retour').value = new_retour;
                     }
-                    window.onload = updateRetour;
+                    window.addEventListener("load", updateRetour);
                 </script>
 
             <?php endif; ?>

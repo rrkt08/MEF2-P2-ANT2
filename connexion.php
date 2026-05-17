@@ -21,7 +21,7 @@ if (isset($_COOKIE['theme'])) {
     <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
-<body>
+<body data-connecte="0">
 
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
@@ -53,6 +53,8 @@ if (isset($_COOKIE['theme'])) {
             $message_erreur = "E-mail ou mot de passe incorrect !";
         } elseif ($_GET['erreur'] == "vide") {
             $message_erreur = "Veuillez remplir tous les champs.";
+        } elseif ($_GET['erreur'] == "bloque") {
+            $message_erreur = "Votre compte a été bloqué par un administrateur. Contactez l'équipe pour plus d'informations.";
         }
 
         if ($message_erreur != "") {
@@ -68,15 +70,17 @@ if (isset($_COOKIE['theme'])) {
                 <legend>IDENTIFIANTS</legend>
 
                 <label for="email-connexion">E-mail</label><br>
-                <input type="email" id="email-connexion" name="email" class="input-form" placeholder="Votre adresse e-mail" required>
+                <input type="email" id="email-connexion" name="email" class="input-form" placeholder="Votre adresse e-mail" maxlength="60" data-compteur="cpt-email-connexion" required>
+                <span id="cpt-email-connexion" class="compteur-caracteres"></span>
                 <span id="erreur-email-connexion" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="mdp-connexion">Mot de passe</label><br>
                 <div class="conteneur-mdp-oeil">
-                    <input type="password" id="mdp-connexion" name="mdp" class="input-form input-mdp-oeil" placeholder="Votre mot de passe" required>
+                    <input type="password" id="mdp-connexion" name="mdp" class="input-form input-mdp-oeil" placeholder="Votre mot de passe" maxlength="40" data-compteur="cpt-mdp-connexion" required>
                     <span id="oeil-mdp-connexion" class="icone-oeil-form" onclick="afficherMasquerMdp('mdp-connexion', 'oeil-mdp-connexion')">👁️</span>
                 </div>
+                <span id="cpt-mdp-connexion" class="compteur-caracteres"></span>
                 <span id="erreur-mdp-connexion" class="message-erreur-js"></span>
             </fieldset>
 

@@ -6,12 +6,13 @@ if (!isset($_SESSION['utilisateur_connecte'])) {
     exit();
 }
 
-if ($_SESSION['role'] != "restaurateur") {
-    if ($_SESSION['role'] != "admin") {
-        header("Location: connexion.php");
-        exit();
-    }
+if ($_SESSION['role'] != "restaurateur" && $_SESSION['role'] != "admin") {
+    header("Location: connexion.php");
+    exit();
 }
+
+// Phase 3 : vérification du blocage
+require_once('verif/check_session.php');
 
 if (!isset($_GET['id'])) {
     echo "Erreur : Aucun identifiant de commande fourni.";
@@ -46,6 +47,10 @@ foreach ($commandes as $cmd) {
         $commande_actuelle = $cmd;
         break;
     }
+}
+
+if ($commande_actuelle == null) {
+    die("Commande introuvable.");
 }
 
 // Recherche du client
@@ -93,7 +98,7 @@ if (isset($_COOKIE['theme'])) {
     <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
-<body>
+<body data-connecte="1">
 
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
@@ -102,8 +107,9 @@ if (isset($_COOKIE['theme'])) {
     <div class="header-menu">
         <ul>
             <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
-            <li><a href="accueil.php">ACCUEIL</a></li>
-            <li><a href="presentation.php">LA CARTE</a></li>
+            <?php if ($_SESSION['role'] == 'admin'): ?>
+                <li><a href="admin.php">RETOUR ADMIN</a></li>
+            <?php endif; ?>
             <li><a href="commandes.php" class="actif">CUISINE</a></li>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
         </ul>
@@ -113,29 +119,32 @@ if (isset($_COOKIE['theme'])) {
         <h2><u>DÉTAIL : <?php echo $id_commande; ?></u></h2>
     </div>
 
+    <!-- Zone messages AJAX -->
+    <div id="message-details"></div>
+
     <div class="conteneur-formulaire">
 
         <fieldset class="groupe-formulaire">
             <legend>INFORMATIONS CLIENT</legend>
 
-            <p><strong>Nom :</strong> <?php echo $client['informations']['prenom'] . ' ' . $client['informations']['nom']; ?></p>
-            <p><strong>Téléphone :</strong> <?php echo $client['informations']['telephone']; ?></p>
-            <p><strong>Mode :</strong> <span class="texte-mode-conso"><?php echo $commande_actuelle['lieu_consommation']; ?></span></p>
+            <p><strong>Nom :</strong> <?php echo htmlspecialchars($client['informations']['prenom'] . ' ' . $client['informations']['nom']); ?></p>
+            <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($client['informations']['telephone']); ?></p>
+            <p><strong>Mode :</strong> <span class="texte-mode-conso"><?php echo htmlspecialchars($commande_actuelle['lieu_consommation']); ?></span></p>
             <?php
             if ($commande_actuelle['lieu_consommation'] == "livraison") {
                 echo '<br><label>Adresse de livraison :</label>';
                 echo '<div class="input-group-profil">';
-                echo '<input type="text" class="input-form" value="' . $commande_actuelle['adresse_livraison']['rue'] . '" readonly>';
+                echo '<input type="text" class="input-form" value="' . htmlspecialchars($commande_actuelle['adresse_livraison']['rue']) . '" readonly>';
                 echo '</div>';
 
                 echo '<div class="input-group-profil">';
-                echo '<input type="text" class="input-form" value="' . $commande_actuelle['adresse_livraison']['code_postal'] . ' ' . $commande_actuelle['adresse_livraison']['ville'] . '" readonly>';
+                echo '<input type="text" class="input-form" value="' . htmlspecialchars($commande_actuelle['adresse_livraison']['code_postal'] . ' ' . $commande_actuelle['adresse_livraison']['ville']) . '" readonly>';
                 echo '</div>';
 
                 if ($commande_actuelle['adresse_livraison']['complement'] != "") {
                     echo '<label>Infos supplémentaires :</label>';
                     echo '<div class="input-group-profil">';
-                    echo '<input type="text" class="input-form" value="' . $commande_actuelle['adresse_livraison']['complement'] . '" readonly>';
+                    echo '<input type="text" class="input-form" value="' . htmlspecialchars($commande_actuelle['adresse_livraison']['complement']) . '" readonly>';
                     echo '</div>';
                 }
             }
@@ -163,13 +172,13 @@ if (isset($_COOKIE['theme'])) {
                         if (isset($noms_articles[$article['id_article']])) {
                             $nom_affiche = $noms_articles[$article['id_article']];
                         }
-                        echo '<td>' . $nom_affiche . '</td>';
+                        echo '<td>' . htmlspecialchars($nom_affiche) . '</td>';
 
                         echo '<td>';
                         if (empty($article['options_choisies'])) {
                             echo '-';
                         } else {
-                            echo implode(', ', $article['options_choisies']);
+                            echo htmlspecialchars(implode(', ', $article['options_choisies']));
                         }
                         echo '</td>';
                         echo '</tr>';
@@ -189,30 +198,25 @@ if (isset($_COOKIE['theme'])) {
             }
             ?>
             <div class="input-group-profil">
-                <input type="text" class="input-form <?php echo $classe_css_paiement; ?>" value="<?php echo $commande_actuelle['statut_paiement']; ?>" readonly>
+                <input type="text" class="input-form <?php echo $classe_css_paiement; ?>" value="<?php echo htmlspecialchars($commande_actuelle['statut_paiement']); ?>" readonly>
             </div>
 
 
-            <h3 class="categorie-titre premier-titre">TOTAL : <?php echo $commande_actuelle['prix_total']; ?> €</h3>
+            <h3 class="categorie-titre premier-titre">TOTAL : <?php echo number_format($commande_actuelle['prix_total'], 2); ?> €</h3>
         </fieldset>
 
         <fieldset class="groupe-formulaire">
             <legend>MISE À JOUR</legend>
-            <form action="#" method="get" onsubmit="return validerMiseAJour(event)">
+            <form action="#" method="post" onsubmit="return validerMiseAJour(event)">
+                <input type="hidden" id="id_cmd_hidden" value="<?php echo htmlspecialchars($id_commande); ?>">
+
                 <label for="nouveau_statut">État de la commande :</label><br>
                 <select id="nouveau_statut" name="nouveau_statut" class="select-form">
-                    <option value="EN ATTENTE" <?php if ($commande_actuelle['statut_preparation'] == 'EN ATTENTE') {
-                                                    echo 'selected';
-                                                } ?>>En attente</option>
-                    <option value="A PREPARER" <?php if ($commande_actuelle['statut_preparation'] == 'A PREPARER') {
-                                                    echo 'selected';
-                                                } ?>>À préparer</option>
-                    <option value="EN COURS" <?php if ($commande_actuelle['statut_preparation'] == 'EN COURS') {
-                                                    echo 'selected';
-                                                } ?>>En cours</option>
-                    <option value="EN LIVRAISON" <?php if ($commande_actuelle['statut_preparation'] == 'EN LIVRAISON') {
-                                                        echo 'selected';
-                                                    } ?>>En livraison</option>
+                    <option value="EN ATTENTE" <?php if ($commande_actuelle['statut_preparation'] == 'EN ATTENTE') echo 'selected'; ?>>En attente</option>
+                    <option value="A PREPARER" <?php if ($commande_actuelle['statut_preparation'] == 'A PREPARER') echo 'selected'; ?>>À préparer</option>
+                    <option value="EN COURS" <?php if ($commande_actuelle['statut_preparation'] == 'EN COURS') echo 'selected'; ?>>En cours</option>
+                    <option value="EN LIVRAISON" <?php if ($commande_actuelle['statut_preparation'] == 'EN LIVRAISON') echo 'selected'; ?>>En livraison</option>
+                    <option value="LIVRÉ" <?php if ($commande_actuelle['statut_preparation'] == 'LIVRÉ') echo 'selected'; ?>>Livré</option>
                 </select>
                 <span id="erreur-statut" class="message-erreur-js"></span>
 
@@ -227,7 +231,7 @@ if (isset($_COOKIE['theme'])) {
                         if ($commande_actuelle['id_livreur'] == $id) {
                             $selected = "selected";
                         }
-                        echo '<option value="' . $id . '" ' . $selected . '>' . $nom_livreur . '</option>';
+                        echo '<option value="' . $id . '" ' . $selected . '>' . htmlspecialchars($nom_livreur) . '</option>';
                     }
                     ?>
                 </select>
@@ -252,7 +256,7 @@ if (isset($_COOKIE['theme'])) {
                 } else {
                     echo 'Restaurateur';
                 }
-                echo ' : ' . $_SESSION['prenom'];
+                echo ' : ' . htmlspecialchars($_SESSION['prenom']);
                 ?>
             </p>
         </div>

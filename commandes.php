@@ -7,6 +7,9 @@ if (!isset($_SESSION['utilisateur_connecte']) || ($_SESSION['role'] != "restaura
     exit();
 }
 
+// Phase 3 : vérification du blocage
+require_once('verif/check_session.php');
+
 $commandes = [];
 if (file_exists('data/commandes.json')) {
     $commandes = json_decode(file_get_contents('data/commandes.json'), true);
@@ -45,7 +48,7 @@ function getNomArticle($id, $type, $plats, $menus)
     return $id;
 }
 
-function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $livreurs, $texte_bouton)
+function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $livreurs, $texte_bouton, $statut_suivant)
 {
     echo '<h2 class="categorie-titre">' . $titre . '</h2>';
     echo '<div class="conteneur-tableau">';
@@ -54,7 +57,6 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
     echo '<tr>';
     echo '<th>N° Commande</th>';
 
-    // si en livraison, on affiche le livreur
     if ($statut_cible == "EN LIVRAISON") {
         echo '<th>Livreur</th>';
     } else {
@@ -72,11 +74,14 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
     foreach ($commandes as $cmd) {
         if ($cmd['statut_preparation'] == $statut_cible) {
             $trouve = true;
-            echo '<tr>';
+            echo '<tr id="ligne-' . htmlspecialchars($cmd['id_commande']) . '">';
             echo '<td><strong>#' . htmlspecialchars($cmd['id_commande']) . '</strong></td>';
 
             if ($statut_cible == "EN LIVRAISON") {
-                $nom_livreur = ($cmd['id_livreur'] !== null && isset($livreurs[$cmd['id_livreur']])) ? $livreurs[$cmd['id_livreur']] : "Non assigné";
+                $nom_livreur = "Non assigné";
+                if ($cmd['id_livreur'] !== null && isset($livreurs[$cmd['id_livreur']])) {
+                    $nom_livreur = $livreurs[$cmd['id_livreur']];
+                }
                 echo '<td>' . htmlspecialchars($nom_livreur) . '</td>';
             } else {
                 echo '<td>' . date("H:i", strtotime($cmd['date_heure'])) . '</td>';
@@ -91,8 +96,10 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
             echo '<td>' . number_format($cmd['prix_total'], 2) . ' €</td>';
             echo '<td class="colonne-actions">';
             echo '<button type="button" class="btn-action btn-details" onclick="window.location.href=\'details_commande.php?id=' . $cmd['id_commande'] . '\'">DÉTAILS</button>';
+
+            // Phase 3 : bouton de changement de statut en AJAX (sauf pour DÉTAILS)
             if ($texte_bouton !== "DÉTAILS") {
-                echo '<button type="button" class="btn-action btn-pret">' . $texte_bouton . '</button>';
+                echo '<button type="button" class="btn-action btn-pret" onclick="changerStatutCmd(\'' . $cmd['id_commande'] . '\', this, \'' . $statut_suivant . '\')">' . $texte_bouton . '</button>';
             }
 
             echo '</td>';
@@ -129,7 +136,7 @@ if (isset($_COOKIE['theme'])) {
     <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
-<body>
+<body data-connecte="1">
 
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
@@ -138,8 +145,9 @@ if (isset($_COOKIE['theme'])) {
     <div class="header-menu">
         <ul>
             <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
-            <li><a href="accueil.php">ACCUEIL</a></li>
-            <li><a href="presentation.php">LA CARTE</a></li>
+            <?php if ($_SESSION['role'] == 'admin'): ?>
+                <li><a href="admin.php">RETOUR ADMIN</a></li>
+            <?php endif; ?>
             <li><a href="commandes.php" class="actif">CUISINE</a></li>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
         </ul>
@@ -149,11 +157,15 @@ if (isset($_COOKIE['theme'])) {
         <h2><u>COMMANDES</u></h2>
     </div>
 
+    <!-- Zone d'affichage des messages AJAX -->
+    <div id="message-commandes"></div>
+
     <?php
-    afficherTableau("À PRÉPARER", "A PREPARER", $commandes, $plats, $menus, $livreurs, "PRÊT");
-    afficherTableau("EN COURS", "EN COURS", $commandes, $plats, $menus, $livreurs, "TERMINER");
-    afficherTableau("EN LIVRAISON", "EN LIVRAISON", $commandes, $plats, $menus, $livreurs, "DÉTAILS");
-    afficherTableau("EN ATTENTE", "EN ATTENTE", $commandes, $plats, $menus, $livreurs, "DÉTAILS");
+    // statut_suivant : statut vers lequel passer quand on clique le bouton
+    afficherTableau("À PRÉPARER", "A PREPARER", $commandes, $plats, $menus, $livreurs, "EN COURS", "EN COURS");
+    afficherTableau("EN COURS", "EN COURS", $commandes, $plats, $menus, $livreurs, "PRÊT À LIVRER", "EN LIVRAISON");
+    afficherTableau("EN LIVRAISON", "EN LIVRAISON", $commandes, $plats, $menus, $livreurs, "DÉTAILS", "");
+    afficherTableau("EN ATTENTE", "EN ATTENTE", $commandes, $plats, $menus, $livreurs, "DÉMARRER", "A PREPARER");
     ?>
 
     <div class="footer">

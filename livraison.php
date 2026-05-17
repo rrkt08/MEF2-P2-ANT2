@@ -7,12 +7,13 @@ if (!isset($_SESSION['utilisateur_connecte'])) {
     exit();
 }
 
-if ($_SESSION['role'] != "livreur") {
-    if ($_SESSION['role'] != "admin") {
-        header("Location: connexion.php");
-        exit();
-    }
+if ($_SESSION['role'] != "livreur" && $_SESSION['role'] != "admin") {
+    header("Location: connexion.php");
+    exit();
 }
+
+// Phase 3 : vérification du blocage
+require_once('verif/check_session.php');
 
 $commandes = [];
 if (file_exists('data/commandes.json')) {
@@ -69,7 +70,7 @@ if (isset($_COOKIE['theme'])) {
     <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
-<body>
+<body data-connecte="1">
 
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
@@ -88,50 +89,48 @@ if (isset($_COOKIE['theme'])) {
     </div>
 
     <?php
-    // Affichage commande trouvée
     if ($commande_a_livrer != null) {
 
-        // Adresse GPS
         $adresse_complete = $commande_a_livrer['adresse_livraison']['rue'] . ', ' . $commande_a_livrer['adresse_livraison']['code_postal'] . ' ' . $commande_a_livrer['adresse_livraison']['ville'];
         $lien_gps = "https://www.google.com/maps/search/?api=1&query=" . urlencode($adresse_complete);
 
         echo '<div class="bandeau-titre">';
-        echo '<h2><u>LIVRAISON #' . $commande_a_livrer['id_commande'] . '</u></h2>';
+        echo '<h2><u>LIVRAISON #' . htmlspecialchars($commande_a_livrer['id_commande']) . '</u></h2>';
         echo '</div>';
+
+        echo '<div id="message-livraison"></div>';
 
         echo '<div class="bloc-livraison">';
 
         echo '<h3 class="titre-livraison">ADRESSE CLIENT</h3>';
         echo '<p class="info-livraison">';
-        echo '<strong>' . $client['informations']['prenom'] . ' ' . $client['informations']['nom'] . '</strong><br>';
-        echo $commande_a_livrer['adresse_livraison']['rue'] . '<br>';
-        echo $commande_a_livrer['adresse_livraison']['code_postal'] . ' ' . $commande_a_livrer['adresse_livraison']['ville'];
+        echo '<strong>' . htmlspecialchars($client['informations']['prenom'] . ' ' . $client['informations']['nom']) . '</strong><br>';
+        echo htmlspecialchars($commande_a_livrer['adresse_livraison']['rue']) . '<br>';
+        echo htmlspecialchars($commande_a_livrer['adresse_livraison']['code_postal'] . ' ' . $commande_a_livrer['adresse_livraison']['ville']);
         echo '</p>';
 
-        // Affichage des compléments
         if ($commande_a_livrer['adresse_livraison']['complement'] != "") {
             echo '<h3 class="titre-livraison">COMPLÉMENTS</h3>';
             echo '<p class="info-livraison">';
-            echo '<em>' . $commande_a_livrer['adresse_livraison']['complement'] . '</em>';
+            echo '<em>' . htmlspecialchars($commande_a_livrer['adresse_livraison']['complement']) . '</em>';
             echo '</p>';
         }
 
-        echo '<div class="actions-livreur">';
+        echo '<div class="actions-livreur" id="actions-livreur-bloc">';
 
-        // Boutons
-        echo '<a href="tel:' . $client['informations']['telephone'] . '" class="btn-livreur btn-tel">📞 APPELER CLIENT</a>';
-        echo '<a href="' . $lien_gps . '" target="_blank" class="btn-livreur btn-gps">🗺️ OUVRIR GPS</a>';
+        echo '<input type="hidden" id="id-cmd-livraison" value="' . htmlspecialchars($commande_a_livrer['id_commande']) . '">';
+
+        echo '<a href="tel:' . htmlspecialchars($client['informations']['telephone']) . '" class="btn-livreur btn-tel">📞 APPELER CLIENT</a>';
+        echo '<a href="' . htmlspecialchars($lien_gps) . '" target="_blank" class="btn-livreur btn-gps">🗺️ OUVRIR GPS</a>';
 
         echo '<p class="titre-livraison">STATUT DE LA COMMANDE</p>';
-        echo '<form action="#" method="get" onsubmit="return confirmerLivraison(event)">';
-        echo '<button type="submit" name="action_livraison" value="terminee" class="btn-livreur btn-valider">✅ LIVRAISON TERMINÉE</button>';
-        echo '<button type="submit" name="action_livraison" value="abandonnee" class="btn-livreur btn-abandon">❌ ABANDONNÉE</button>';
-        echo '</form>';
+        // Phase 3 : boutons en AJAX
+        echo '<button type="button" class="btn-livreur btn-valider" onclick="confirmerLivraison(\'terminee\')">✅ LIVRAISON TERMINÉE</button>';
+        echo '<button type="button" class="btn-livreur btn-abandon" onclick="confirmerLivraison(\'abandonnee\')">❌ ABANDONNÉE</button>';
 
         echo '</div>';
         echo '</div>';
     } else {
-        // Affichage pas de commande trouvée
         echo '<div class="bandeau-titre">';
         echo '<h2><u>AUCUNE LIVRAISON</u></h2>';
         echo '</div>';
@@ -145,7 +144,7 @@ if (isset($_COOKIE['theme'])) {
     <div class="footer">
         <div class="footer-col copyright-col">
             <p><strong>ESPACE LIVREUR</strong></p>
-            <p><?php echo $_SESSION['prenom']; ?></p>
+            <p><?php echo htmlspecialchars($_SESSION['prenom']); ?></p>
         </div>
         <div class="footer-col copyright-col">
             <p>©2026 Flagrant Délice</p>

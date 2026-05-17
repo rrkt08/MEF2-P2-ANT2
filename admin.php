@@ -7,6 +7,9 @@ if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != "admin") {
     exit();
 }
 
+// Phase 3 : vérification du blocage (cas où un autre admin viendrait à bloquer celui-ci)
+require_once('verif/check_session.php');
+
 //Récupération des données
 $fichier = 'data/utilisateurs.json';
 if (file_exists($fichier)) {
@@ -35,7 +38,7 @@ if (isset($_COOKIE['theme'])) {
     <link rel="stylesheet" type="text/css" id="theme-css" href="<?php echo $theme_choisi; ?>">
 </head>
 
-<body>
+<body data-connecte="1">
 
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
@@ -45,7 +48,7 @@ if (isset($_COOKIE['theme'])) {
         <ul>
             <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
             <li><a href="accueil.php">RETOUR SITE</a></li>
-            <li><a href="admin.php" class="actif">DASHBOARD ADMIN (<?php echo $_SESSION['prenom']; ?>)</a></li>
+            <li><a href="admin.php" class="actif">DASHBOARD ADMIN (<?php echo htmlspecialchars($_SESSION['prenom']); ?>)</a></li>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
         </ul>
     </div>
@@ -53,6 +56,9 @@ if (isset($_COOKIE['theme'])) {
     <div class="bandeau-titre">
         <h2><u>GESTION DES UTILISATEURS</u></h2>
     </div>
+
+    <!-- Zone d'affichage des messages AJAX -->
+    <div id="message-admin"></div>
 
     <div class="conteneur-tableau">
         <table class="tableau-commandes">
@@ -62,12 +68,12 @@ if (isset($_COOKIE['theme'])) {
                     <th>Rôle</th>
                     <th>Identité</th>
                     <th>Email</th>
+                    <th>État</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Affichage du tableau avec tous les utilisateurs
                 if (!empty($utilisateurs)) {
                     foreach ($utilisateurs as $user) {
                         echo '<tr>';
@@ -75,15 +81,22 @@ if (isset($_COOKIE['theme'])) {
 
                         $role = strtoupper($user['role']);
 
-                        //Si c'est un admin, on ajoute la classe "role-admin"
                         $classe_role = "";
                         if ($role == 'ADMIN') {
                             $classe_role = "role-admin";
                         }
                         echo '<td class="' . $classe_role . '">' . $role . '</td>';
 
-                        echo '<td><strong>' . $user['informations']['prenom'] . ' ' . $user['informations']['nom'] . '</strong></td>';
-                        echo '<td>' . $user['login'] . '</td>';
+                        echo '<td><strong>' . htmlspecialchars($user['informations']['prenom'] . ' ' . $user['informations']['nom']) . '</strong></td>';
+                        echo '<td>' . htmlspecialchars($user['login']) . '</td>';
+
+                        // Phase 3 : Affichage de l'état (bloqué ou non)
+                        $est_bloque = (isset($user['bloque']) && $user['bloque'] == true);
+                        if ($est_bloque) {
+                            echo '<td class="statut-annule">BLOQUÉ</td>';
+                        } else {
+                            echo '<td class="statut-livre">ACTIF</td>';
+                        }
 
                         echo '<td class="colonne-actions">';
 
@@ -91,9 +104,13 @@ if (isset($_COOKIE['theme'])) {
                         echo '<button type="button" class="btn-admin btn-statut">STATUT</button>';
                         echo '<button type="button" class="btn-admin btn-remise">REMISE</button>';
 
-                        // L'admin ne peut pas se bloquer (c'est logique)
+                        // L'admin ne peut pas se bloquer / bloquer un autre admin
                         if ($role != 'ADMIN') {
-                            echo '<button type="button" class="btn-admin btn-bloquer">BLOQUER</button>';
+                            if ($est_bloque) {
+                                echo '<button type="button" class="btn-admin btn-debloquer" data-action="debloquer" onclick="bloquerUtilisateurAjax(' . $user['id_utilisateur'] . ', this)">DÉBLOQUER</button>';
+                            } else {
+                                echo '<button type="button" class="btn-admin btn-bloquer" data-action="bloquer" onclick="bloquerUtilisateurAjax(' . $user['id_utilisateur'] . ', this)">BLOQUER</button>';
+                            }
                         } else {
                             echo '<span class="btn-admin admin-tiret">-</span>';
                         }
@@ -102,7 +119,7 @@ if (isset($_COOKIE['theme'])) {
                         echo '</tr>';
                     }
                 } else {
-                    echo '<tr><td colspan="5">Aucun utilisateur trouvé.</td></tr>';
+                    echo '<tr><td colspan="6">Aucun utilisateur trouvé.</td></tr>';
                 }
                 ?>
             </tbody>
@@ -120,7 +137,6 @@ if (isset($_COOKIE['theme'])) {
             <a href="presentation.php" class="btn-action btn-debug btn-debug-client">LA CARTE</a>
             <a href="inscription.php" class="btn-action btn-debug btn-debug-client">INSCRIPTION</a>
             <a href="connexion.php" class="btn-action btn-debug btn-debug-client">CONNEXION</a>
-            <a href="notation.php" class="btn-action btn-debug btn-debug-client">NOTATION</a>
         </div>
 
         <div class="admin-debug-col">
