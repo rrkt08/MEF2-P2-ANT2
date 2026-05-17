@@ -648,7 +648,6 @@ body {
 .input-mdp-oeil {
     width: 100%;
     padding-right: 40px;
-    /* Évite que le texte tapé passe sous l'œil */
     box-sizing: border-box;
 }
 
@@ -658,10 +657,9 @@ body {
     cursor: pointer;
     font-size: 18px;
     user-select: none;
-    /* Évite de sélectionner l'émoji textuellement lors du clic */
 }
 
-/* erreur javascript*/
+/*erreur javascript*/
 .message-erreur-js {
     color: #e60012;
     font-size: 13px;
@@ -669,9 +667,20 @@ body {
     display: block;
     margin-top: 5px;
     margin-bottom: -15px;
-    /* Absorbe l'espace des <br><br> */
 }
 
 .message-erreur-js:empty {
     display: none;
+}
+
+/*Alignement erreur et zone de recherche dans l'accueil */
+.conteneur-input-recherche {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+}
+
+#erreur-recherche {
+    padding-left: 25px;
+    margin-top: 5px;
 }
