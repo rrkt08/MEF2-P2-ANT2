@@ -76,30 +76,36 @@ if (isset($_COOKIE['theme'])) {
             Complétez vos informations personnelles pour créer votre compte. Tous les champs marqués d'un * sont obligatoires.
         </p>
 
-        <form action="verif/verification_inscription.php" method="post">
+        <form action="verif/verification_inscription.php" method="post" onsubmit="return validerInscription(event)">
 
             <fieldset class="groupe-formulaire">
                 <legend>MES INFORMATIONS</legend>
 
                 <label for="prenom-insc">Prénom *</label><br>
                 <input type="text" id="prenom-insc" name="prenom" class="input-form" placeholder="ex: Tristan" required>
+                <span id="erreur-prenom" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="nom-insc">Nom *</label><br>
                 <input type="text" id="nom-insc" name="nom" class="input-form" placeholder="ex: Douille" required>
+                <span id="erreur-nom" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="date-naissance-insc">Date de naissance *</label><br>
                 <input type="date" id="date-naissance-insc" name="date_naissance" class="input-form" required>
+                <span id="erreur-date" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="email-insc">E-mail *</label><br>
                 <input type="email" id="email-insc" name="email" class="input-form" placeholder="ex: tristan.douille@email.com" required>
+                <span id="erreur-email" class="message-erreur-js"></span>
+
                 <br><br>
 
                 <label for="mdp-insc">Mot de passe *</label><br>
                 <div class="conteneur-mdp-oeil">
                     <input type="password" id="mdp-insc" name="mdp" class="input-form input-mdp-oeil" placeholder="8 caractères minimum" minlength="8" required>
+                    <span id="erreur-mdp" class="message-erreur-js"></span>
                     <span id="oeil-mdp" class="icone-oeil-form" onclick="afficherMasquerMdp('mdp-insc', 'oeil-mdp')">👁️</span>
                 </div>
             </fieldset>
@@ -109,6 +115,7 @@ if (isset($_COOKIE['theme'])) {
 
                 <label for="adresse-insc">Adresse (N° et rue) *</label><br>
                 <input type="text" id="adresse-insc" name="adresse" class="input-form" placeholder="ex: 42 Avenue des Champs Elysées" required>
+                <span id="erreur-adresse" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="complement-insc">Complément d'adresse</label><br>
@@ -117,14 +124,17 @@ if (isset($_COOKIE['theme'])) {
 
                 <label for="cp-insc">Code Postal *</label><br>
                 <input type="text" id="cp-insc" name="code_postal" class="input-form" maxlength="5" placeholder="ex: 75008" required>
+                <span id="erreur-cp" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="ville-insc">Ville *</label><br>
                 <input type="text" id="ville-insc" name="ville" class="input-form" placeholder="ex: Paris" required>
+                <span id="erreur-ville" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="tel-insc">Numéro de téléphone *</label><br>
                 <input type="tel" id="tel-insc" name="telephone" class="input-form" placeholder="ex: 06 12 34 56 78" required>
+                <span id="erreur-telephone" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="pref-insc">Préférences alimentaires / Allergies</label><br>
@@ -147,6 +157,7 @@ if (isset($_COOKIE['theme'])) {
 
                 <input type="checkbox" name="age" required id="age">
                 <label for="age" class="label-checkbox">Je certifie avoir un estomac solide. *</label>
+                <span id="erreur-certification" class="message-erreur-js"></span>
             </fieldset>
 
             <div class="form-actions">

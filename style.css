@@ -660,3 +660,18 @@ body {
     user-select: none;
     /* Évite de sélectionner l'émoji textuellement lors du clic */
 }
+
+/* erreur javascript*/
+.message-erreur-js {
+    color: #e60012;
+    font-size: 13px;
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: -15px;
+    /* Absorbe l'espace des <br><br> */
+}
+
+.message-erreur-js:empty {
+    display: none;
+}

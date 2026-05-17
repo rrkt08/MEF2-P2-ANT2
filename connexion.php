@@ -66,13 +66,14 @@ if (isset($_COOKIE['theme'])) {
     ?>
 
     <div class="conteneur-formulaire conteneur-connexion">
-        <form action="verif/verification_connexion.php" method="post">
+        <form action="verif/verification_connexion.php" method="post" onsubmit="return validerConnexion(event)">
 
             <fieldset class="groupe-formulaire">
                 <legend>IDENTIFIANTS</legend>
 
                 <label for="email-connexion">E-mail</label><br>
                 <input type="email" id="email-connexion" name="email" class="input-form" placeholder="Votre adresse e-mail" required>
+                <span id="erreur-email-connexion" class="message-erreur-js"></span>
                 <br><br>
 
                 <label for="mdp-connexion">Mot de passe</label><br>
@@ -80,6 +81,7 @@ if (isset($_COOKIE['theme'])) {
                     <input type="password" id="mdp-connexion" name="mdp" class="input-form input-mdp-oeil" placeholder="Votre mot de passe" required>
                     <span id="oeil-mdp-connexion" class="icone-oeil-form" onclick="afficherMasquerMdp('mdp-connexion', 'oeil-mdp-connexion')">👁️</span>
                 </div>
+                <span id="erreur-mdp-connexion" class="message-erreur-js"></span>
             </fieldset>
 
             <div class="form-actions">
