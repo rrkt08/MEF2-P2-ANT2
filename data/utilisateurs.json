@@ -62,7 +62,7 @@
     {
         "id_utilisateur": 3,
         "login": "jean@email.com",
-        "mot_de_passe": "jean123",
+        "mot_de_passe": "jean12345",
         "role": "client",
         "informations": {
             "nom": "Dupont",
@@ -151,7 +151,7 @@
     {
         "id_utilisateur": 6,
         "login": "tarko@email.com",
-        "mot_de_passe": "Tarko8",
+        "mot_de_passe": "TarkoOcho8",
         "role": "admin",
         "informations": {
             "nom": "Super",
@@ -201,7 +201,7 @@
     {
         "id_utilisateur": 8,
         "login": "mario@email.com",
-        "mot_de_passe": "Yahou00",
+        "mot_de_passe": "Yahou005",
         "role": "restaurateur",
         "informations": {
             "nom": "Nette",
