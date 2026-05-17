@@ -2,7 +2,7 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    //Vérification des champs vides obligatoires
+    // check qu'aucun champ obligatoire est vide
     if (
         empty($_POST['email']) || empty($_POST['mdp']) || empty($_POST['nom']) ||
         empty($_POST['prenom']) || empty($_POST['telephone']) || empty($_POST['date_naissance']) ||
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $utilisateurs = json_decode($contenu, true);
 
-    // Nettoyage
+    // nettoyage
     $email_saisi  = htmlspecialchars(trim($_POST['email']));
     $tel_propre = str_replace(' ', '', $_POST['telephone']);
     $date_saisie = $_POST['date_naissance'];
@@ -32,24 +32,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $type_erreur = "";
 
-    // Verif date de naissance
+    // date de naissance cohérente
     $annee_saisie = (int)date('Y', strtotime($date_saisie));
     $date_aujourdhui = date('Y-m-d');
 
     if ($annee_saisie < 1900 || $date_saisie > $date_aujourdhui) {
         $type_erreur = "date_invalide";
     }
-
-    //mdp avec 8 caractères minimum
+    // mdp 8 cara mini
     elseif (strlen($mdp_saisi) < 8) {
         $type_erreur = "mdp_invalide";
     }
-
-    // Vérification du format du téléphone
+    // tel 10 chiffres et commence par 0
     elseif (strlen($tel_propre) != 10 || !ctype_digit($tel_propre) || $tel_propre[0] != '0') {
         $type_erreur = "tel_invalide";
     }
-    // Vérification des doublons (Email et Téléphone)
+    // check doublons (email + tel)
     else {
         if (!empty($utilisateurs)) {
             foreach ($utilisateurs as $user) {
@@ -65,13 +63,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Redirection en cas d'erreur
     if ($type_erreur != "") {
         header("Location: ../inscription.php?erreur=" . $type_erreur);
         exit();
     }
 
-    // Détermination de l'ID
+    // id auto-incrémenté à partir du dernier user
     $nouvel_id = 1;
     if (!empty($utilisateurs)) {
         $dernier_user = end($utilisateurs);
@@ -84,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $preferences_contact = [];
     }
 
-    // Création de l'utilisateur
+    // on construit l'objet user et on l'ajoute
     $nouvel_utilisateur = [
         "id_utilisateur" => $nouvel_id,
         "login" => $email_saisi,
@@ -117,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $utilisateurs[] = $nouvel_utilisateur;
 
-    // Sauvegarde
+    // on sauvegarde
     file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
 
     header("Location: ../connexion.php?succes=1");

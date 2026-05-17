@@ -2,7 +2,7 @@
 session_start();
 header("Content-Type: application/json");
 
-// Phase 3 : modifier les quantités du panier en AJAX
+// modif des qté du panier en ajax
 
 if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != 'client') {
     echo json_encode(["succes" => false, "message" => "Vous devez être connecté en tant que client."]);
@@ -26,6 +26,7 @@ if (!isset($_SESSION['panier'][$id_plat])) {
     exit();
 }
 
+// cas suppression directe
 if ($delta == "supprimer") {
     unset($_SESSION['panier'][$id_plat]);
     echo json_encode(["succes" => true, "message" => "Article retiré."]);
@@ -35,12 +36,14 @@ if ($delta == "supprimer") {
 $delta = (int)$delta;
 $nouvelle_qte = $_SESSION['panier'][$id_plat] + $delta;
 
+// si on tombe à 0 ou en dessous => suppression
 if ($nouvelle_qte <= 0) {
     unset($_SESSION['panier'][$id_plat]);
     echo json_encode(["succes" => true, "message" => "Article retiré."]);
     exit();
 }
 
+// max 10 par article (sinon abusé)
 if ($nouvelle_qte > 10) {
     echo json_encode(["succes" => false, "message" => "Quantité maximum 10 par article."]);
     exit();

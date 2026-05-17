@@ -2,7 +2,7 @@
 session_start();
 header("Content-Type: application/json");
 
-// Phase 3 : livreur valide ou abandonne une livraison
+// le livreur valide ou abandonne une livraison
 
 if (!isset($_SESSION['utilisateur_connecte'])) {
     echo json_encode(["succes" => false, "message" => "Vous devez être connecté."]);
@@ -35,7 +35,7 @@ for ($i = 0; $i < count($commandes); $i = $i + 1) {
     if ($commandes[$i]['id_commande'] == $id_commande) {
         $trouvee = true;
 
-        // Sécurité : on vérifie que c'est bien le livreur assigné (ou un admin)
+        // un livreur ne peut valider que sa propre cmd (l'admin oui)
         if ($_SESSION['role'] != 'admin' && $commandes[$i]['id_livreur'] != $_SESSION['id_utilisateur']) {
             echo json_encode(["succes" => false, "message" => "Cette livraison ne vous est pas assignée."]);
             exit();

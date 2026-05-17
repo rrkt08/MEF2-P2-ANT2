@@ -2,8 +2,7 @@
 session_start();
 header("Content-Type: application/json");
 
-// Phase 3 : mise à jour du profil en AJAX
-// Réponse JSON : { succes: true/false, message: "..." }
+// renvoie un json { succes: true/false, message: "..." }
 
 if (!isset($_SESSION['utilisateur_connecte'])) {
     echo json_encode(["succes" => false, "message" => "Vous devez être connecté."]);
@@ -19,10 +18,10 @@ $id_user = $_SESSION['id_utilisateur'];
 $champ = $_POST['champ'] ?? '';
 $valeur = $_POST['valeur'] ?? '';
 
-// On nettoie la valeur reçue
+// nettoyage de la valeur
 $valeur = htmlspecialchars(trim($valeur));
 
-// Liste des champs autorisés à modifier
+// champs autorisés
 $champs_simples = ["nom", "prenom", "telephone", "preferences_alimentaires"];
 $champs_adresse = ["rue", "complement", "code_postal", "ville"];
 $champ_email = "login";
@@ -36,9 +35,9 @@ for ($i = 0; $i < count($utilisateurs); $i = $i + 1) {
     if ($utilisateurs[$i]['id_utilisateur'] == $id_user) {
         $trouve = true;
 
-        // Vérifications selon le champ
+        // selon le champ on fait des verifs spécifiques
         if (in_array($champ, $champs_simples)) {
-            // Vérif spéciale pour le téléphone
+            // tél : on retire les espaces et on vérifie le format
             if ($champ == "telephone") {
                 $tel_propre = str_replace(' ', '', $valeur);
                 if (strlen($tel_propre) != 10 || !ctype_digit($tel_propre) || $tel_propre[0] != '0') {
@@ -47,7 +46,7 @@ for ($i = 0; $i < count($utilisateurs); $i = $i + 1) {
                 }
                 $valeur = $tel_propre;
             }
-            // Vérif minimum 2 caractères pour nom/prenom
+            // nom et prénom > 2 cara
             if (($champ == "nom" || $champ == "prenom") && strlen($valeur) < 2) {
                 echo json_encode(["succes" => false, "message" => "Trop court (2 caractères minimum)."]);
                 exit();
@@ -60,12 +59,12 @@ for ($i = 0; $i < count($utilisateurs); $i = $i + 1) {
             }
             $utilisateurs[$i]['informations']['adresse'][$champ] = $valeur;
         } elseif ($champ == $champ_email) {
-            // Email simple : présence de "@" et "."
+            // check basique d'email (@ + .)
             if (strpos($valeur, '@') === false || strpos($valeur, '.') === false) {
                 echo json_encode(["succes" => false, "message" => "E-mail invalide."]);
                 exit();
             }
-            // Vérification d'unicité
+            // pas de doublon
             for ($j = 0; $j < count($utilisateurs); $j = $j + 1) {
                 if ($j != $i && $utilisateurs[$j]['login'] == $valeur) {
                     echo json_encode(["succes" => false, "message" => "Cet e-mail est déjà utilisé."]);
@@ -74,7 +73,7 @@ for ($i = 0; $i < count($utilisateurs); $i = $i + 1) {
             }
             $utilisateurs[$i]['login'] = $valeur;
         } elseif ($champ == $champ_pref_contact) {
-            // Préférences de contact : liste séparée par virgules
+            // liste séparée par virgules (ex "email,sms")
             $liste = [];
             if ($valeur != "") {
                 $liste = explode(",", $valeur);

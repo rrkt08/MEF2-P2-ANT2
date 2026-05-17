@@ -1,6 +1,6 @@
 <?php
-// Phase 3 : endpoint AJAX qui renvoie un fragment HTML
-// avec les plats filtrés (catégorie / allergène / recherche).
+// endpoint qui renvoie le fragment html des plats filtrés
+// (utilisé par presentation.php quand on clique "FILTRER")
 
 session_start();
 
@@ -16,7 +16,7 @@ if (file_exists('../data/plats.json')) {
     }
 }
 
-// Liste des catégories possibles
+// les catégories qu'on connait
 $categories = [
     "donut-burgers" => "DONUT BURGERS",
     "pizzas"        => "PIZZAS",
@@ -25,7 +25,7 @@ $categories = [
     "boissons"      => "BOISSONS"
 ];
 
-// Si une catégorie est sélectionnée, on ne garde que celle-ci
+// si une catégorie est sélectionnée, on ne garde que celle-là
 if ($categorie_filtre != "") {
     $categories = [$categorie_filtre => strtoupper(str_replace("-", " ", $categorie_filtre))];
 }
@@ -40,14 +40,14 @@ foreach ($categories as $id_cat => $nom_cat) {
             continue;
         }
 
-        // Filtre allergène (on EXCLUT les plats qui contiennent l'allergène à éviter)
+        // si filtre allergène, on EXCLUT les plats qui le contiennent
         if ($allergene_filtre != "") {
             if (in_array($allergene_filtre, $plat['informations']['allergenes'])) {
                 continue;
             }
         }
 
-        // Filtre recherche par nom
+        // filtre par nom
         if ($recherche_filtre != "") {
             if (strpos(strtolower($plat['nom']), $recherche_filtre) === false) {
                 continue;
@@ -62,6 +62,7 @@ foreach ($categories as $id_cat => $nom_cat) {
         echo '<div class="plats-populaires">';
 
         foreach ($plats_de_la_categorie as $plat) {
+            // png ou jpg ? on essaye les deux
             $nom_sans_extension = pathinfo($plat['image'], PATHINFO_FILENAME);
 
             if (file_exists("../images/" . $nom_sans_extension . ".png")) {
@@ -78,7 +79,7 @@ foreach ($categories as $id_cat => $nom_cat) {
             echo '<p class="description-plat">' . htmlspecialchars($plat['description']) . '</p>';
             echo '<p class="prix">' . number_format($plat['prix'], 2) . ' €</p>';
 
-            // Si client connecté, on affiche le formulaire d'ajout au panier
+            // si client co, on affiche le form d'ajout panier
             if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client') {
                 echo '<form action="verif/ajouter_panier.php" method="POST" onsubmit="return validerAjoutPanier(event)">';
                 echo '<input type="hidden" name="id_plat" value="' . $plat['id_plat'] . '">';

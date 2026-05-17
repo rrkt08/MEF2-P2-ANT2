@@ -2,8 +2,8 @@
 session_start();
 header("Content-Type: application/json");
 
-// Phase 3 : vérifie si l'utilisateur courant a été bloqué entre-temps
-// Appelée périodiquement par le JS (toutes les 30s)
+// le js poll cette page toutes les 30s
+// pour voir si l'admin nous a bloqué entre temps
 
 if (!isset($_SESSION['utilisateur_connecte'])) {
     echo json_encode(["bloque" => false]);

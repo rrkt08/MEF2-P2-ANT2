@@ -2,8 +2,7 @@
 session_start();
 header("Content-Type: application/json");
 
-// Phase 3 : admin bloque ou débloque un utilisateur
-
+// admin only
 if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != 'admin') {
     echo json_encode(["succes" => false, "message" => "Accès non autorisé."]);
     exit();
@@ -22,7 +21,7 @@ if ($action != "bloquer" && $action != "debloquer") {
     exit();
 }
 
-// On ne peut pas se bloquer soi-même
+// on s'auto-bloque pas
 if ($id_user == $_SESSION['id_utilisateur']) {
     echo json_encode(["succes" => false, "message" => "Vous ne pouvez pas vous bloquer vous-même."]);
     exit();
@@ -38,7 +37,7 @@ for ($i = 0; $i < count($utilisateurs); $i = $i + 1) {
     if ($utilisateurs[$i]['id_utilisateur'] == $id_user) {
         $trouve = true;
 
-        // On empêche aussi de bloquer un autre admin
+        // pas de blocage d'admin non plus
         if ($utilisateurs[$i]['role'] == "admin") {
             echo json_encode(["succes" => false, "message" => "On ne peut pas bloquer un administrateur."]);
             exit();

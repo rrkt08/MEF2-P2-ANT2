@@ -2,36 +2,41 @@
 session_start();
 require_once('getapikey.php');
 
-// Récupération des données renvoyées par CYBank
+// données qui reviennent de cybank
 $status = $_GET['status'] ?? '';
 $transaction = $_GET['transaction'] ?? '';
 $montant = $_GET['montant'] ?? '';
 $vendeur = $_GET['vendeur'] ?? '';
 $control_banque = $_GET['control'] ?? '';
 
-// Récupération des données personnalisées ajoutées dans l'URL de retour
-$mode_conso = $_GET['mode'] ?? 'livraison';
-$type_preparation = $_GET['type_preparation'] ?? 'immediate';
-$date_commande_choisie = $_GET['date_commande'] ?? '';
+// on relit les choix du client (mis en session avant le paiement)
+$mode_conso = $_SESSION['paiement_mode'] ?? 'livraison';
+$type_preparation = $_SESSION['paiement_prep'] ?? 'immediate';
+$date_commande_choisie = $_SESSION['paiement_date'] ?? '';
 
-// Phase 3 : si on est sur un paiement additionnel d'une commande modifiée
+// modif d'une commande déjà existante ?
 $id_cmd_modif = $_GET['cmd_modif'] ?? '';
 
 $api_key = getAPIKey($vendeur);
 
-// Vérification de sécurité
+// le hash de retour doit aussi inclure le status (cf doc cybank)
+// url retour = la même qu'à l'envoi (fixe)
+$url_retour_attendue = "http://localhost/FlagrantDelice/verif/validation_commande.php";
+if ($id_cmd_modif != "") {
+    $url_retour_attendue = $url_retour_attendue . "?cmd_modif=" . urlencode($id_cmd_modif);
+}
+
 $check_hash = md5($api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $status . "#");
 
 if ($status == 'accepted' && $check_hash == $control_banque) {
 
-    // Cas 1 : paiement additionnel d'une commande déjà existante (Phase 3)
+    // Cas modif d'une commande existante
     if ($id_cmd_modif != '') {
         $fichier_commandes = '../data/commandes.json';
         $commandes = json_decode(file_get_contents($fichier_commandes), true);
 
         for ($i = 0; $i < count($commandes); $i = $i + 1) {
             if ($commandes[$i]['id_commande'] == $id_cmd_modif) {
-                // Le complément a été payé, on met à jour le prix total et on confirme
                 $commandes[$i]['statut_paiement'] = "paye";
                 break;
             }
@@ -42,17 +47,17 @@ if ($status == 'accepted' && $check_hash == $control_banque) {
         exit();
     }
 
-    // Cas 2 : paiement classique (nouvelle commande)
+    // Cas normal : nouvelle commande
     $id_client = $_SESSION['id_utilisateur'];
 
-    // Charger les plats pour le catalogue
+    // charge les plats pour le catalogue
     $plats_data = json_decode(file_get_contents('../data/plats.json'), true);
     $catalogue = [];
     foreach ($plats_data as $p) {
         $catalogue[$p['id_plat']] = $p;
     }
 
-    // Préparer la liste des articles
+    // construit la liste articles
     $liste_articles = [];
     foreach ($_SESSION['panier'] as $id => $qte) {
         $liste_articles[] = [
@@ -63,7 +68,7 @@ if ($status == 'accepted' && $check_hash == $control_banque) {
         ];
     }
 
-    // Récupération de l'adresse du client
+    // récup l'adresse du client (utile si livraison)
     $adresse_client = ["rue" => "Non renseignée", "code_postal" => "", "ville" => "", "complement" => ""];
     $users = json_decode(file_get_contents('../data/utilisateurs.json'), true);
     foreach ($users as $u) {
@@ -73,7 +78,7 @@ if ($status == 'accepted' && $check_hash == $control_banque) {
         }
     }
 
-    // Gestion statut et date
+    // statut + date selon le choix
     if ($type_preparation == 'plustard' && !empty($date_commande_choisie)) {
         $statut_preparation = "EN ATTENTE";
         $date_heure = date("Y-m-d\TH:i:s", strtotime($date_commande_choisie));
@@ -86,7 +91,7 @@ if ($status == 'accepted' && $check_hash == $control_banque) {
     elseif ($mode_conso == 'emporter') $lieu_consommation = "a emporter";
     else $lieu_consommation = "livraison";
 
-    // Chargement et maj des commandes
+    // sauvegarde dans commandes.json
     $fichier_commandes = '../data/commandes.json';
     $commandes = json_decode(file_get_contents($fichier_commandes), true) ?? [];
 
@@ -106,14 +111,16 @@ if ($status == 'accepted' && $check_hash == $control_banque) {
 
     file_put_contents($fichier_commandes, json_encode($commandes, JSON_PRETTY_PRINT));
 
-    // Vider le panier après commande
+    // on vide le panier et les infos de session lié au paiement
     unset($_SESSION['panier']);
+    unset($_SESSION['paiement_mode']);
+    unset($_SESSION['paiement_prep']);
+    unset($_SESSION['paiement_date']);
 
-    // Redirection du client vers son profil
     header("Location: ../profil.php?commande=succes");
     exit();
 } else {
-    // Si le paiement est refusé ou le hash incorrect
+    // paiement refusé ou hash KO
     header("Location: ../panier.php?erreur=paiement_refuse");
     exit();
 }

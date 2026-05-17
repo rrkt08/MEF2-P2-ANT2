@@ -1,6 +1,6 @@
 <?php
-// Phase 3 : à inclure en haut de chaque page protégée par session.
-// Si l'utilisateur a été bloqué entre-temps, on détruit sa session et on redirige.
+// petit fichier à inclure en haut des pages connectées
+// si l'admin nous a bloqué pendant qu'on était co, on dégage
 
 if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['utilisateur_connecte'] == true) {
 
@@ -12,7 +12,7 @@ if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['utilisateur_connecte'
         foreach ($tous as $u) {
             if ($u['id_utilisateur'] == $_SESSION['id_utilisateur']) {
                 if (isset($u['bloque']) && $u['bloque'] == true) {
-                    // Compte bloqué => fin de session immédiate
+                    // session terminée direct
                     session_unset();
                     session_destroy();
                     header("Location: connexion.php?erreur=bloque");

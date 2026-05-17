@@ -4,7 +4,7 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Vérification des champs vides obligatoires
+    // si un champ est vide on retourne avec un msg d'erreur
     if (empty($_POST['email']) || empty($_POST['mdp'])) {
         header("Location: ../connexion.php?erreur=vide");
         exit();
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $utilisateur_trouve = false;
     $profil_utilisateur = null;
 
-    // Recherche de l'utilisateur
+    // on parcourt pour trouver le bon couple email/mdp
     if (!empty($utilisateurs)) {
         foreach ($utilisateurs as $user) {
             if ($user['login'] == $email_saisi && $user['mot_de_passe'] == $mdp_saisi) {
@@ -39,20 +39,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($utilisateur_trouve == true) {
 
-        // Phase 3 : on refuse la connexion si le compte est bloqué
+        // si le compte est bloqué, on refuse
         if (isset($profil_utilisateur['bloque']) && $profil_utilisateur['bloque'] == true) {
             header("Location: ../connexion.php?erreur=bloque");
             exit();
         }
 
-        // Sauvegarde des infos de l'utilisateur
+        // ok on sauve en session
         $_SESSION['utilisateur_connecte'] = true;
         $_SESSION['id_utilisateur'] = $profil_utilisateur['id_utilisateur'];
         $_SESSION['role'] = $profil_utilisateur['role'];
         $_SESSION['prenom'] = $profil_utilisateur['informations']['prenom'];
         $_SESSION['nom'] = $profil_utilisateur['informations']['nom'];
 
-        // Redirection selon le rôle
+        // redirection selon le rôle
         if ($_SESSION['role'] == "admin") {
             header("Location: ../admin.php");
         } elseif ($_SESSION['role'] == "restaurateur") {
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         exit();
     } else {
-        // Email ou mdp faux
+        // pas trouvé => msg erreur
         header("Location: ../connexion.php?erreur=identifiants");
         exit();
     }
