@@ -46,8 +46,11 @@ if (isset($_COOKIE['theme'])) {
     </div>
 
     <div class="zone-recherche">
-        <form action="presentation.php" method="get">
-            <input type="text" name="q" placeholder="RECHERCHER UN CRIME CULINAIRE..." class="input-recherche">
+        <form action="presentation.php" method="get" onsubmit="return validerRecherche(event)">
+            <div class="conteneur-input-recherche">
+                <input type="text" id="recherche-accueil" name="q" placeholder="RECHERCHER UN CRIME CULINAIRE..." class="input-recherche">
+                <span id="erreur-recherche" class="message-erreur-js"></span>
+            </div>
             <button type="submit" class="btn-recherche">RECHERCHER</button>
         </form>
     </div>

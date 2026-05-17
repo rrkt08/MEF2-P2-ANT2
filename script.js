@@ -175,3 +175,61 @@ function validerConnexion(event) {
 
     return valide;
 }
+
+//Pour la page d'accueil
+function validerRecherche(event) {
+    var valide = true;
+
+    var champRecherche = document.getElementById("recherche-accueil");
+    var texteErreur = document.getElementById("erreur-recherche");
+
+    if (texteErreur) {
+        texteErreur.innerHTML = "";
+    }
+
+    //champ vide ou ne contenant que des espaces
+    if (champRecherche && champRecherche.value.trim() === "") {
+        if (texteErreur) {
+            texteErreur.innerHTML = "Veuillez saisir le nom d'un plat avant de rechercher.";
+        }
+        valide = false;
+    }
+
+    //une règle pas respectée = on annule l'envoi
+    if (valide === false) {
+        event.preventDefault();
+    }
+
+    return valide;
+}
+
+/*pour la page détails_commande*/
+function validerMiseAJour(event) {
+    var valide = true;
+
+    var champStatut = document.getElementById("nouveau_statut");
+    var champLivreur = document.getElementById("id_livreur");
+
+    var erreurStatut = document.getElementById("erreur-statut");
+    var erreurLivreur = document.getElementById("erreur-livreur");
+
+    if (erreurStatut) erreurStatut.innerHTML = "";
+    if (erreurLivreur) erreurLivreur.innerHTML = "";
+
+    //"en livraison" sélectionné = un livreur obligatoire
+    if (champStatut && champLivreur) {
+        if (champStatut.value === "EN LIVRAISON" && champLivreur.value === "") {
+            if (erreurLivreur) {
+                erreurLivreur.innerHTML = "Veuillez attribuer un livreur.";
+            }
+            valide = false;
+        }
+    }
+
+    //une règle pas respectée = on annule l'envoi
+    if (valide === false) {
+        event.preventDefault();
+    }
+
+    return valide;
+}

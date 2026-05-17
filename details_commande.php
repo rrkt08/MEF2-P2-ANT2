@@ -202,8 +202,7 @@ if (isset($_COOKIE['theme'])) {
 
         <fieldset class="groupe-formulaire">
             <legend>MISE À JOUR</legend>
-
-            <form action="#" method="get">
+            <form action="#" method="get" onsubmit="return validerMiseAJour(event)">
                 <label for="nouveau_statut">État de la commande :</label><br>
                 <select id="nouveau_statut" name="nouveau_statut" class="select-form">
                     <option value="EN ATTENTE" <?php if ($commande_actuelle['statut_preparation'] == 'EN ATTENTE') {
@@ -219,6 +218,7 @@ if (isset($_COOKIE['theme'])) {
                                                         echo 'selected';
                                                     } ?>>En livraison</option>
                 </select>
+                <span id="erreur-statut" class="message-erreur-js"></span>
 
                 <br><br>
 
@@ -235,10 +235,11 @@ if (isset($_COOKIE['theme'])) {
                     }
                     ?>
                 </select>
+                <span id="erreur-livreur" class="message-erreur-js"></span>
 
                 <br><br>
                 <div class="form-actions">
-                    <button type="button" class="btn-recherche btn-submit-form">SAUVEGARDER</button>
+                    <button type="submit" class="btn-recherche btn-submit-form">SAUVEGARDER</button>
                 </div>
             </form>
         </fieldset>
