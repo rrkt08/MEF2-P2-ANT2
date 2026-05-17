@@ -14,14 +14,35 @@ $mode_conso = $_GET['mode'] ?? 'livraison';
 $type_preparation = $_GET['type_preparation'] ?? 'immediate';
 $date_commande_choisie = $_GET['date_commande'] ?? '';
 
+// Phase 3 : si on est sur un paiement additionnel d'une commande modifiée
+$id_cmd_modif = $_GET['cmd_modif'] ?? '';
+
 $api_key = getAPIKey($vendeur);
 
-// Vérification de sécurité 
+// Vérification de sécurité
 $check_hash = md5($api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $status . "#");
 
 if ($status == 'accepted' && $check_hash == $control_banque) {
 
-    // Paiement réussit, enregistrement de la commande
+    // Cas 1 : paiement additionnel d'une commande déjà existante (Phase 3)
+    if ($id_cmd_modif != '') {
+        $fichier_commandes = '../data/commandes.json';
+        $commandes = json_decode(file_get_contents($fichier_commandes), true);
+
+        for ($i = 0; $i < count($commandes); $i = $i + 1) {
+            if ($commandes[$i]['id_commande'] == $id_cmd_modif) {
+                // Le complément a été payé, on met à jour le prix total et on confirme
+                $commandes[$i]['statut_paiement'] = "paye";
+                break;
+            }
+        }
+
+        file_put_contents($fichier_commandes, json_encode($commandes, JSON_PRETTY_PRINT));
+        header("Location: ../profil.php?modif_commande=succes");
+        exit();
+    }
+
+    // Cas 2 : paiement classique (nouvelle commande)
     $id_client = $_SESSION['id_utilisateur'];
 
     // Charger les plats pour le catalogue
@@ -42,7 +63,7 @@ if ($status == 'accepted' && $check_hash == $control_banque) {
         ];
     }
 
-    // Récupération de l'adresse du client 
+    // Récupération de l'adresse du client
     $adresse_client = ["rue" => "Non renseignée", "code_postal" => "", "ville" => "", "complement" => ""];
     $users = json_decode(file_get_contents('../data/utilisateurs.json'), true);
     foreach ($users as $u) {
@@ -79,7 +100,8 @@ if ($status == 'accepted' && $check_hash == $control_banque) {
         "lieu_consommation" => $lieu_consommation,
         "adresse_livraison" => ($mode_conso == 'livraison') ? $adresse_client : null,
         "liste_articles" => $liste_articles,
-        "prix_total" => (float)$montant
+        "prix_total" => (float)$montant,
+        "deja_note" => false
     ];
 
     file_put_contents($fichier_commandes, json_encode($commandes, JSON_PRETTY_PRINT));

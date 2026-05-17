@@ -90,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "login" => $email_saisi,
         "mot_de_passe" => $mdp_saisi,
         "role" => "client",
+        "bloque" => false,
         "informations" => [
             "nom" => htmlspecialchars(trim($_POST['nom'])),
             "prenom" => htmlspecialchars(trim($_POST['prenom'])),

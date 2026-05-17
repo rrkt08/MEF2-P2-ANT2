@@ -39,6 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($utilisateur_trouve == true) {
 
+        // Phase 3 : on refuse la connexion si le compte est bloqué
+        if (isset($profil_utilisateur['bloque']) && $profil_utilisateur['bloque'] == true) {
+            header("Location: ../connexion.php?erreur=bloque");
+            exit();
+        }
+
         // Sauvegarde des infos de l'utilisateur
         $_SESSION['utilisateur_connecte'] = true;
         $_SESSION['id_utilisateur'] = $profil_utilisateur['id_utilisateur'];
