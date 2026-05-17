@@ -43,11 +43,7 @@ if (isset($_COOKIE['theme'])) {
 
     <div class="header-menu">
         <ul>
-            <li>
-                <button type="button" onclick="changerTheme()" style="background:none; border:none; color:white; cursor:pointer; font-family:Impact, sans-serif; font-size:18px;">
-                    🌓
-                </button>
-            </li>
+            <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
             <li><a href="accueil.php">RETOUR SITE</a></li>
             <li><a href="admin.php" class="actif">DASHBOARD ADMIN (<?php echo $_SESSION['prenom']; ?>)</a></li>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
