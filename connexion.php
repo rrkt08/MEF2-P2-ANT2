@@ -44,7 +44,7 @@ if (isset($_COOKIE['theme'])) {
     <?php
     // Messages d'erreurs ou de succès
     if (isset($_GET['succes']) && $_GET['succes'] == 1) {
-        echo '<div style="background-color: #e6ffe6; color: #008000; text-align: center; padding: 15px; font-family: Impact, sans-serif; font-size: 20px; letter-spacing: 1px;">Inscription réussie ! Vous pouvez maintenant vous connecter.</div>';
+        echo '<div class="message-alerte alerte-succes">Inscription réussie ! Vous pouvez maintenant vous connecter.</div>';
     }
 
     if (isset($_GET['erreur'])) {
@@ -56,7 +56,7 @@ if (isset($_COOKIE['theme'])) {
         }
 
         if ($message_erreur != "") {
-            echo '<div style="background-color: #ffe6e6; color: #e60012; text-align: center; padding: 15px; font-family: Impact, sans-serif; font-size: 20px; letter-spacing: 1px;">' . $message_erreur . '</div>';
+            echo '<div class="message-alerte alerte-erreur">' . $message_erreur . '</div>';
         }
     }
     ?>

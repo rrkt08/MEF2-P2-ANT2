@@ -637,6 +637,81 @@ body {
     text-transform: uppercase;
 }
 
+/*Boutons, tableau admin*/
+.colonne-actions {
+    white-space: nowrap;
+}
+
+.role-admin {
+    color: red;
+    font-weight: bold;
+}
+
+.btn-admin {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin-right: 4px;
+    width: 95px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 10px 0;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*couleurs pour chaque bouton*/
+.btn-voir-profil {
+    background-color: #00a8e8;
+}
+
+.btn-statut {
+    background-color: #ff9900;
+}
+
+.btn-remise {
+    background-color: #28a745;
+}
+
+.btn-bloquer {
+    background-color: #cc0000;
+}
+
+.admin-tiret {
+    display: inline-block;
+    color: #999;
+    font-weight: bold;
+}
+
+/*bouton pour la cuisine (commandes)*/
+.btn-details {
+    background-color: #00a8e8;
+    color: white;
+    margin-right: 2px;
+}
+
+/* msg de succès ou d'échec (connexion) */
+.message-alerte {
+    text-align: center;
+    padding: 15px;
+    font-family: Impact, sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.alerte-succes {
+    background-color: #e6ffe6;
+    color: #008000;
+}
+
+.alerte-erreur {
+    background-color: #ffe6e6;
+    color: #e60012;
+}
+
 /*bouton dark/light mode*/
 .btn-theme {
     background: none;

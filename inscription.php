@@ -61,7 +61,7 @@ if (isset($_COOKIE['theme'])) {
         }
 
         if ($message_erreur != "") {
-            echo '<div style="background-color: #ffe6e6; color: #e60012; text-align: center; padding: 15px; font-family: Impact, sans-serif; font-size: 20px; letter-spacing: 1px;">' . $message_erreur . '</div>';
+            echo '<div class="message-alerte alerte-erreur">' . $message_erreur . '</div>';
         }
     }
     ?>

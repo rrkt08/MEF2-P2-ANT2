@@ -74,30 +74,28 @@ if (isset($_COOKIE['theme'])) {
                         echo '<td>#' . $user['id_utilisateur'] . '</td>';
 
                         $role = strtoupper($user['role']);
-                        $couleur_role = "";
+
+                        //Si c'est un admin, on ajoute la classe "role-admin"
+                        $classe_role = "";
                         if ($role == 'ADMIN') {
-                            $couleur_role = 'color: red; font-weight: bold;';
+                            $classe_role = "role-admin";
                         }
-                        echo '<td style="' . $couleur_role . '">' . $role . '</td>';
+                        echo '<td class="' . $classe_role . '">' . $role . '</td>';
 
                         echo '<td><strong>' . $user['informations']['prenom'] . ' ' . $user['informations']['nom'] . '</strong></td>';
                         echo '<td>' . $user['login'] . '</td>';
 
-                        // boutons
-                        echo '<td style="white-space: nowrap;">';
+                        echo '<td class="colonne-actions">';
 
-                        $style_bouton = "font-family: Arial, sans-serif; font-size: 12px; margin-right: 4px; width: 95px; text-align: center; box-sizing: border-box; padding: 10px 0;";
-
-                        echo '<button type="button" class="btn-action" style="background-color: #00a8e8; color: black; ' . $style_bouton . '" onclick="window.location.href=\'profil.php?id=' . $user['id_utilisateur'] . '\'">VOIR PROFIL</button>';
-                        echo '<button class="btn-action" style="background-color: #ff9900; color: black; ' . $style_bouton . '">STATUT</button>';
-                        echo '<button class="btn-action" style="background-color: #28a745; color: black; ' . $style_bouton . '">REMISE</button>';
+                        echo '<button type="button" class="btn-admin btn-voir-profil" onclick="window.location.href=\'profil.php?id=' . $user['id_utilisateur'] . '\'">VOIR PROFIL</button>';
+                        echo '<button type="button" class="btn-admin btn-statut">STATUT</button>';
+                        echo '<button type="button" class="btn-admin btn-remise">REMISE</button>';
 
                         // L'admin ne peut pas se bloquer (c'est logique)
                         if ($role != 'ADMIN') {
-                            echo '<button class="btn-action" style="background-color: #cc0000; color: black; ' . $style_bouton . '">BLOQUER</button>';
+                            echo '<button type="button" class="btn-admin btn-bloquer">BLOQUER</button>';
                         } else {
-                            $style_tiret = "display: inline-block; color: #999; font-weight: bold; " . $style_bouton;
-                            echo '<span style="' . $style_tiret . '">-</span>';
+                            echo '<span class="btn-admin admin-tiret">-</span>';
                         }
 
                         echo '</td>';

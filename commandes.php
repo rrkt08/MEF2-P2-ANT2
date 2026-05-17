@@ -89,9 +89,8 @@ function afficherTableau($titre, $statut_cible, $commandes, $plats, $menus, $liv
             }
             echo '</td>';
             echo '<td>' . number_format($cmd['prix_total'], 2) . ' €</td>';
-            echo '<td style="white-space: nowrap;">';
-            echo '<button type="button" class="btn-action" style="background-color: #00a8e8; color: white; margin-right: 2px;" onclick="window.location.href=\'details_commande.php?id=' . $cmd['id_commande'] . '\'">DÉTAILS</button>';
-
+            echo '<td class="colonne-actions">';
+            echo '<button type="button" class="btn-action btn-details" onclick="window.location.href=\'details_commande.php?id=' . $cmd['id_commande'] . '\'">DÉTAILS</button>';
             if ($texte_bouton !== "DÉTAILS") {
                 echo '<button type="button" class="btn-action btn-pret">' . $texte_bouton . '</button>';
             }
