@@ -27,8 +27,12 @@ $transaction = substr(md5(uniqid(mt_rand(), true)), 0, 15);
 $montant = number_format((float)$_POST['montant'], 2, '.', '');
 $api_key = getAPIKey($vendeur);
 
-// url de retour fixe pcq on a déjà tout mis en session
-$url_retour = "http://localhost/FlagrantDelice/verif/validation_commande.php";
+// On construit l'url de retour automatiquement selon l'adresse du site.
+// Comme ca ca marche peu importe le port (8888) ou le nom du dossier,
+// avant c'etait ecrit en dur donc CYBank revenait au mauvais endroit
+// et la commande n'etait jamais ajoutee.
+$dossier = dirname($_SERVER['PHP_SELF']); // ex : /projet_final/verif
+$url_retour = "http://" . $_SERVER['HTTP_HOST'] . $dossier . "/validation_commande.php";
 if ($id_cmd_modif != "") {
     $url_retour = $url_retour . "?cmd_modif=" . urlencode($id_cmd_modif);
 }

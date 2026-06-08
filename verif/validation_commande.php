@@ -20,8 +20,9 @@ $id_cmd_modif = $_GET['cmd_modif'] ?? '';
 $api_key = getAPIKey($vendeur);
 
 // le hash de retour doit aussi inclure le status (cf doc cybank)
-// url retour = la même qu'à l'envoi (fixe)
-$url_retour_attendue = "http://localhost/FlagrantDelice/verif/validation_commande.php";
+// on reconstruit l'url de retour de la meme facon que dans preparer_paiement.php
+$dossier = dirname($_SERVER['PHP_SELF']);
+$url_retour_attendue = "http://" . $_SERVER['HTTP_HOST'] . $dossier . "/validation_commande.php";
 if ($id_cmd_modif != "") {
     $url_retour_attendue = $url_retour_attendue . "?cmd_modif=" . urlencode($id_cmd_modif);
 }
