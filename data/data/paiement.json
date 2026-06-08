@@ -1,0 +1,28 @@
+[
+    {
+        "id_paiement": "PAY-1042",
+        "id_client": 3,
+        "id_commande": "CMD-002",
+        "coordonnees_bancaires": {
+            "carte_masquee": "**** **** **** 1234",
+            "type_carte": "Visa",
+            "date_expiration": "12/28"
+        },
+        "date_transaction": "2025-10-16T12:35:10",
+        "montant_total": 24.00,
+        "statut": "valide"
+    },
+    {
+        "id_paiement": "PAY-1043",
+        "id_client": 2,
+        "id_commande": "CMD-003",
+        "coordonnees_bancaires": {
+            "carte_masquee": "**** **** **** 9876",
+            "type_carte": "MasterCard",
+            "date_expiration": "05/27"
+        },
+        "date_transaction": "2025-10-16T12:45:05",
+        "montant_total": 16.00,
+        "statut": "valide"
+    }
+]

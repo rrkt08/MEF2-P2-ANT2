@@ -1,0 +1,50 @@
+{
+    "modifications_ingredients": [
+        {
+            "id_option": "SANS_CORNICHON",
+            "action": "enlever",
+            "ingredient": "cornichon",
+            "impact_prix": 0.00
+        },
+        {
+            "id_option": "SANS_FROMAGE",
+            "action": "enlever",
+            "ingredient": "fromage",
+            "impact_prix": 0.00
+        },
+        {
+            "id_option": "STEAK_VEGE",
+            "action": "remplacer",
+            "ingredient_base": "steak haché",
+            "ingredient_nouveau": "galette végétale",
+            "impact_prix": 1.50
+        },
+        {
+            "id_option": "SAUCE_PIQUANTE",
+            "action": "remplacer",
+            "ingredient_base": "ketchup",
+            "ingredient_nouveau": "sauce piment",
+            "impact_prix": 0.50
+        }
+    ],
+    "coupons_reductions": [
+        {
+            "code": "CRIME10",
+            "description": "10% de réduction sur l'ensemble de la commande",
+            "type_remise": "pourcentage",
+            "valeur": 10
+        },
+        {
+            "code": "BIENVENUE5",
+            "description": "5€ offerts pour la première commande",
+            "type_remise": "montant_fixe",
+            "valeur": 5.00
+        },
+        {
+            "code": "LIVRAISON_FREE",
+            "description": "Frais de livraison offerts",
+            "type_remise": "frais_livraison",
+            "valeur": 0
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+[
+    {
+        "id_menu": "M01",
+        "nom": "Menu Crime Parfait",
+        "description": "Le grand classique de l'hérésie culinaire. Un burger, des frites et une boisson.",
+        "prix_total": 16.00,
+        "liste_plats_inclus": [
+            "CHIKEN_DONUT",
+            "FRITES_CHOCO",
+            "SODA_CORNICHON"
+        ],
+        "nombre_personnes_minimum": 1,
+        "creneaux_limites": [
+            "midi",
+            "soir"
+        ]
+    },
+    {
+        "id_menu": "M02",
+        "nom": "Menu Hawaïen Extrême",
+        "description": "Pour les amoureux du sucré-salé qui assument jusqu'au bout.",
+        "prix_total": 12.00,
+        "liste_plats_inclus": [
+            "PIZZA_HAWAIENNE",
+            "SMOOTHIE_ANANAS"
+        ],
+        "nombre_personnes_minimum": 1,
+        "creneaux_limites": [
+            "midi"
+        ]
+    },
+    {
+        "id_menu": "M03",
+        "nom": "Menu Duo Diabolique",
+        "description": "À partager à vos risques et périls. Deux burgers, deux accompagnements et deux desserts audacieux.",
+        "prix_total": 28.50,
+        "liste_plats_inclus": [
+            "STEAK_DONUT",
+            "FISH_DONUT",
+            "FRITES_CHOCO",
+            "CROISSANT_JAMBON",
+            "TIRAMISU_VQR",
+            "PECHE_MAYO"
+        ],
+        "nombre_personnes_minimum": 2,
+        "creneaux_limites": [
+            "soir",
+            "week-end"
+        ]
+    }
+]
