@@ -62,13 +62,16 @@ if (isset($_COOKIE['theme'])) {
 
 <body data-connecte="1">
 
+    <!-- lien d'acces direct pour la navigation clavier -->
+    <a href="#contenu" class="lien-acces-direct">Aller au contenu principal</a>
+
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
     </div>
 
     <div class="header-menu">
         <ul>
-            <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
+            <li><button type="button" class="btn-theme" onclick="changerTheme()" aria-label="Changer le thème">🌓</button></li>
             <li><a href="accueil.php">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
             <li><a href="profil.php">MON COMPTE</a></li>
@@ -76,7 +79,7 @@ if (isset($_COOKIE['theme'])) {
         </ul>
     </div>
 
-    <div class="bandeau-titre">
+    <div id="contenu" class="bandeau-titre">
         <h2><u>NOTER LA COMMANDE <?php echo htmlspecialchars($id_commande); ?></u></h2>
     </div>
 

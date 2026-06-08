@@ -31,17 +31,29 @@ if (isset($_SESSION['utilisateur_connecte'])) {
 
 <body data-connecte="<?php echo $est_connecte; ?>">
 
+    <!-- lien d'acces direct pour la navigation clavier -->
+    <a href="#contenu" class="lien-acces-direct">Aller au contenu principal</a>
+
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
     </div>
 
     <div class="header-menu">
         <ul>
-            <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
-            <li><a href="accueil.php" class="actif">ACCUEIL</a></li>
+            <li><button type="button" class="btn-theme" onclick="changerTheme()" aria-label="Changer le thème">🌓</button></li>
+            <li><a href="accueil.php" class="actif" aria-current="page">ACCUEIL</a></li>
             <li><a href="presentation.php">LA CARTE</a></li>
-            <?php if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
-                <li><a href="profil.php">MON COMPTE</a></li>
+            <?php if (isset($_SESSION['utilisateur_connecte'])): ?>
+                <?php if ($_SESSION['role'] == 'client'): ?>
+                    <li><a href="profil.php">MON COMPTE</a></li>
+                    <li><a href="panier.php">🛒 PANIER</a></li>
+                <?php elseif ($_SESSION['role'] == 'admin'): ?>
+                    <li><a href="admin.php">ESPACE ADMIN</a></li>
+                <?php elseif ($_SESSION['role'] == 'restaurateur'): ?>
+                    <li><a href="commandes.php">ESPACE CUISINE</a></li>
+                <?php elseif ($_SESSION['role'] == 'livreur'): ?>
+                    <li><a href="livraison.php">ESPACE LIVRAISON</a></li>
+                <?php endif; ?>
                 <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
             <?php else: ?>
                 <li><a href="connexion.php">CONNEXION</a></li>
@@ -65,7 +77,7 @@ if (isset($_SESSION['utilisateur_connecte'])) {
         </form>
     </div>
 
-    <div class="bandeau-titre">
+    <div id="contenu" class="bandeau-titre">
         <h2><u>PLATS POPULAIRES</u></h2>
     </div>
 

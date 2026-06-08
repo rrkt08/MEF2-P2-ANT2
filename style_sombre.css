@@ -161,3 +161,21 @@ legend,
     background-color: #ffffff;
     color: #000000;
 }
+
+/* skip nav et focus en mode sombre */
+.lien-acces-direct {
+    background-color: #cc0000;
+}
+
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid #ff4444;
+    outline-offset: 2px;
+}
+
+.header-menu a:focus {
+    outline-color: #aaaaaa;
+}

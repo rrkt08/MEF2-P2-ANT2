@@ -70,13 +70,16 @@ if (isset($_COOKIE['theme'])) {
 
 <body data-connecte="1">
 
+    <!-- lien d'acces direct pour la navigation clavier -->
+    <a href="#contenu" class="lien-acces-direct">Aller au contenu principal</a>
+
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
     </div>
 
     <div class="header-menu">
         <ul>
-            <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
+            <li><button type="button" class="btn-theme" onclick="changerTheme()" aria-label="Changer le thème">🌓</button></li>
             <?php
             if ($_SESSION['role'] == 'admin') {
                 echo '<li><a href="admin.php">RETOUR ADMIN</a></li>';
@@ -93,7 +96,7 @@ if (isset($_COOKIE['theme'])) {
         $adresse_complete = $commande_a_livrer['adresse_livraison']['rue'] . ', ' . $commande_a_livrer['adresse_livraison']['code_postal'] . ' ' . $commande_a_livrer['adresse_livraison']['ville'];
         $lien_gps = "https://www.google.com/maps/search/?api=1&query=" . urlencode($adresse_complete);
 
-        echo '<div class="bandeau-titre">';
+        echo '<div id="contenu" class="bandeau-titre">';
         echo '<h2><u>LIVRAISON #' . htmlspecialchars($commande_a_livrer['id_commande']) . '</u></h2>';
         echo '</div>';
 

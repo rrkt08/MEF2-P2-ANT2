@@ -100,22 +100,25 @@ if (isset($_COOKIE['theme'])) {
 
 <body data-connecte="1">
 
+    <!-- lien d'acces direct pour la navigation clavier -->
+    <a href="#contenu" class="lien-acces-direct">Aller au contenu principal</a>
+
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
     </div>
 
     <div class="header-menu">
         <ul>
-            <li><button type="button" class="btn-theme" onclick="changerTheme()">🌓</button></li>
+            <li><button type="button" class="btn-theme" onclick="changerTheme()" aria-label="Changer le thème">🌓</button></li>
             <?php if ($_SESSION['role'] == 'admin'): ?>
                 <li><a href="admin.php">RETOUR ADMIN</a></li>
             <?php endif; ?>
-            <li><a href="commandes.php" class="actif">CUISINE</a></li>
+            <li><a href="commandes.php" class="actif" aria-current="page">CUISINE</a></li>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
         </ul>
     </div>
 
-    <div class="bandeau-titre">
+    <div id="contenu" class="bandeau-titre">
         <h2><u>DÉTAIL : <?php echo $id_commande; ?></u></h2>
     </div>
 

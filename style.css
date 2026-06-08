@@ -955,3 +955,40 @@ body {
     padding-left: 25px;
     margin-top: 5px;
 }
+
+/* ===== Phase 4 : Accessibilité ===== */
+
+/* lien pour sauter la navigation (utile au clavier / lecteurs d'ecran)
+   il est invisible sauf quand on appuie sur Tab et qu'il est focus */
+.lien-acces-direct {
+    position: absolute;
+    left: -9999px;
+    top: 8px;
+    background-color: #e60012;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-family: Impact, sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    z-index: 9999;
+}
+
+.lien-acces-direct:focus {
+    left: 10px;
+}
+
+/* focus visible pour la navigation clavier */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid #e60012;
+    outline-offset: 2px;
+}
+
+.header-menu a:focus {
+    outline-color: #ffffff;
+    outline-offset: 3px;
+}
