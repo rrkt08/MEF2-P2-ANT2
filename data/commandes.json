@@ -22,7 +22,7 @@
         "date_heure": "2025-10-16T12:30:00",
         "statut_preparation": "A PREPARER",
         "id_livreur": null,
-        "prix_total": 16.00,
+        "prix_total": 16,
         "deja_note": false
     },
     {
@@ -55,7 +55,7 @@
         "date_heure": "2025-10-16T12:35:00",
         "statut_preparation": "A PREPARER",
         "id_livreur": null,
-        "prix_total": 24.00,
+        "prix_total": 24,
         "deja_note": false
     },
     {
@@ -78,9 +78,9 @@
         },
         "statut_paiement": "paye",
         "date_heure": "2025-10-16T12:45:00",
-        "statut_preparation": "EN LIVRAISON",
+        "statut_preparation": "LIVRÉ",
         "id_livreur": 9,
-        "prix_total": 16.00,
+        "prix_total": 16,
         "deja_note": false
     },
     {
@@ -100,7 +100,7 @@
         "date_heure": "2025-10-16T18:00:00",
         "statut_preparation": "EN ATTENTE",
         "id_livreur": null,
-        "prix_total": 12.00,
+        "prix_total": 12,
         "deja_note": false
     },
     {
@@ -120,7 +120,7 @@
         "date_heure": "2025-10-16T12:50:00",
         "statut_preparation": "EN COURS",
         "id_livreur": null,
-        "prix_total": 6.50,
+        "prix_total": 6.5,
         "deja_note": false
     },
     {
@@ -145,7 +145,39 @@
         "date_heure": "2025-10-14T19:30:00",
         "statut_preparation": "LIVRÉ",
         "id_livreur": 9,
-        "prix_total": 11.50,
+        "prix_total": 11.5,
+        "deja_note": false
+    },
+    {
+        "id_commande": "CMD-007",
+        "id_client": 2,
+        "id_livreur": null,
+        "date_heure": "2026-06-08T21:52:47",
+        "statut_preparation": "A PREPARER",
+        "statut_paiement": "paye",
+        "lieu_consommation": "a emporter",
+        "adresse_livraison": null,
+        "liste_articles": [
+            {
+                "type": "plat",
+                "id_article": "STEAK_DONUT",
+                "quantite": 1,
+                "options_choisies": []
+            },
+            {
+                "type": "plat",
+                "id_article": "PATES_CHOCO",
+                "quantite": 1,
+                "options_choisies": []
+            },
+            {
+                "type": "plat",
+                "id_article": "SMOOTHIE_TOMATE",
+                "quantite": 1,
+                "options_choisies": []
+            }
+        ],
+        "prix_total": 22,
         "deja_note": false
     }
 ]
