@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// livreur ou admin
+// livreur ou admin seulement
 if (!isset($_SESSION['utilisateur_connecte'])) {
     header("Location: connexion.php");
     exit();
@@ -24,24 +24,25 @@ if (file_exists('data/utilisateurs.json')) {
     $utilisateurs = json_decode(file_get_contents('data/utilisateurs.json'), true);
 }
 
-// on cherche la cmd assignée à ce livreur (ou la 1ère en livraison si admin)
+// on cherche la commande assignée à ce livreur
+// si c'est l'admin, on prend la première commande en livraison qu'on trouve
 $commande_a_livrer = null;
 
-foreach ($commandes as $cmd) {
-    if ($cmd['statut_preparation'] == "EN LIVRAISON") {
-        if ($cmd['id_livreur'] == $_SESSION['id_utilisateur'] || $_SESSION['role'] == 'admin') {
-            $commande_a_livrer = $cmd;
+for ($i = 0; $i < count($commandes); $i++) {
+    if ($commandes[$i]['statut_preparation'] == "EN LIVRAISON") {
+        if ($commandes[$i]['id_livreur'] == $_SESSION['id_utilisateur'] || $_SESSION['role'] == 'admin') {
+            $commande_a_livrer = $commandes[$i];
             break;
         }
     }
 }
 
-// infos du client si on a une cmd
+// on cherche les infos du client si on a trouvé une commande
 $client = null;
 if ($commande_a_livrer != null) {
-    foreach ($utilisateurs as $u) {
-        if ($u['id_utilisateur'] == $commande_a_livrer['id_client']) {
-            $client = $u;
+    for ($j = 0; $j < count($utilisateurs); $j++) {
+        if ($utilisateurs[$j]['id_utilisateur'] == $commande_a_livrer['id_client']) {
+            $client = $utilisateurs[$j];
             break;
         }
     }
@@ -70,9 +71,6 @@ if (isset($_COOKIE['theme'])) {
 
 <body data-connecte="1">
 
-    <!-- lien d'acces direct pour la navigation clavier -->
-    <a href="#contenu" class="lien-acces-direct">Aller au contenu principal</a>
-
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
     </div>
@@ -82,7 +80,7 @@ if (isset($_COOKIE['theme'])) {
             <li><button type="button" class="btn-theme" onclick="changerTheme()" aria-label="Changer le thème">🌓</button></li>
             <?php
             if ($_SESSION['role'] == 'admin') {
-                echo '<li><a href="admin.php">RETOUR ADMIN</a></li>';
+                echo '<li><a href="admin.php" aria-current="page">RETOUR ADMIN</a></li>';
             }
             ?>
             <li><a href="verif/deconnexion.php">DÉCONNEXION</a></li>
@@ -92,11 +90,17 @@ if (isset($_COOKIE['theme'])) {
     <?php
     if ($commande_a_livrer != null) {
 
-        // construit l'url google maps avec l'adresse
-        $adresse_complete = $commande_a_livrer['adresse_livraison']['rue'] . ', ' . $commande_a_livrer['adresse_livraison']['code_postal'] . ' ' . $commande_a_livrer['adresse_livraison']['ville'];
-        $lien_gps = "https://www.google.com/maps/search/?api=1&query=" . urlencode($adresse_complete);
+        $adresse = $commande_a_livrer['adresse_livraison'];
 
-        echo '<div id="contenu" class="bandeau-titre">';
+        // construction du lien GPS seulement si on a une adresse
+        // (commandes sur place ou à emporter n'en ont pas)
+        $lien_gps = "#";
+        if ($adresse != null) {
+            $adresse_texte = $adresse['rue'] . ', ' . $adresse['code_postal'] . ' ' . $adresse['ville'];
+            $lien_gps = "https://www.google.com/maps/search/?api=1&query=" . urlencode($adresse_texte);
+        }
+
+        echo '<div class="bandeau-titre">';
         echo '<h2><u>LIVRAISON #' . htmlspecialchars($commande_a_livrer['id_commande']) . '</u></h2>';
         echo '</div>';
 
@@ -107,38 +111,42 @@ if (isset($_COOKIE['theme'])) {
         echo '<h3 class="titre-livraison">ADRESSE CLIENT</h3>';
         echo '<p class="info-livraison">';
         echo '<strong>' . htmlspecialchars($client['informations']['prenom'] . ' ' . $client['informations']['nom']) . '</strong><br>';
-        echo htmlspecialchars($commande_a_livrer['adresse_livraison']['rue']) . '<br>';
-        echo htmlspecialchars($commande_a_livrer['adresse_livraison']['code_postal'] . ' ' . $commande_a_livrer['adresse_livraison']['ville']);
+
+        // si la commande a une adresse de livraison on l'affiche
+        if ($adresse != null) {
+            echo htmlspecialchars($adresse['rue']) . '<br>';
+            echo htmlspecialchars($adresse['code_postal'] . ' ' . $adresse['ville']);
+        } else {
+            // commande sur place ou à emporter
+            $lieu = $commande_a_livrer['lieu_consommation'] ?? 'sur place';
+            echo '<em>Commande ' . htmlspecialchars($lieu) . ' - pas de livraison à domicile</em>';
+        }
         echo '</p>';
 
-        // compléments si y en a (digicode, étage...)
-        if ($commande_a_livrer['adresse_livraison']['complement'] != "") {
+        // compléments d'adresse (digicode, étage...) si il y en a
+        if ($adresse != null && isset($adresse['complement']) && $adresse['complement'] != "") {
             echo '<h3 class="titre-livraison">COMPLÉMENTS</h3>';
             echo '<p class="info-livraison">';
-            echo '<em>' . htmlspecialchars($commande_a_livrer['adresse_livraison']['complement']) . '</em>';
+            echo '<em>' . htmlspecialchars($adresse['complement']) . '</em>';
             echo '</p>';
         }
 
         echo '<div class="actions-livreur" id="actions-livreur-bloc">';
-
         echo '<input type="hidden" id="id-cmd-livraison" value="' . htmlspecialchars($commande_a_livrer['id_commande']) . '">';
-
         echo '<a href="tel:' . htmlspecialchars($client['informations']['telephone']) . '" class="btn-livreur btn-tel">📞 APPELER CLIENT</a>';
         echo '<a href="' . htmlspecialchars($lien_gps) . '" target="_blank" class="btn-livreur btn-gps">🗺️ OUVRIR GPS</a>';
 
         echo '<p class="titre-livraison">STATUT DE LA COMMANDE</p>';
-        // boutons ajax
         echo '<button type="button" class="btn-livreur btn-valider" onclick="confirmerLivraison(\'terminee\')">✅ LIVRAISON TERMINÉE</button>';
         echo '<button type="button" class="btn-livreur btn-abandon" onclick="confirmerLivraison(\'abandonnee\')">❌ ABANDONNÉE</button>';
 
         echo '</div>';
         echo '</div>';
+
     } else {
-        // pas de cmd en livraison pour ce livreur
         echo '<div class="bandeau-titre">';
         echo '<h2><u>AUCUNE LIVRAISON</u></h2>';
         echo '</div>';
-
         echo '<div class="bloc-livraison">';
         echo '<p class="info-livraison texte-repos">Vous n\'avez aucune commande à livrer pour le moment. Détendez-vous !</p>';
         echo '</div>';

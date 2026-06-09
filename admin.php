@@ -40,9 +40,6 @@ if (isset($_COOKIE['theme'])) {
 
 <body data-connecte="1">
 
-    <!-- lien d'acces direct pour la navigation clavier -->
-    <a href="#contenu" class="lien-acces-direct">Aller au contenu principal</a>
-
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
     </div>
@@ -150,6 +147,7 @@ if (isset($_COOKIE['theme'])) {
             <a href="presentation.php" class="btn-action btn-debug btn-debug-client">LA CARTE</a>
             <a href="inscription.php" class="btn-action btn-debug btn-debug-client">INSCRIPTION</a>
             <a href="connexion.php" class="btn-action btn-debug btn-debug-client">CONNEXION</a>
+            <a href="notation.php" class="btn-action btn-debug btn-debug-client">NOTATION</a>
         </div>
 
         <div class="admin-debug-col">

@@ -31,9 +31,6 @@ if (isset($_SESSION['utilisateur_connecte'])) {
 
 <body data-connecte="<?php echo $est_connecte; ?>">
 
-    <!-- lien d'acces direct pour la navigation clavier -->
-    <a href="#contenu" class="lien-acces-direct">Aller au contenu principal</a>
-
     <div class="header-top">
         <div class="logo-texte">FLAGRANT DÉLICE</div>
     </div>
