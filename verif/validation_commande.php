@@ -19,8 +19,8 @@ $id_cmd_modif = $_GET['cmd_modif'] ?? '';
 
 $api_key = getAPIKey($vendeur);
 
-// le hash de retour doit aussi inclure le status (cf doc cybank)
-// on reconstruit l'url de retour de la meme facon que dans preparer_paiement.php
+// meme url de retour que dans preparer_paiement.php
+// CYBank nous renvoie dessus avec status + hash pour qu'on puisse verifier
 $dossier = dirname($_SERVER['PHP_SELF']);
 $url_retour_attendue = "http://" . $_SERVER['HTTP_HOST'] . $dossier . "/validation_commande.php";
 if ($id_cmd_modif != "") {

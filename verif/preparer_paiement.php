@@ -27,10 +27,9 @@ $transaction = substr(md5(uniqid(mt_rand(), true)), 0, 15);
 $montant = number_format((float)$_POST['montant'], 2, '.', '');
 $api_key = getAPIKey($vendeur);
 
-// On construit l'url de retour automatiquement selon l'adresse du site.
-// Comme ca ca marche peu importe le port (8888) ou le nom du dossier,
-// avant c'etait ecrit en dur donc CYBank revenait au mauvais endroit
-// et la commande n'etait jamais ajoutee.
+// url de retour vers notre site apres le paiement
+// on la construit depuis les variables du serveur pour pas avoir a
+// changer a la main si on change de port ou de nom de dossier
 $dossier = dirname($_SERVER['PHP_SELF']); // ex : /projet_final/verif
 $url_retour = "http://" . $_SERVER['HTTP_HOST'] . $dossier . "/validation_commande.php";
 if ($id_cmd_modif != "") {
