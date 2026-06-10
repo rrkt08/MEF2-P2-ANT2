@@ -16,18 +16,19 @@ Le concept ? Un restaurant audacieux spécialisé dans les **"crimes culinaires"
 ## État d'Avancement du Projet
 
 - **Phase 1 : Interface Statique (HTML5 / CSS3)** - *Terminée* ✅
-- **Phase 2 : Dynamisation Serveur (PHP / MySQL)** - *Terminée* ✅
-- **Phase 3 : Dynamisation Client (JavaScript / AJAX)** - *À venir* ⏳
-- **Phase 4 : Bonnes Pratiques & Optimisation** - *À venir* ⏳
+- **Phase 2 : Dynamisation Serveur (PHP / JSON)** - *Terminée* ✅
+- **Phase 3 : Dynamisation Client (JavaScript / AJAX)** - *Terminée* ✅
+- **Phase 4 : Bonnes Pratiques & Sécurité** - *Terminée* ✅
 
 ---
 
 ## 🎨 Charte Graphique
 
 L'identité visuelle repose sur un contraste fort pour souligner le côté "décalé" du restaurant :
-* **Bleu Cyan (`#00a8e8`)** : Couleur principale (Fonds, bordures, titres).
-* **Rouge Vif (`#e60012`)** : Couleur d'accentuation (Boutons, actions importantes, alertes).
-* **Typographie** : Utilisation des polices `Impact` et `Arial Black` pour les titres afin de donner un effet "Headline" ou "Breaking News".
+* **Bleu Cyan (`#00a8e8`)** : Couleur principale (fonds, bordures, titres).
+* **Rouge Vif (`#e60012`)** : Couleur d'accentuation (boutons, actions importantes, alertes).
+* **Typographie** : Utilisation des polices `Impact` et `Arial Black` pour les titres afin de donner un effet "Headline".
+* **Mode Sombre** : Une charte alternative activable via un bouton sur toutes les pages, mémorisée par cookie.
 
 ---
 
@@ -38,11 +39,11 @@ La phase 1 se concentre exclusivement sur l'intégration graphique et la structu
 ### Arborescence des fichiers
 
 * **Partie Client :**
-    * `accueil.html` : Page d'accueil (Vitrine des plats populaires et barre de recherche).
-    * `presentation.html` : La carte complète avec filtres visuels (Catégories, Allergènes).
+    * `accueil.html` : Page d'accueil (vitrine des plats populaires et barre de recherche).
+    * `presentation.html` : La carte complète avec filtres visuels (catégories, allergènes).
     * `inscription.html` : Formulaire de création de compte complet.
     * `connexion.html` : Page d'identification.
-    * `profil.html` : Espace client (Informations, Fidélité, Historique des commandes).
+    * `profil.html` : Espace client (informations, fidélité, historique des commandes).
     * `notation.html` : Formulaire d'avis après livraison.
 
 * **Partie Staff (Restaurateur & Livreur) :**
@@ -60,7 +61,7 @@ La phase 1 se concentre exclusivement sur l'intégration graphique et la structu
 ## 🛠️ Problèmes connus & Solutions (Phase 1)
 
 * **Responsive Livreur :** L'interface `livraison.html` a été spécifiquement codée avec `box-sizing: border-box` et des largeurs en pourcentage pour s'adapter aux écrans mobiles et faciliter le clic (contrainte des gants).
-* **Formulaires :** Les formulaires (recherche, filtres, inscription) sont visuels. Ils redirigent vers les pages cibles via `action="..."` mais ne traitent pas encore les données (cela sera fait en Phase 2 avec PHP).
+* **Formulaires :** Les formulaires sont visuels. Ils redirigent vers les pages cibles mais ne traitent pas encore les données (fait en Phase 2 avec PHP).
 
 ---
 
@@ -71,86 +72,147 @@ La Phase 2 marque le passage d'un site statique à une application web dynamique
 ### Architecture Dynamique (PHP)
 * **Pages Clients** :
     * `accueil.php` : Page d'accueil gérant l'état de connexion.
-    * `presentation.php` : Affichage dynamique du catalogue de plats à partir de `plats.json` avec gestion du panier.
-    * `panier.php` : Tunnel de commande complet incluant le choix du mode de consommation (sur place, emporter, livraison) et l'intégration de l'API CYBank.
-    * `profil.php` : Espace personnel affichant les points de fidélité et l'historique des commandes filtré par client.
+    * `presentation.php` : Affichage dynamique du catalogue à partir de `plats.json` avec gestion du panier.
+    * `panier.php` : Tunnel de commande complet (mode de consommation, intégration API CYBank).
+    * `profil.php` : Espace personnel (points de fidélité, historique des commandes).
     * `notation.php` : Système de notation des livraisons et des repas.
 * **Interfaces Staff & Admin** :
-    * `admin.php` : Dashboard de gestion de tous les utilisateurs inscrits avec outils de debug.
-    * `commandes.php` : Gestion des statuts de préparation pour le restaurateur (À préparer, En cours, En livraison).
-    * `livraison.php` : Interface mobile dédiée au livreur avec actions rapides (Appel, GPS).
+    * `admin.php` : Dashboard de gestion de tous les utilisateurs avec outils de debug.
+    * `commandes.php` : Gestion des statuts de préparation pour le restaurateur.
+    * `livraison.php` : Interface mobile dédiée au livreur (appel, GPS).
 * **Logique Serveur (`/verif`)** :
-    * `verification_connexion.php` & `verification_inscription.php` : Gestion de l'authentification et de la création de compte.
-    * `ajouter_panier.php` : Script de gestion des quantités en session.
+    * `verification_connexion.php` & `verification_inscription.php` : Authentification et création de compte.
+    * `ajouter_panier.php` : Gestion des quantités en session.
     * `validation_commande.php` : Traitement post-paiement et enregistrement de la commande.
 
 ### Stockage des Données (`/data`)
-* `utilisateurs.json` : Base de données des comptes, rôles (client, admin, livreur, restaurateur) et points de fidélité.
+* `utilisateurs.json` : Comptes, rôles (client, admin, livreur, restaurateur) et points de fidélité.
 * `plats.json` & `menus.json` : Catalogue complet des produits et compositions de menus.
 * `commandes.json` : Registre centralisé du suivi des commandes et de leurs statuts.
-* `avis.json` & `paiement.json` : Stockage des retours clients et des transactions validées.
+* `avis.json` & `paiement.json` : Retours clients et transactions validées.
 
 ---
 
 ## 🛠️ Problèmes connus & Solutions (Phase 2)
 
-Le développement de cette phase a nécessité la résolution de plusieurs défis techniques :
-
 ### 1. Environnement et Synchronisation
-* **Problème :** Conflit de synchronisation avec l'éditeur (fichiers apparaissant vides dans le navigateur lors de l'utilisation de dossiers distants).
-* **Solution :** Migration vers un dossier local dédié avec activation de l'enregistrement automatique (Auto-Save) pour garantir l'intégrité des fichiers.
+* **Problème :** Fichiers apparaissant vides dans le navigateur lors de l'utilisation de dossiers distants.
+* **Solution :** Migration vers un dossier local dédié avec activation de l'Auto-Save.
 
 ### 2. Affichage Dynamique
-* **Problème :** Erreur d'affichage sur certains produits (ex: "Croissant Viande") malgré des données correctes.
-* **Solution :** Harmonisation de la nomenclature des catégories entre le fichier `plats.json` et les filtres de la boucle PHP.
+* **Problème :** Erreur d'affichage sur certains produits malgré des données correctes.
+* **Solution :** Harmonisation de la nomenclature des catégories entre `plats.json` et les filtres PHP.
 
 ### 3. Gestion des Profils (Admin)
-* **Problème :** Conflit entre la session de l'administrateur et l'affichage des informations d'un client spécifique.
-* **Solution :** Restructuration des conditions PHP pour donner la priorité à l'identifiant transmis par `$_GET['id']` lorsque l'utilisateur connecté possède le rôle admin.
+* **Problème :** Conflit entre la session de l'administrateur et l'affichage d'un profil client.
+* **Solution :** Priorité donnée à `$_GET['id']` lorsque le rôle actif est admin.
 
 ### 4. Intégration Paiement CYBank
-* **Problème :** Erreurs de hachage MD5 et rejet de la transaction ("Code vendeur inconnu").
-* **Statut :** La structure est prête, mais la validation finale reste à finaliser en raison de contraintes de sécurité sur l'URL de retour de l'API.
+* **Problème :** Erreurs de hachage MD5 causées par une modification de l'URL de retour en JavaScript après le calcul du hash en PHP.
+* **Statut :** Résolu en Phase 3 (voir ci-dessous).
 
 ---
+
+## 📂 Contenu de la Phase 3
+
+La Phase 3 introduit JavaScript et la manipulation du DOM pour rendre l'interface pleinement interactive, sans rechargement de page.
+
+### Fonctionnalités JavaScript (`script.js`)
+
+* **Mode Sombre / Clair :** Changement dynamique du fichier CSS sans rechargement, choix mémorisé dans un cookie 30 jours.
+* **Validation des formulaires côté client :** Vérification des champs (email, téléphone, mot de passe, âge) avant envoi au serveur, avec messages d'erreur en temps réel.
+* **Affichage / masquage des mots de passe :** Icône œil sur les champs de saisie.
+* **Compteurs de caractères en temps réel :** Sur tous les champs limités en taille.
+* **Filtres asynchrones (Fetch / AJAX) :** Filtrage des plats par catégorie, allergène et recherche textuelle sans rechargement de la page de présentation.
+* **Modification de profil asynchrone :** Les informations personnelles sont mises à jour et envoyées au serveur au clic sans rechargement.
+* **Gestion des commandes (restaurateur) :** Changement de statut des commandes en AJAX.
+* **Validation livraison (livreur) :** Confirmation ou abandon d'une livraison en AJAX.
+* **Blocage / déblocage utilisateur (admin) :** Action asynchrone qui ferme immédiatement la session de l'utilisateur ciblé.
+* **Polling de sécurité :** Vérification toutes les 30 secondes si le compte connecté a été bloqué, déconnexion automatique si c'est le cas.
+
+### Nouveaux scripts serveur (`/verif`)
+* `maj_profil.php` : Traitement asynchrone des modifications de profil.
+* `maj_statut_commande.php` : Mise à jour du statut d'une commande.
+* `maj_livraison.php` : Validation ou abandon d'une livraison.
+* `bloquer_utilisateur.php` : Blocage / déblocage d'un compte en temps réel.
+* `maj_fidelite.php` : Modification du statut et des points de fidélité.
+* `filtrer_plats.php` : Retourne les plats filtrés en HTML pour les requêtes asynchrones.
+* `verifier_blocage.php` : Vérifie si le compte courant est bloqué (utilisé par le polling).
+
+---
+
+## 🛠️ Problèmes connus & Solutions (Phase 3)
+
+### 1. Déconnexion immédiate de l'utilisateur bloqué
+* **Problème :** La requête Fetch détruisait la session de l'admin et non celle de l'utilisateur ciblé.
+* **Solution :** Mise en place d'un polling asynchrone côté client toutes les 30 secondes. Dès que le statut passe à "bloqué" dans le JSON, la session du client est fermée et il est redirigé.
+
+### 2. Clignotement visuel (FOUC)
+* **Problème :** Le CSS du mode sombre était appliqué après le chargement, causant un flash.
+* **Solution :** Lecture du cookie directement en PHP en début de page pour injecter le bon fichier CSS avant le rendu.
+
+### 3. Résolution définitive de CYBank
+* **Problème :** Le JavaScript du panier modifiait l'URL de retour après que PHP avait calculé le hash, invalidant la signature.
+* **Solution :** Suppression de toute modification JavaScript sur l'URL. Toutes les variables sont figées en PHP avant la redirection vers l'API.
+
+---
+
+## 📂 Contenu de la Phase 4
+
+La Phase 4 finalise l'application en appliquant les bonnes pratiques de développement web : sécurité, accessibilité et correction des bugs restants. Une fonctionnalité innovante a également été ajoutée.
+
+### Sécurité
+* **Protection des données :** Ajout d'un fichier `data/.htaccess` bloquant tout accès direct aux fichiers JSON depuis le navigateur (erreur 403). Les données restent accessibles uniquement par le code PHP côté serveur.
+* **Contrôle des accès :** Tous les scripts `/verif` vérifient systématiquement la session et le rôle avant toute action.
+* **Protection XSS :** Toutes les données affichées sont nettoyées avec `htmlspecialchars()`.
+* **Intégrité des profils :** La modification de profil utilise toujours l'ID de session, jamais l'ID du formulaire.
+
+### Accessibilité
+* Ajout de l'attribut `aria-label` sur les boutons sans texte (bouton de thème).
+* Ajout de l'attribut `aria-current="page"` sur les liens actifs de navigation.
+
+### Corrections de bugs
+* **Page livraison :** Correction des erreurs PHP sur les commandes sans adresse (commandes sur place ou à emporter).
+* **Navigation admin :** Les administrateurs, restaurateurs et livreurs voient désormais leur lien dédié sur les pages publiques (accueil, carte) au lieu des boutons Connexion/Inscription.
+* **Lien Notation :** Ajout du lien vers la page de notation dans l'accès rapide de l'administrateur.
+
+### Fonctionnalité Innovante — 🎲 Plat Aléatoire
+Un bouton **"🎲 PLAT ALÉATOIRE"** a été ajouté sur la page de la carte, visible uniquement pour les clients connectés. En un clic, un plat est tiré au sort parmi l'ensemble du catalogue et ajouté directement au panier. Un message de confirmation affiche le nom du plat sélectionné.
+
+---
+
 ## 🚀 Installation et Utilisation
 
-Cette section détaille la procédure pour installer et lancer l'application localement en utilisant un environnement serveur de type WAMP ou MAMP.
+### 📋 Prérequis
 
-### 📋 1. Prérequis
-
-Avant de commencer, assurez-vous d'avoir installé l'un des logiciels suivants selon votre système d'exploitation :
 * **Windows :** [WAMP Server](https://www.wampserver.com/)
 * **macOS :** [MAMP](https://www.mamp.info/)
-* **Navigateur :** Un navigateur moderne (Chrome, Firefox, Edge ou Safari) pour le rendu HTML/CSS.
+* **Navigateur :** Chrome, Firefox, Edge ou Safari.
 
----
+### ⚙️ Mise en place
 
-### ⚙️ 2. Mise en place des fichiers
+1. Localiser le dossier racine du serveur :
+    * **WAMP :** `C:\wamp64\www\`
+    * **MAMP :** `/Applications/MAMP/htdocs/`
+2. Copier le dossier du projet dans ce répertoire.
+3. Démarrer les services Apache du logiciel.
 
-Pour que le serveur puisse interpréter le projet, les fichiers doivent être placés dans le dossier "racine" du logiciel :
+### 🏃 Accès
 
-1.  **Localiser le dossier cible :**
-    * Sous **WAMP** : `C:\wamp64\www\`
-    * Sous **MAMP** : `/Applications/MAMP/htdocs/`
-2.  **Copier le projet :** Créez un dossier nommé `projet_phase2` dans ce répertoire et déposez-y tous vos fichiers (HTML, CSS, PHP, etc.).
-
----
-
-### 🏃 3. Lancement de l'Application
-
-Une fois les services activés, vous pouvez accéder à l'application via votre navigateur :
-
-| Environnement | URL d'accès |
+| Environnement | URL |
 | :--- | :--- |
-| **WAMP / MAMP** | `http://localhost/projet_phase2/` |
+| **WAMP / MAMP** | `http://localhost/[nom_du_dossier]/` |
 
----
+### ✅ Comptes de test disponibles
 
-### ✅ 4. Vérification du rendu
+| Rôle | Email | Mot de passe |
+| :--- | :--- | :--- |
+| **Client** | client1@flagrant.fr | password1 |
+| **Admin** | admin@flagrant.fr | adminpass |
+| **Restaurateur** | resto@flagrant.fr | restopass |
+| **Livreur** | livreur@flagrant.fr | livreurpass |
 
-* **HTML/CSS :** Si la mise en page s'affiche correctement, le serveur sert bien les fichiers statiques.
-* **PHP/MySQL :** Testez une interaction (formulaire ou affichage de données) pour confirmer que la connexion à la base de données est active.
+> ⚠️ Vérifiez les identifiants exacts dans `data/utilisateurs.json`.
 
 ---
 
