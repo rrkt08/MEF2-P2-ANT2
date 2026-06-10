@@ -207,12 +207,10 @@ Un bouton **"🎲 PLAT ALÉATOIRE"** a été ajouté sur la page de la carte, vi
 
 | Rôle | Email | Mot de passe |
 | :--- | :--- | :--- |
-| **Client** | client1@flagrant.fr | password1 |
-| **Admin** | admin@flagrant.fr | adminpass |
-| **Restaurateur** | resto@flagrant.fr | restopass |
-| **Livreur** | livreur@flagrant.fr | livreurpass |
-
-> ⚠️ Vérifiez les identifiants exacts dans `data/utilisateurs.json`.
+| **Client** | tristan.douille@email.com | Unmotdepasse13sécurisé! |
+| **Admin** | tarko@email.com | TarkoOcho8 |
+| **Restaurateur** | mario@email.com | Yahou005 |
+| **Livreur** | paul@email.com | Onepiece1 |
 
 ---
 
