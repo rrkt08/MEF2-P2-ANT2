@@ -1,16 +1,1 @@
-# On empeche d'acceder aux fichiers de donnees directement depuis le navigateur.
-# Comme ca si quelqu'un tape data/utilisateurs.json dans l'url, il a une erreur 403
-# et il peut pas voler les comptes / mots de passe.
-# PHP lui peut toujours lire les fichiers cote serveur (file_get_contents),
-# c'est juste l'acces par url qui est bloque.
-
-# Pour Apache 2.4 (version de MAMP)
-<IfModule mod_authz_core.c>
-    Require all denied
-</IfModule>
-
-# Pour les anciennes versions d'Apache (2.2)
-<IfModule !mod_authz_core.c>
-    Order deny,allow
-    Deny from all
-</IfModule>
+Require all denied
