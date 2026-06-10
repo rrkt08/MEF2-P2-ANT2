@@ -14,15 +14,17 @@ function changerTheme() {
         valeurCookie = "clair";
     }
 
+    // on change le fichier css sans recharger la page
     themeLink.setAttribute("href", nouveauTheme);
 
+    // et on sauvegarde le choix dans un cookie qui dure 30 jours
     var dateExpiration = new Date();
     dateExpiration.setTime(dateExpiration.getTime() + (30 * 24 * 60 * 60 * 1000));
     document.cookie = "theme=" + valeurCookie + "; expires=" + dateExpiration.toUTCString() + "; path=/";
 }
 
 
-// icone oeil pour afficher/cacher le mdp
+// icone oeil pour afficher/cacher le mot de passe
 function afficherMasquerMdp(idChamp, idIcone) {
     var champMdp = document.getElementById(idChamp);
     var iconeOeil = document.getElementById(idIcone);
@@ -39,7 +41,8 @@ function afficherMasquerMdp(idChamp, idIcone) {
 }
 
 
-/* ======== validation inscription ======== */
+// validation du formulaire d'inscription côté client
+// ça évite d'envoyer des données invalides au serveur pour rien
 function validerInscription(event) {
     var valide = true;
 
@@ -54,7 +57,7 @@ function validerInscription(event) {
     var champMdp = document.getElementById("mdp-insc");
     var champCertif = document.getElementById("age");
 
-    // on reset tous les msgs d'erreur
+    // on efface les anciens messages d'erreur avant de re-vérifier
     document.getElementById("erreur-nom").innerHTML = "";
     document.getElementById("erreur-prenom").innerHTML = "";
     document.getElementById("erreur-date").innerHTML = "";
@@ -83,13 +86,13 @@ function validerInscription(event) {
         valide = false;
     }
 
-    // CP : 5 chiffres
+    // code postal : exactement 5 chiffres
     if (champCp && (champCp.value.length !== 5 || isNaN(champCp.value))) {
         document.getElementById("erreur-cp").innerHTML = "Le code postal doit contenir exactement 5 chiffres.";
         valide = false;
     }
 
-    // tél : 10 chiffres (espaces ok)
+    // téléphone : 10 chiffres, les espaces sont acceptés donc on les enlève avant de compter
     if (champTel) {
         var telSansEspaces = champTel.value.replaceAll(" ", "");
         if (telSansEspaces.length !== 10 || isNaN(telSansEspaces)) {
@@ -98,26 +101,26 @@ function validerInscription(event) {
         }
     }
 
-    // email : juste un @ et un .
+    // vérif email basique : faut au moins un @ et un point
     if (champEmail && (champEmail.value.indexOf("@") === -1 || champEmail.value.indexOf(".") === -1)) {
         document.getElementById("erreur-email").innerHTML = "Veuillez saisir une adresse e-mail valide.";
         valide = false;
     }
 
-    // mdp 8 cara mini
+    // mot de passe minimum 8 caractères
     if (champMdp && champMdp.value.length < 8) {
         document.getElementById("erreur-mdp").innerHTML = "Le mot de passe doit contenir au moins 8 caractères.";
         valide = false;
     }
 
-    // 18 ans mini
+    // vérification de l'âge : il faut avoir au moins 18 ans
     if (champDate && champDate.value !== "") {
         var dateSaisie = new Date(champDate.value);
         var aujourdhui = new Date();
 
         var age = aujourdhui.getFullYear() - dateSaisie.getFullYear();
 
-        // si anniv pas encore passé cette année
+        // si l'anniversaire n'est pas encore passé cette année, on enlève 1
         if (aujourdhui.getMonth() < dateSaisie.getMonth() || (aujourdhui.getMonth() === dateSaisie.getMonth() && aujourdhui.getDate() < dateSaisie.getDate())) {
             age = age - 1;
         }
@@ -128,12 +131,13 @@ function validerInscription(event) {
         }
     }
 
-    // case "j'ai un estomac solide" obligatoire
+    // la case "j'ai un estomac solide" est obligatoire
     if (champCertif && champCertif.checked === false) {
         document.getElementById("erreur-certification").innerHTML = "Vous devez certifier avoir un estomac solide.";
         valide = false;
     }
 
+    // si un champ est invalide, on bloque l'envoi du formulaire
     if (valide === false) {
         event.preventDefault();
     }
@@ -142,7 +146,7 @@ function validerInscription(event) {
 }
 
 
-// validation form connexion
+// validation du formulaire de connexion
 function validerConnexion(event) {
     var valide = true;
 
@@ -170,7 +174,7 @@ function validerConnexion(event) {
 }
 
 
-// barre de recherche accueil : pas de champ vide
+// barre de recherche sur l'accueil : évite d'envoyer une recherche vide
 function validerRecherche(event) {
     var valide = true;
 
@@ -196,7 +200,7 @@ function validerRecherche(event) {
 }
 
 
-// commentaire avis < 250 cara
+// vérifie que le commentaire fait moins de 250 caractères avant d'envoyer l'avis
 function validerNotation(event) {
     var valide = true;
     var champCommentaire = document.getElementById("commentaire-avis");
@@ -219,7 +223,7 @@ function validerNotation(event) {
 }
 
 
-// si pour plus tard, date oblig
+// si le client choisit "pour plus tard", la date devient obligatoire
 function validerPanier(event) {
     var valide = true;
 
@@ -248,7 +252,7 @@ function validerPanier(event) {
 }
 
 
-// quantité ajout panier (1 à 10)
+// vérifie que la quantité est entre 1 et 10 avant d'ajouter au panier
 function validerAjoutPanier(event) {
     var valide = true;
     var formulaire = event.target;
@@ -278,7 +282,8 @@ function validerAjoutPanier(event) {
 }
 
 
-/* ======== livreur : validation/abandon livraison en ajax ======== */
+// le livreur valide ou abandonne une livraison
+// une confirmation est demandée car l'action est irréversible
 function confirmerLivraison(action) {
     var choix = confirm("Êtes-vous sûr de vouloir valider cette action ? Cette opération est définitive.");
 
@@ -302,7 +307,7 @@ function confirmerLivraison(action) {
             if (data.succes === true) {
                 msgZone.className = "message-alerte alerte-succes";
                 msgZone.innerHTML = data.message;
-                // on cache les boutons une fois validé
+                // les boutons disparaissent une fois que c'est validé
                 var blocActions = document.getElementById("actions-livreur-bloc");
                 if (blocActions) {
                     blocActions.style.display = "none";
@@ -319,8 +324,8 @@ function confirmerLivraison(action) {
 }
 
 
-/* ======== compteurs de cara temps réel ======== */
-// on prend tous les champs qui ont data-compteur="id_du_span" et on bind l'event
+// compteurs de caractères en temps réel
+// fonctionne sur tous les champs qui ont un attribut data-compteur="id_du_span"
 function initCompteursCaracteres() {
     var champs = document.querySelectorAll("[data-compteur]");
 
@@ -330,7 +335,7 @@ function initCompteursCaracteres() {
         var compteur = document.getElementById(idCompteur);
 
         if (compteur) {
-            // closure pour bien isoler la var champ/compteur
+            // la closure isole bien les variables champ et compteur pour chaque itération
             var maj = (function (c, cp) {
                 return function () {
                     var max = c.getAttribute("maxlength");
@@ -349,7 +354,8 @@ function initCompteursCaracteres() {
 }
 
 
-/* ======== profil : modif d'un champ en ajax ======== */
+// modification d'un champ du profil directement sur la page
+// premier clic sur le crayon = on active le champ, deuxième clic = on envoie la modif au serveur
 function modifierChampProfil(bouton) {
     var champ = bouton.parentNode.querySelector(".input-form, .textarea-form");
     var nomChamp = champ.getAttribute("data-champ");
@@ -358,18 +364,18 @@ function modifierChampProfil(bouton) {
         return;
     }
 
-    // si le champ est readonly => on passe en mode édition
     if (champ.hasAttribute("readonly") || champ.hasAttribute("disabled")) {
+        // le champ est en lecture seule donc on passe en mode édition
         champ.removeAttribute("readonly");
         champ.removeAttribute("disabled");
         champ.focus();
         bouton.innerHTML = "✅";
         bouton.classList.add("btn-edit-valider");
     } else {
-        // sinon on sauvegarde
+        // le champ est éditable donc on envoie la nouvelle valeur au serveur
         var nouvelleValeur = champ.value;
 
-        // cas spécial : checkboxes pref contact
+        // les préférences de contact sont des checkboxes, pas un input texte
         if (nomChamp === "preferences_contact") {
             var checkboxes = bouton.parentNode.querySelectorAll("input[type='checkbox']");
             var liste = [];
@@ -380,7 +386,6 @@ function modifierChampProfil(bouton) {
             }
             nouvelleValeur = liste.join(",");
 
-            // on re-disable les cases
             for (var j = 0; j < checkboxes.length; j = j + 1) {
                 checkboxes[j].setAttribute("disabled", "disabled");
             }
@@ -424,7 +429,8 @@ function modifierChampProfil(bouton) {
     }
 }
 
-// pour les checkboxes (pref contact) : 1er clic = activation, 2eme = save
+// cas particulier pour les checkboxes des préférences de contact
+// le premier clic active les cases, le deuxième déclenche la sauvegarde
 function activerCheckboxesContact(bouton) {
     var checkboxes = bouton.parentNode.querySelectorAll("input[type='checkbox']");
 
@@ -440,7 +446,8 @@ function activerCheckboxesContact(bouton) {
 }
 
 
-/* ======== présentation : filtres ajax + tri js ======== */
+// filtre les plats par catégorie, allergène et recherche textuelle
+// la requête part au serveur qui renvoie le HTML des plats correspondants
 function filtrerPlatsAjax(event) {
     if (event) {
         event.preventDefault();
@@ -461,6 +468,7 @@ function filtrerPlatsAjax(event) {
     })
         .then(function (reponse) { return reponse.text(); })
         .then(function (html) {
+            // on remplace le contenu de la zone sans recharger la page
             var zone = document.getElementById("zone-plats");
             if (zone) {
                 zone.innerHTML = html;
@@ -476,7 +484,8 @@ function filtrerPlatsAjax(event) {
     return false;
 }
 
-// le tri est en js pur sur les data déjà chargées
+// le tri se fait en js directement sur les éléments déjà affichés
+// pas besoin de retourner au serveur pour ça
 function trierPlats(critere) {
     var grilles = document.querySelectorAll(".plats-populaires");
 
@@ -484,7 +493,7 @@ function trierPlats(critere) {
         var grille = grilles[g];
         var plats = grille.querySelectorAll(".plat");
 
-        // on convertit en tableau pour pouvoir trier
+        // on convertit en tableau pour pouvoir utiliser sort()
         var tableauPlats = [];
         for (var i = 0; i < plats.length; i = i + 1) {
             tableauPlats.push(plats[i]);
@@ -508,7 +517,7 @@ function trierPlats(critere) {
             return 0;
         });
 
-        // on remet les plats triés en place
+        // on réinsère les éléments dans le bon ordre
         for (var j = 0; j < tableauPlats.length; j = j + 1) {
             grille.appendChild(tableauPlats[j]);
         }
@@ -516,7 +525,8 @@ function trierPlats(critere) {
 }
 
 
-/* ======== panier : ajout/retrait qté ======== */
+// modifie la quantité d'un article dans le panier (+1 ou -1)
+// si la quantité tombe à 0 le serveur supprime l'article automatiquement
 function modifierQuantitePanier(idPlat, delta) {
     var formData = new FormData();
     formData.append("id_plat", idPlat);
@@ -529,7 +539,7 @@ function modifierQuantitePanier(idPlat, delta) {
         .then(function (reponse) { return reponse.json(); })
         .then(function (data) {
             if (data.succes === true) {
-                // on reload pour voir les nouveaux totaux
+                // un rechargement suffit pour recalculer les totaux
                 window.location.reload();
             } else {
                 alert(data.message);
@@ -540,6 +550,7 @@ function modifierQuantitePanier(idPlat, delta) {
         });
 }
 
+// supprime complètement un article du panier après confirmation
 function supprimerArticlePanier(idPlat) {
     var choix = confirm("Voulez-vous vraiment retirer cet article de votre panier ?");
     if (choix === false) {
@@ -564,7 +575,8 @@ function supprimerArticlePanier(idPlat) {
 }
 
 
-/* ======== cuisine : changer le statut d'une commande ======== */
+// change le statut d'une commande depuis la page cuisine
+// la ligne disparaît du tableau actuel une fois le changement validé
 function changerStatutCmd(idCmd, ligne, nouveauStatut) {
     var formData = new FormData();
     formData.append("id_commande", idCmd);
@@ -577,7 +589,7 @@ function changerStatutCmd(idCmd, ligne, nouveauStatut) {
         .then(function (reponse) { return reponse.json(); })
         .then(function (data) {
             if (data.succes === true) {
-                // on retire la ligne du tableau actuel
+                // on retire la ligne du tableau sans recharger la page
                 var ligneTr = document.getElementById("ligne-" + idCmd);
                 if (ligneTr) {
                     ligneTr.parentNode.removeChild(ligneTr);
@@ -597,7 +609,8 @@ function changerStatutCmd(idCmd, ligne, nouveauStatut) {
 }
 
 
-/* ======== détail commande : sauver statut + livreur ======== */
+// sauvegarde le statut et le livreur depuis la page détail d'une commande
+// évite d'envoyer en livraison sans avoir assigné un livreur
 function validerMiseAJour(event) {
     if (event) {
         event.preventDefault();
@@ -615,6 +628,7 @@ function validerMiseAJour(event) {
     if (erreurStatut) erreurStatut.innerHTML = "";
     if (erreurLivreur) erreurLivreur.innerHTML = "";
 
+    // si on passe en livraison, il faut un livreur
     if (champStatut && champLivreur) {
         if (champStatut.value === "EN LIVRAISON" && champLivreur.value === "") {
             if (erreurLivreur) {
@@ -662,7 +676,8 @@ function validerMiseAJour(event) {
 }
 
 
-/* ======== admin : bloquer / débloquer ======== */
+// bloque ou débloque un utilisateur depuis le tableau admin
+// une confirmation est demandée car ça coupe la session de l'utilisateur immédiatement
 function bloquerUtilisateurAjax(idUser, bouton) {
     var actionActuelle = bouton.getAttribute("data-action");
 
@@ -689,13 +704,12 @@ function bloquerUtilisateurAjax(idUser, bouton) {
         .then(function (reponse) { return reponse.json(); })
         .then(function (data) {
             if (data.succes === true) {
-                // on switch le bouton bloqué <-> débloqué
+                // on met à jour le bouton et la cellule état sans recharger
                 if (actionActuelle === "bloquer") {
                     bouton.innerHTML = "DÉBLOQUER";
                     bouton.setAttribute("data-action", "debloquer");
                     bouton.classList.remove("btn-bloquer");
                     bouton.classList.add("btn-debloquer");
-                    // on met aussi à jour la cellule "état"
                     var tr = bouton.closest("tr");
                     if (tr) {
                         var cellEtat = tr.children[4];
@@ -734,7 +748,7 @@ function bloquerUtilisateurAjax(idUser, bouton) {
 }
 
 
-/* ======== admin : changer statut fidélité ======== */
+// fait passer un utilisateur au statut fidélité suivant (cycle dans la liste)
 function changerStatutFidelite(idUser) {
     if (!confirm("Faire passer cet utilisateur au statut fidélité suivant ?")) {
         return;
@@ -771,7 +785,8 @@ function changerStatutFidelite(idUser) {
 }
 
 
-/* ======== admin : accorder une remise (en points) ======== */
+// ajoute ou retire des points fidélité à un utilisateur
+// la valeur peut être négative pour retirer des points
 function accorderRemise(idUser) {
     var saisie = prompt("Combien de points fidélité ajouter ? (peut être négatif pour retirer)", "50");
     if (saisie === null) {
@@ -811,8 +826,8 @@ function accorderRemise(idUser) {
 }
 
 
-/* ======== check si on s'est fait bloquer entre temps ======== */
-// (poll toutes les 30s sur les pages connectées)
+// vérifie toutes les 30 secondes si le compte a été bloqué par l'admin
+// si oui, l'utilisateur est déconnecté immédiatement
 function verifierBlocage() {
     fetch("verif/verifier_blocage.php")
         .then(function (reponse) { return reponse.json(); })
@@ -823,16 +838,16 @@ function verifierBlocage() {
             }
         })
         .catch(function () {
-            // on dit rien, ça ré-essayera
+            // si le réseau coupe on ne fait rien, ça réessayera au prochain interval
         });
 }
 
 
-// init au chargement de la page
+// initialisation au chargement de la page
 window.addEventListener("load", function () {
     initCompteursCaracteres();
 
-    // si on est co, on check périodiquement si on a été bloqué
+    // le polling de blocage ne démarre que si quelqu'un est connecté
     if (document.body.getAttribute("data-connecte") === "1") {
         setInterval(verifierBlocage, 30000);
     }
