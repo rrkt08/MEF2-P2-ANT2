@@ -2,13 +2,12 @@
 session_start();
 header("Content-Type: application/json");
 
-// changement de statut d'une cmd (resto / admin)
-
 if (!isset($_SESSION['utilisateur_connecte'])) {
     echo json_encode(["succes" => false, "message" => "Vous devez être connecté."]);
     exit();
 }
 
+// seuls le restaurateur et l'admin peuvent changer les statuts
 if ($_SESSION['role'] != "restaurateur" && $_SESSION['role'] != "admin") {
     echo json_encode(["succes" => false, "message" => "Accès non autorisé."]);
     exit();
@@ -23,7 +22,7 @@ $id_commande = $_POST['id_commande'] ?? '';
 $nouveau_statut = $_POST['nouveau_statut'] ?? '';
 $id_livreur = $_POST['id_livreur'] ?? '';
 
-// les statuts autorisés
+// on vérifie que le statut envoyé fait partie des statuts connus
 $statuts_ok = ["EN ATTENTE", "A PREPARER", "EN COURS", "EN LIVRAISON", "LIVRÉ"];
 if (!in_array($nouveau_statut, $statuts_ok)) {
     echo json_encode(["succes" => false, "message" => "Statut non valide."]);
@@ -38,7 +37,7 @@ for ($i = 0; $i < count($commandes); $i = $i + 1) {
     if ($commandes[$i]['id_commande'] == $id_commande) {
         $trouvee = true;
 
-        // si on passe en livraison, faut un livreur
+        // impossible de passer en livraison sans livreur assigné
         if ($nouveau_statut == "EN LIVRAISON" && $id_livreur == "") {
             echo json_encode(["succes" => false, "message" => "Un livreur doit être assigné."]);
             exit();

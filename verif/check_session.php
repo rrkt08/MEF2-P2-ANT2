@@ -1,6 +1,6 @@
 <?php
-// petit fichier à inclure en haut des pages connectées
-// si l'admin nous a bloqué pendant qu'on était co, on dégage
+// ce fichier est inclus en haut des pages qui nécessitent une connexion
+// il vérifie si le compte a été bloqué pendant que l'utilisateur était connecté
 
 if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['utilisateur_connecte'] == true) {
 
@@ -12,7 +12,7 @@ if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['utilisateur_connecte'
         foreach ($tous as $u) {
             if ($u['id_utilisateur'] == $_SESSION['id_utilisateur']) {
                 if (isset($u['bloque']) && $u['bloque'] == true) {
-                    // session terminée direct
+                    // on détruit la session et on redirige vers la connexion
                     session_unset();
                     session_destroy();
                     header("Location: connexion.php?erreur=bloque");

@@ -2,8 +2,6 @@
 session_start();
 header("Content-Type: application/json");
 
-// le livreur valide ou abandonne une livraison
-
 if (!isset($_SESSION['utilisateur_connecte'])) {
     echo json_encode(["succes" => false, "message" => "Vous devez être connecté."]);
     exit();
@@ -22,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 $id_commande = $_POST['id_commande'] ?? '';
 $action = $_POST['action_livraison'] ?? '';
 
+// deux actions possibles : la livraison s'est bien passée ou elle a été abandonnée
 if ($action != "terminee" && $action != "abandonnee") {
     echo json_encode(["succes" => false, "message" => "Action inconnue."]);
     exit();
@@ -35,7 +34,7 @@ for ($i = 0; $i < count($commandes); $i = $i + 1) {
     if ($commandes[$i]['id_commande'] == $id_commande) {
         $trouvee = true;
 
-        // un livreur ne peut valider que sa propre cmd (l'admin oui)
+        // un livreur ne peut valider que sa propre commande, l'admin peut tout valider
         if ($_SESSION['role'] != 'admin' && $commandes[$i]['id_livreur'] != $_SESSION['id_utilisateur']) {
             echo json_encode(["succes" => false, "message" => "Cette livraison ne vous est pas assignée."]);
             exit();

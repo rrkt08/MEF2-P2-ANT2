@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-// On vide les variables
+// on vide toutes les variables de session
 session_unset();
 
-// Destruction de la session
+// puis on détruit la session
 session_destroy();
 
-// Redirection
 header("Location: ../connexion.php");
 exit();
+?>

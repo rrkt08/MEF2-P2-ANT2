@@ -2,7 +2,7 @@
 session_start();
 header("Content-Type: application/json");
 
-// admin only
+// cette page est réservée aux admins
 if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != 'admin') {
     echo json_encode(["succes" => false, "message" => "Accès non autorisé."]);
     exit();
@@ -16,12 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 $id_user = $_POST['id_utilisateur'] ?? '';
 $action = $_POST['action'] ?? '';
 
+// évite les valeurs inattendues pour l'action
 if ($action != "bloquer" && $action != "debloquer") {
     echo json_encode(["succes" => false, "message" => "Action inconnue."]);
     exit();
 }
 
-// on s'auto-bloque pas
+// un admin ne peut pas se bloquer lui-même
 if ($id_user == $_SESSION['id_utilisateur']) {
     echo json_encode(["succes" => false, "message" => "Vous ne pouvez pas vous bloquer vous-même."]);
     exit();
@@ -37,7 +38,7 @@ for ($i = 0; $i < count($utilisateurs); $i = $i + 1) {
     if ($utilisateurs[$i]['id_utilisateur'] == $id_user) {
         $trouve = true;
 
-        // pas de blocage d'admin non plus
+        // les comptes admin ne sont pas bloquables non plus
         if ($utilisateurs[$i]['role'] == "admin") {
             echo json_encode(["succes" => false, "message" => "On ne peut pas bloquer un administrateur."]);
             exit();

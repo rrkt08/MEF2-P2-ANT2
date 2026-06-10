@@ -4,7 +4,7 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // si un champ est vide on retourne avec un msg d'erreur
+    // évite de traiter un formulaire avec des champs vides
     if (empty($_POST['email']) || empty($_POST['mdp'])) {
         header("Location: ../connexion.php?erreur=vide");
         exit();
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $utilisateur_trouve = false;
     $profil_utilisateur = null;
 
-    // on parcourt pour trouver le bon couple email/mdp
+    // on parcourt tous les utilisateurs pour trouver le bon couple email/mdp
     if (!empty($utilisateurs)) {
         foreach ($utilisateurs as $user) {
             if ($user['login'] == $email_saisi && $user['mot_de_passe'] == $mdp_saisi) {
@@ -39,20 +39,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($utilisateur_trouve == true) {
 
-        // si le compte est bloqué, on refuse
+        // si le compte a été bloqué par l'admin, on refuse la connexion
         if (isset($profil_utilisateur['bloque']) && $profil_utilisateur['bloque'] == true) {
             header("Location: ../connexion.php?erreur=bloque");
             exit();
         }
 
-        // ok on sauve en session
+        // les infos utiles sont mises en session pour les pages suivantes
         $_SESSION['utilisateur_connecte'] = true;
         $_SESSION['id_utilisateur'] = $profil_utilisateur['id_utilisateur'];
         $_SESSION['role'] = $profil_utilisateur['role'];
         $_SESSION['prenom'] = $profil_utilisateur['informations']['prenom'];
         $_SESSION['nom'] = $profil_utilisateur['informations']['nom'];
 
-        // redirection selon le rôle
+        // chaque rôle a sa page d'accueil
         if ($_SESSION['role'] == "admin") {
             header("Location: ../admin.php");
         } elseif ($_SESSION['role'] == "restaurateur") {
@@ -64,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         exit();
     } else {
-        // pas trouvé => msg erreur
         header("Location: ../connexion.php?erreur=identifiants");
         exit();
     }

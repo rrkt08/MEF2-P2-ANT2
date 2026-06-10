@@ -2,7 +2,7 @@
 session_start();
 header("Content-Type: application/json");
 
-// admin only
+// réservé à l'admin
 if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != 'admin') {
     echo json_encode(["succes" => false, "message" => "Accès refusé."]);
     exit();
@@ -20,7 +20,7 @@ $valeur = $_POST['valeur'] ?? '';
 $fichier = '../data/utilisateurs.json';
 $utilisateurs = json_decode(file_get_contents($fichier), true);
 
-// ordre des statuts fidélité (cycle dans l'ordre)
+// liste des statuts dans l'ordre, on passe au suivant en bouclant
 $ordre_statuts = ["SUSPECT CULINAIRE", "SERIAL CROQUEUR", "COMPLICE GOURMAND", "CRIMINEL CROQUANT"];
 
 $trouve = false;
@@ -32,14 +32,14 @@ for ($i = 0; $i < count($utilisateurs); $i = $i + 1) {
     if ($utilisateurs[$i]['id_utilisateur'] == $id_user) {
         $trouve = true;
 
-        // que les clients ont une fidélité
+        // seuls les clients ont une fidélité
         if (!isset($utilisateurs[$i]['fidelite']) || $utilisateurs[$i]['fidelite'] === null) {
             echo json_encode(["succes" => false, "message" => "Cet utilisateur n'a pas de fidélité."]);
             exit();
         }
 
         if ($action == "statut") {
-            // passe au suivant dans la liste, et on boucle
+            // on trouve la position actuelle et on passe au suivant
             $statut_actuel = $utilisateurs[$i]['fidelite']['statut'];
             $idx = array_search($statut_actuel, $ordre_statuts);
             if ($idx === false) {
@@ -49,20 +49,22 @@ for ($i = 0; $i < count($utilisateurs); $i = $i + 1) {
             $nouveau_statut = $ordre_statuts[$idx_nv];
             $utilisateurs[$i]['fidelite']['statut'] = $nouveau_statut;
             $message = "Statut changé en : " . $nouveau_statut;
+
         } elseif ($action == "remise") {
-            // ajoute des points
             $pts = (int)$valeur;
+            // on limite pour éviter les abus
             if ($pts < -500 || $pts > 500) {
                 echo json_encode(["succes" => false, "message" => "Valeur de remise invalide (-500 à 500)."]);
                 exit();
             }
             $utilisateurs[$i]['fidelite']['points'] = $utilisateurs[$i]['fidelite']['points'] + $pts;
-            // pas de points négatifs
+            // les points ne peuvent pas être négatifs
             if ($utilisateurs[$i]['fidelite']['points'] < 0) {
                 $utilisateurs[$i]['fidelite']['points'] = 0;
             }
             $nouveaux_points = $utilisateurs[$i]['fidelite']['points'];
             $message = "Remise appliquée. Nouveau solde : " . $nouveaux_points . " points";
+
         } else {
             echo json_encode(["succes" => false, "message" => "Action inconnue."]);
             exit();

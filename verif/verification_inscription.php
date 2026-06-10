@@ -2,14 +2,13 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // check qu'aucun champ obligatoire est vide
+    // tous ces champs sont obligatoires, si un seul est vide on arrête tout
     if (
         empty($_POST['email']) || empty($_POST['mdp']) || empty($_POST['nom']) ||
         empty($_POST['prenom']) || empty($_POST['telephone']) || empty($_POST['date_naissance']) ||
         empty($_POST['adresse']) || empty($_POST['code_postal']) || empty($_POST['ville']) ||
         empty($_POST['age'])
     ) {
-
         header("Location: ../inscription.php?erreur=champs_vides");
         exit();
     }
@@ -24,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $utilisateurs = json_decode($contenu, true);
 
-    // nettoyage
+    // nettoyage des valeurs reçues
     $email_saisi  = htmlspecialchars(trim($_POST['email']));
     $tel_propre = str_replace(' ', '', $_POST['telephone']);
     $date_saisie = $_POST['date_naissance'];
@@ -32,22 +31,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $type_erreur = "";
 
-    // date de naissance cohérente
+    // la date ne peut pas être dans le futur ni avant 1900
     $annee_saisie = (int)date('Y', strtotime($date_saisie));
     $date_aujourdhui = date('Y-m-d');
 
     if ($annee_saisie < 1900 || $date_saisie > $date_aujourdhui) {
         $type_erreur = "date_invalide";
     }
-    // mdp 8 cara mini
+    // mot de passe trop court
     elseif (strlen($mdp_saisi) < 8) {
         $type_erreur = "mdp_invalide";
     }
-    // tel 10 chiffres et commence par 0
+    // téléphone : 10 chiffres qui commence par 0
     elseif (strlen($tel_propre) != 10 || !ctype_digit($tel_propre) || $tel_propre[0] != '0') {
         $type_erreur = "tel_invalide";
     }
-    // check doublons (email + tel)
+    // vérification des doublons (email et téléphone doivent être uniques)
     else {
         if (!empty($utilisateurs)) {
             foreach ($utilisateurs as $user) {
@@ -68,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // id auto-incrémenté à partir du dernier user
+    // id auto-incrémenté à partir du dernier utilisateur enregistré
     $nouvel_id = 1;
     if (!empty($utilisateurs)) {
         $dernier_user = end($utilisateurs);
@@ -81,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $preferences_contact = [];
     }
 
-    // on construit l'objet user et on l'ajoute
+    // construction de l'objet utilisateur avant de l'ajouter au fichier
     $nouvel_utilisateur = [
         "id_utilisateur" => $nouvel_id,
         "login" => $email_saisi,
@@ -114,7 +113,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $utilisateurs[] = $nouvel_utilisateur;
 
-    // on sauvegarde
     file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
 
     header("Location: ../connexion.php?succes=1");

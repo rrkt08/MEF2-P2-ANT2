@@ -2,7 +2,7 @@
 session_start();
 require_once('getapikey.php');
 
-// si pas client, on dégage
+// si pas client connecté, on ne laisse pas accéder à cette page
 if (!isset($_SESSION['utilisateur_connecte']) || $_SESSION['role'] != 'client') {
     header("Location: ../connexion.php");
     exit();
@@ -13,13 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     exit();
 }
 
-// On stocke les choix du client en session avant d'aller à la banque
-// (sinon le hash et l'url ne matchent pas)
+// on sauvegarde les choix du client en session avant d'aller sur CYBank
+// sinon quand CYBank nous renvoie, on ne sait plus ce que le client avait choisi
 $_SESSION['paiement_mode'] = $_POST['mode_conso_choisi'] ?? 'livraison';
 $_SESSION['paiement_prep'] = $_POST['type_preparation'] ?? 'immediate';
 $_SESSION['paiement_date'] = $_POST['date_commande'] ?? '';
 
-// si on était en train de modifier une commande payée (cas phase 3)
+// dans le cas où le client modifie une commande déjà payée
 $id_cmd_modif = $_POST['cmd_modif'] ?? '';
 
 $vendeur = "MEF-2_G";
@@ -27,16 +27,16 @@ $transaction = substr(md5(uniqid(mt_rand(), true)), 0, 15);
 $montant = number_format((float)$_POST['montant'], 2, '.', '');
 $api_key = getAPIKey($vendeur);
 
-// url de retour vers notre site apres le paiement
-// on la construit depuis les variables du serveur pour pas avoir a
-// changer a la main si on change de port ou de nom de dossier
-$dossier = dirname($_SERVER['PHP_SELF']); // ex : /projet_final/verif
+// url de retour vers notre site après le paiement
+// on la construit depuis les variables du serveur pour ne pas avoir à
+// la changer à la main si on change de port ou de nom de dossier
+$dossier = dirname($_SERVER['PHP_SELF']);
 $url_retour = "http://" . $_SERVER['HTTP_HOST'] . $dossier . "/validation_commande.php";
 if ($id_cmd_modif != "") {
     $url_retour = $url_retour . "?cmd_modif=" . urlencode($id_cmd_modif);
 }
 
-// le # final est obligatoire dans le hash selon le doc cybank
+// le # final est obligatoire dans le hash selon la doc CYBank
 $hash_control = md5($api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $url_retour . "#");
 ?>
 <!DOCTYPE html>
