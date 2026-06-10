@@ -955,3 +955,13 @@ body {
     padding-left: 25px;
     margin-top: 5px;
 }
+
+/* bouton plat aléatoire */
+.btn-aleatoire {
+    background-color: #e60012;
+    margin-left: 10px;
+}
+
+.btn-aleatoire:hover {
+    background-color: #b0000e;
+}

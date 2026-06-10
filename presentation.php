@@ -111,7 +111,6 @@ if (isset($_SESSION['utilisateur_connecte'])) {
             <button type="submit" class="btn-recherche">FILTRER</button>
         </form>
 
-        <br>
 
         <label class="label-tri">Trier par :</label>
         <select id="critere-tri" class="menu-deroulant" onchange="trierPlats(this.value)">
@@ -120,11 +119,21 @@ if (isset($_SESSION['utilisateur_connecte'])) {
             <option value="prix-desc">Prix décroissant</option>
             <option value="nom-asc">Nom (A → Z)</option>
         </select>
+
+        <?php if (isset($_SESSION['utilisateur_connecte']) && $_SESSION['role'] == 'client'): ?>
+            <form action="verif/plat_aleatoire.php" method="POST" style="display:inline;">
+                <button type="submit" class="btn-recherche btn-aleatoire">🎲 PLAT ALÉATOIRE</button>
+            </form>
+        <?php endif; ?>
     </div>
 
     <?php
     if (isset($_GET['ajout']) && $_GET['ajout'] == 'ok') {
-        echo '<div class="message-alerte alerte-succes">Article ajouté au panier avec succès !</div>';
+        if (isset($_GET['nom_plat']) && $_GET['nom_plat'] != '') {
+            echo '<div class="message-alerte alerte-succes">&laquo;' . htmlspecialchars($_GET['nom_plat']) . '&raquo; ajouté au panier !</div>';
+        } else {
+            echo '<div class="message-alerte alerte-succes">Article ajouté au panier avec succès !</div>';
+        }
     }
     ?>
 
